@@ -1,4 +1,4 @@
-Garnish.LinkIt = Garnish.Base.extend({
+Garnish.LinkItField = Garnish.Base.extend({
 
 	defaults: {
 		id: null,
@@ -45,9 +45,3 @@ Garnish.LinkIt = Garnish.Base.extend({
 		}
 	}
 });
-
-
-(function($){
-
-
-})(jQuery);

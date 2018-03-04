@@ -2,7 +2,8 @@
 namespace fruitstudios\linkit\fields;
 
 use fruitstudios\linkit\LinkIt;
-use fruitstudios\linkit\assetbundles\linkit\LinkItAsset;
+use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
+use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use fruitstudios\linkit\services\LinkItService;
 use fruitstudios\linkit\models\Link;
 
@@ -231,6 +232,8 @@ class LinkItField extends Field
      */
     public function getSettingsHtml()
     {
+        Craft::$app->getView()->registerAssetBundle(FieldSettingsAssetBundle::class);
+
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'link-it/fields/_settings',
@@ -340,7 +343,7 @@ class LinkItField extends Field
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()->registerAssetBundle(LinkItAsset::class);
+        Craft::$app->getView()->registerAssetBundle(FieldAssetBundle::class);
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
@@ -351,7 +354,7 @@ class LinkItField extends Field
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
-        Craft::$app->getView()->registerJs('new Garnish.LinkIt('.$jsVariables.');');
+        Craft::$app->getView()->registerJs('new Garnish.LinkItField('.$jsVariables.');');
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
