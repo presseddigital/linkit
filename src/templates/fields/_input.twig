@@ -1,0 +1,77 @@
+{% import "_includes/forms" as forms %}
+
+{% set currentType = 'fruitstudios\\linkit\\models\\Url' %}
+
+<div class="linkit">
+
+	{% if field.types|length > 1 %}
+
+	    {{ forms.selectField({
+	        id: id ~ '-type',
+	        name: name ~ '[type]',
+	        fieldClass: 'linkit--type',
+	        options: field.enabledlinkTypesAsOptions,
+	        value: currentType,
+	        errors: field.getErrors('type') ?? null,
+	        toggle: true,
+	    }) }}
+
+	{% endif %}
+
+	{% for linkType in field.enabledlinkTypes %}
+
+	    {% set isSelected = linkType.type == currentType %}
+
+	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not isSelected ? 'hidden' }}">
+
+			{% namespace linkType.type %}
+	    		{{ linkType.getInputHtml(name)|raw }}
+		    {% endnamespace %}
+
+			{#
+				TODO: Need to understand this before i start using
+				Feel like it may be rather useful
+
+		       	{% namespace 'types['~type~']' %}
+		            {{ _field.getSettingsHtml()|raw }}
+		        {% endnamespace %}
+		    #}
+
+	    </div>
+
+	{% endfor %}
+
+	{% if field.allowCustomText or field.allowTarget %}
+
+		<div id="{{ id }}-any" class="linkit--settings {{ currentType == '' ? 'hidden' }}">
+
+			{% if field.allowCustomText %}
+
+				{{ forms.textField({
+					id: name~'CustomText',
+					name: name~'[customText]',
+					fieldClass: 'linkit--customText',
+					placeholder: field.defaultText ? field.defaultText : 'Link Text'|t('link-it'),
+					value: value.customText ?? ''
+				}) }}
+
+			{% endif %}
+
+			{% if field.allowTarget %}
+
+				{{ forms.checkboxField({
+					id: name~'Target',
+					name: name~'[target]',
+					fieldClass: 'linkit--target',
+					value: true,
+					label: 'Open link in new window?'|t('link-it'),
+					checked: value.target ?? null
+				}) }}
+
+			{% endif %}
+
+		</div>
+
+	{% endif %}
+
+</div>

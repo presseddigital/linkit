@@ -1,0 +1,11 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Label"|t('link-it'),
+    instructions: "Enter the text you want to appear in the LinkIt dropdown."|t('link-it'),
+    id: type.type|id~'-typeLabel',
+    name: 'typesSettings['~type.type~'][typeLabel]',
+    value: type.typeLabel ?? '',
+    placeholder: type.defaultLabel,
+    errors: type.getErrors('typeLabel')
+}) }}

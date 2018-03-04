@@ -1,0 +1,10 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    id: name ~ '-value',
+    name: name ~ '[value]',
+    value: link.value ?? '',
+    placeholder: type.defaultValue ?? '',
+    errors: link.getErrors('value') ?? null
+}) }}
+

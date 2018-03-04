@@ -1,0 +1,16 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.elementSelect({
+    id: name ~ '-value',
+    name: name ~ '[value]',
+    elementType: type.getElementType(),
+    selectionLabel: type.selectionLabel ?? type.defaultSelectionLabel(),
+    criteria: {
+        enabledForSite: null,
+        status: null,
+        siteId: 1,
+    },
+    sources: type.sources == '*' ? null : type.sources,
+    limit: 1,
+    elements: link.value ?? [],
+}) }}
