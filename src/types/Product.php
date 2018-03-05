@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
@@ -21,7 +21,11 @@ class Product extends LinkType
 
     public function getLabel()
     {
-        return Craft::t('link-it', 'Product');
+        if($this->typeLabel != '')
+        {
+            return $this->typeLabel;
+        }
+        return static::defaultLabel();
     }
 
     public function getSettingsHtml()

@@ -2,10 +2,7 @@
 namespace fruitstudios\linkit\base;
 
 use Craft;
-use craft\base\Component;
 use craft\base\SavableComponent;
-
-use fruitstudios\linkit\models\Link;
 
 abstract class LinkType extends SavableComponent implements LinkTypeInterface
 {
@@ -23,8 +20,19 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return '';
     }
 
+    // Static
+    // =========================================================================
+
+    public $value;
+
     // Public Methods
     // =========================================================================
+
+
+    public function __construct($value = null)
+    {
+        $this->value = $value;
+    }
 
     public function defaultSelectionLabel(): string
     {
@@ -41,6 +49,11 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return $this->defaultLabel();
     }
 
+    public function getSelectionLabel()
+    {
+        return $this->defaultSelectionLabel();
+    }
+
     public function getSettingsHtml()
     {
         return null;
@@ -51,10 +64,8 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return null;
     }
 
-    // public function getLink(): Link
     public function getLink()
     {
         return null;
-        // return new Link();
     }
 }

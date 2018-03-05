@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
@@ -21,10 +21,9 @@ class User extends LinkType
     // Public
     // =========================================================================
 
-    // public $value;
-    public $typeLabel;
+    public $customLabel;
     public $sources = '*';
-    public $selectionLabel;
+    public $customSelectionLabel;
     public $userPath;
 
     // Static
@@ -35,7 +34,20 @@ class User extends LinkType
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
+    }
+
+    public function getSelectionLabel()
+    {
+        if($this->customSelectionLabel != '')
+        {
+            return $this->customSelectionLabel;
+        }
+        return static::defaultSelectionLabel();
     }
 
     public function getElementType()
@@ -46,7 +58,7 @@ class User extends LinkType
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         $rules[] = ['selectionLabel', 'string'];
         $rules[] = ['userPath', 'string'];
         return $rules;
@@ -69,7 +81,7 @@ class User extends LinkType
             [
                 'name' => $name,
                 'type' => $this,
-                'link' => $this->getLink(),
+                'value' => $this->value,
             ]
         );
     }

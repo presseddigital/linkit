@@ -2,10 +2,7 @@
 namespace fruitstudios\linkit\base;
 
 use Craft;
-use craft\base\ComponentInterface;
 use craft\base\SavableComponentInterface;
-
-use fruitstudios\linkit\models\Link;
 
 interface LinkTypeInterface extends SavableComponentInterface
 {
@@ -19,13 +16,13 @@ interface LinkTypeInterface extends SavableComponentInterface
     // Public Methods
     // =========================================================================
 
-	public function defaultSelectionLabel(): string;
+    public function defaultSelectionLabel(): string;
 
     public function getLabel();
+
+    public function getSelectionLabel();
 
     public function getInputHtml($name);
 
     public function getLink();
-    // public function getLink(): Link;
-
 }

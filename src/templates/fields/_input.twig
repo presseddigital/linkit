@@ -24,9 +24,7 @@
 
 	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not isSelected ? 'hidden' }}">
 
-			{% namespace linkType.type %}
-	    		{{ linkType.getInputHtml(name)|raw }}
-		    {% endnamespace %}
+	    	{{ linkType.getInputHtml(name)|raw }}
 
 			{#
 				TODO: Need to understand this before i start using

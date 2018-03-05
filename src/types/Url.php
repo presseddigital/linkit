@@ -1,12 +1,12 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
 
-class Email extends LinkType
+class Url extends LinkType
 {
     // Private
     // =========================================================================
@@ -17,20 +17,19 @@ class Email extends LinkType
     // Public
     // =========================================================================
 
-    public $typeLabel;
-
+    public $customLabel;
 
     // Static
     // =========================================================================
 
     public static function defaultLabel(): string
     {
-        return Craft::t('link-it', 'Email Address');
+        return Craft::t('link-it', 'URL');
     }
 
     public static function defaultValue(): string
     {
-        return Craft::t('link-it', 'email@domain.co.uk');
+        return Craft::t('link-it', 'https://domain.co.uk');
     }
 
     // Public Methods
@@ -38,13 +37,17 @@ class Email extends LinkType
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
     }
 
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         return $rules;
     }
 
@@ -65,7 +68,7 @@ class Email extends LinkType
             [
                 'name' => $name,
                 'type' => $this,
-                'link' => $this->getLink(),
+                'value' => $this->value,
             ]
         );
     }
@@ -75,4 +78,5 @@ class Email extends LinkType
         return null;
         // return new Link();
     }
+
 }

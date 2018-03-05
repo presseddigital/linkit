@@ -1,10 +1,10 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.elementSelect({
-    id: name ~ '-value',
-    name: name ~ '[value]',
+    id: name ~ type.type|id ~ '-value',
+    name: name ~ '[values]['~ type.type ~']',
     elementType: type.getElementType(),
-    selectionLabel: type.selectionLabel ?? type.defaultSelectionLabel(),
+    selectionLabel: type.selectionLabel,
     criteria: {
         enabledForSite: null,
         status: null,

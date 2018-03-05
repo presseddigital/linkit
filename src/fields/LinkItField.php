@@ -5,7 +5,9 @@ use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use fruitstudios\linkit\services\LinkItService;
+
 use fruitstudios\linkit\models\Link;
+use fruitstudios\linkit\models\ElementLink;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -101,23 +103,24 @@ class LinkItField extends Field
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if ($value instanceof Link)
+        if($value instanceof Link)
         {
             return $value;
         }
 
-        // $value needs
-        // - type
-        // - value (link or id etc)
-        // - any other settings
+        $linkType = false;
+        if($value['type'] ?? false)
+        {
+            $linkType = Craft::createObject($value['type']);
+            $linkType->value = $value;
+        }
 
-        // Get the linkType model
+        // if (is_array($value))
+        // {
+        //     Craft::dd($value);
+        // }
 
-        // populate the linkType
-
-        // Return the link model
-        return $value;
-       //return $linkType->getLink() ?? $value;
+       return $linkType ? $linkType->getLink() : null;
     }
 
     /**
@@ -364,7 +367,7 @@ class LinkItField extends Field
                 'namespacedId' => $namespacedId,
                 'name' => $this->handle,
                 'field' => $this,
-                'link' => false ?? $value,
+                'value' => $value,
             ]
         );
     }
@@ -388,9 +391,7 @@ class LinkItField extends Field
             {
                 foreach ($this->types as $type)
                 {
-                    $this->_enabledLinkTypes[] = Craft::createObject([
-                      'class' => $type,
-                    ]);
+                    $this->_enabledLinkTypes[] = Craft::createObject($type, []);
                 }
                 $this->_enabledLinkTypes = $this->_populateLinkTypeModels($this->_enabledLinkTypes);
             }
@@ -429,7 +430,7 @@ class LinkItField extends Field
         foreach ($linkTypes as $linkType)
         {
             $attributes = $this->typesSettings[$linkType->type] ?? [];
-            $linkType->setAttributes($attributes, false); // TODO: Check should i use safeonly true here??
+            $linkType->setAttributes($attributes, false);
             $populatedLinkTypeModels[] = $linkType;
         }
         return $populatedLinkTypeModels;

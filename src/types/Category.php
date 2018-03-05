@@ -1,60 +1,61 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
 
-class Phone extends LinkType
+use craft\elements\Category as CraftCategory;
+
+class Category extends LinkType
 {
     // Private
     // =========================================================================
 
-    private $_settingsHtmlPath = 'link-it/types/settings/_default';
-    private $_inputHtmlPath = 'link-it/types/input/_default';
+    private $_elementType = CraftCategory::class;
+    private $_settingsHtmlPath = 'link-it/types/settings/_element';
+    private $_inputHtmlPath = 'link-it/types/input/_element';
 
     // Public
     // =========================================================================
 
-    public $typeLabel;
-
+    public $customLabel;
+    public $sources = '*';
+    public $customSelectionLabel;
 
     // Static
     // =========================================================================
-
-    public static function defaultLabel(): string
-    {
-        return Craft::t('link-it', 'Phone Number');
-    }
-
-    public static function defaultValue(): string
-    {
-        return Craft::t('link-it', '+44 00000 000000');
-    }
 
     // Public Methods
     // =========================================================================
 
     public function getLabel()
     {
-        if($this->typeLabel != '')
+        if($this->customLabel != '')
         {
-            return $this->typeLabel;
+            return $this->customLabel;
         }
         return static::defaultLabel();
+    }
+
+    public function getElementType()
+    {
+        return $this->_elementType;
     }
 
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
+        $rules[] = ['selectionLabel', 'string'];
         return $rules;
     }
 
+
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate(
+       return Craft::$app->getView()->renderTemplate(
             $this->_settingsHtmlPath,
             [
                 'type' => $this,
@@ -69,7 +70,7 @@ class Phone extends LinkType
             [
                 'name' => $name,
                 'type' => $this,
-                'link' => $this->getLink(),
+                'value' => $this->value,
             ]
         );
     }
@@ -80,6 +81,16 @@ class Phone extends LinkType
         // return new Link();
     }
 
+    // Protected Methods
+    // =========================================================================
 
-
+    /**
+     * Normalizes the available sources into select input options.
+     *
+     * @return array
+     */
+    public function getSourceOptions(): array
+    {
+        return LinkIt::$plugin->service->getSourceOptions($this->_elementType);
+    }
 }

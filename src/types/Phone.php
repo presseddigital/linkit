@@ -1,12 +1,12 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
 
-class Url extends LinkType
+class Phone extends LinkType
 {
     // Private
     // =========================================================================
@@ -17,34 +17,37 @@ class Url extends LinkType
     // Public
     // =========================================================================
 
-    public $typeLabel;
+    public $customLabel;
 
     // Static
     // =========================================================================
 
     public static function defaultLabel(): string
     {
-        return Craft::t('link-it', 'URL');
+        return Craft::t('link-it', 'Phone Number');
     }
 
     public static function defaultValue(): string
     {
-        return Craft::t('link-it', 'https://domain.co.uk');
+        return Craft::t('link-it', '+44 00000 000000');
     }
-
 
     // Public Methods
     // =========================================================================
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
     }
 
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         return $rules;
     }
 
@@ -65,7 +68,7 @@ class Url extends LinkType
             [
                 'name' => $name,
                 'type' => $this,
-                'link' => $this->getLink(),
+                'value' => $this->value,
             ]
         );
     }
@@ -75,5 +78,7 @@ class Url extends LinkType
         return null;
         // return new Link();
     }
+
+
 
 }

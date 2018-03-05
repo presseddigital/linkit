@@ -1,28 +1,30 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
+use fruitstudios\linkit\services\LinkItService;
 
-use craft\elements\Asset as CraftAsset;
+use craft\elements\Entry as CraftEntry;
+use craft\base\ElementInterface;
 
-class Asset extends LinkType
+class Entry extends LinkType
 {
     // Private
     // =========================================================================
 
-    private $_elementType = CraftAsset::class;
+    private $_elementType = CraftEntry::class;
     private $_settingsHtmlPath = 'link-it/types/settings/_element';
     private $_inputHtmlPath = 'link-it/types/input/_element';
 
     // Public
     // =========================================================================
 
-    public $typeLabel;
-    public $sources;
-    public $selectionLabel;
+    public $customLabel;
+    public $sources = '*';
+    public $customSelectionLabel;
 
     // Static
     // =========================================================================
@@ -32,7 +34,20 @@ class Asset extends LinkType
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
+    }
+
+    public function getSelectionLabel()
+    {
+        if($this->customSelectionLabel != '')
+        {
+            return $this->customSelectionLabel;
+        }
+        return static::defaultSelectionLabel();
     }
 
     public function getElementType()
@@ -43,7 +58,7 @@ class Asset extends LinkType
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         $rules[] = ['selectionLabel', 'string'];
         return $rules;
     }
@@ -66,7 +81,7 @@ class Asset extends LinkType
             [
                 'name' => $name,
                 'type' => $this,
-                'link' => $this->getLink(),
+                'value' => $this->value,
             ]
         );
     }
