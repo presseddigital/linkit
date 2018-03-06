@@ -15,7 +15,7 @@ use craft\base\Field;
 use craft\helpers\Json as JsonHelper;
 use craft\helpers\Db as DbHelper;
 use yii\db\Schema;
-use yii\base\Exception;
+use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
 
 
@@ -430,21 +430,16 @@ class LinkItField extends Field
     private function _getLinkTypeModelByType(string $type, bool $populateSettings = true)
     {
         try {
-
-            $linkType = new $type();
+            $linkType = Craft::createObject($type);
             if($populateSettings)
             {
                 $linkType = $this->_populateLinkTypeModel($linkType);
             }
             return $linkType;
-
-        } catch (Exception $exception) {
-
+        } catch(ErrorException $exception) {
             $error = $exception->getMessage();
             return false;
-
         }
-
     }
 
     private function _populateLinkTypeModel(LinkType $linkType)

@@ -7,7 +7,7 @@
     instructions: "Enter the path that you would like to use to link to each user. Note that the path can contain variables like {username} or {id}."|t('link-it', { type: type.defaultLabel()|lower }),
     id: type.type|id~'-userPath',
     name: 'typesSettings['~type.type~'][userPath]',
-    value: type.selectionLabel,
+    value: type.userPath,
     placeholder: "members/{username}"|t('link-it'),
     errors: type.getErrors('userPath')
 }) }}
