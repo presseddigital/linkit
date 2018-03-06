@@ -4,18 +4,15 @@ namespace fruitstudios\linkit\models;
 use Craft;
 use craft\base\Model;
 
-use fruitstudios\linkit\base\Link as BaseLink;
+use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\helpers\LinkItHelper;
 
-class Link extends BaseLink
+class ElementLink extends Link
 {
     // Public
     // =========================================================================
 
-    public $type;
-    public $value;
-    public $text;
-    public $target;
-    private $_element;
+    public $_element;
 
     // Public Methods
     // =========================================================================
@@ -32,33 +29,21 @@ class Link extends BaseLink
 
     public function getLink()
     {
-
-
+        return LinkItHelper::getLinkHtml($this->getUrl(), $this->text, $this->getAttributes());
     }
 
     public function getUrl()
     {
-
-
-    }
-
-    public function getText()
-    {
-
+        return $this->_element->getUrl() ?? '';
     }
 
     public function getElement()
     {
-
-
-    }
-
-    public function rules()
-    {
-        return [
-            ['url', 'string'],
-            ['text', 'default', 'value' => '#'],
-        ];
+        if(is_null($this->_element))
+        {
+            $this->_element = Craft::$app->getElements()->getElementById((int) $this->value);
+        }
+        return $this->_element;
     }
 
 }

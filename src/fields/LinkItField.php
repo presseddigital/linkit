@@ -109,9 +109,13 @@ class LinkItField extends Field
         }
 
         $linkType = false;
-        if($value['type'] ?? false)
+        if(isset($value['type']))
         {
-            $linkType = Craft::createObject($value['type']);
+            $linkType = $this->_getLinkTypeModelByType($value['type']);
+            if(!$linkType)
+            {
+                return new Link();
+            }
             $linkType->value = $value;
         }
 
@@ -120,7 +124,7 @@ class LinkItField extends Field
         //     Craft::dd($value);
         // }
 
-       return $linkType ? $linkType->getLink() : null;
+       return $linkType ? $linkType->getLink() : new Link();
     }
 
     /**
@@ -391,9 +395,12 @@ class LinkItField extends Field
             {
                 foreach ($this->types as $type)
                 {
-                    $this->_enabledLinkTypes[] = Craft::createObject($type, []);
+                    $linkType = $this->_getLinkTypeModelByType($type);
+                    if($linkType)
+                    {
+                        $this->_enabledLinkTypes[] = $linkType;
+                    }
                 }
-                $this->_enabledLinkTypes = $this->_populateLinkTypeModels($this->_enabledLinkTypes);
             }
         }
         return $this->_enabledLinkTypes;
@@ -424,16 +431,21 @@ class LinkItField extends Field
     // Private Methods
     // =========================================================================
 
-    private function _populateLinkTypeModels($linkTypes)
+    private function _getLinkTypeModelByType(string $type, bool $populateSettings = true)
     {
-        $populatedLinkTypeModels = [];
-        foreach ($linkTypes as $linkType)
+        if(!class_exists($type))
+        {
+
+            return false;
+        }
+
+        $linkType = new $type();
+        if($populateSettings)
         {
             $attributes = $this->typesSettings[$linkType->type] ?? [];
             $linkType->setAttributes($attributes, false);
-            $populatedLinkTypeModels[] = $linkType;
         }
-        return $populatedLinkTypeModels;
+        return $linkType;
     }
 
 }
