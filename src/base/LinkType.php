@@ -4,6 +4,9 @@ namespace fruitstudios\linkit\base;
 use Craft;
 use craft\base\SavableComponent;
 
+use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\base\LinkInterface;
+
 abstract class LinkType extends SavableComponent implements LinkTypeInterface
 {
     // Static
@@ -59,13 +62,15 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return null;
     }
 
-    public function getInputHtml($name)
+    public function getInputHtml($name, LinkInterface $link = null)
     {
         return null;
     }
 
-    public function getLink()
+    public function getLink($value): LinkInterface
     {
-        return null;
+        $link = new Link();
+        $link->setAttributes($value, false);
+        return $link;
     }
 }

@@ -5,7 +5,8 @@ use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
-use fruitstudios\linkit\services\LinkItService;
+use fruitstudios\linkit\base\LinkInterface;
+use fruitstudios\linkit\models\ElementLink;
 
 use craft\elements\Entry as CraftEntry;
 use craft\base\ElementInterface;
@@ -74,22 +75,23 @@ class Entry extends LinkType
         );
     }
 
-    public function getInputHtml($name)
+    public function getInputHtml($name, LinkInterface $link = null)
     {
         return Craft::$app->getView()->renderTemplate(
             $this->_inputHtmlPath,
             [
                 'name' => $name,
                 'type' => $this,
-                'value' => $this->value,
+                'link' => $link,
             ]
         );
     }
 
-    public function getLink()
+    public function getLink($value): LinkInterface
     {
-        return null;
-        // return new Link();
+        $link = new ElementLink();
+        $link->setAttributes($value, false);
+        return $link;
     }
 
     // Protected Methods

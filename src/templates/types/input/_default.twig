@@ -3,7 +3,7 @@
 {{ forms.textField({
     id: name ~ type.type|id ~ '-value',
     name: name ~ '[values]['~ type.type ~']',
-    value: value.link.value ?? 'hmmm',
+    value: link.value ?? '',
     placeholder: 'PLACEHOLDER ??',
     errors: link.getErrors('value') ?? null
 }) }}

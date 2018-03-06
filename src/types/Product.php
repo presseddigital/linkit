@@ -5,6 +5,8 @@ use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
+use fruitstudios\linkit\base\LinkInterface;
+use fruitstudios\linkit\models\ElementLink;
 
 // use craft\elements\Product as CraftProduct;
 
@@ -33,15 +35,22 @@ class Product extends LinkType
         return '<p>Product settings here</p>';
     }
 
-    public function getInputHtml($name)
+    public function getInputHtml($name, LinkInterface $link = null)
     {
-        return '<p>Product settings here</p>';
+        return Craft::$app->getView()->renderTemplate(
+            $this->_inputHtmlPath,
+            [
+                'name' => $name,
+                'type' => $this,
+                'link' => $link,
+            ]
+        );
     }
 
-    public function getLink()
+    public function getLink($value): LinkInterface
     {
-        return null;
-        // return new Link();
+        $link = new ElementLink();
+        $link->setAttributes($value, false);
+        return $link;
     }
-
 }

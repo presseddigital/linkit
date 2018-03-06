@@ -5,17 +5,17 @@ use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use fruitstudios\linkit\services\LinkItService;
-
+use fruitstudios\linkit\base\LinkType;
 use fruitstudios\linkit\models\Link;
 use fruitstudios\linkit\models\ElementLink;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Db;
+use craft\helpers\Json as JsonHelper;
+use craft\helpers\Db as DbHelper;
 use yii\db\Schema;
-use craft\helpers\Json;
-
+use yii\base\Exception;
 use craft\validators\ArrayValidator;
 
 
@@ -107,39 +107,28 @@ class LinkItField extends Field
         {
             return $value;
         }
+        if(!is_array($value))
+        {
+            $value = JsonHelper::decodeIfJson($value);
+        }
 
-        $linkType = false;
         if(isset($value['type']))
         {
             $linkType = $this->_getLinkTypeModelByType($value['type']);
-            if(!$linkType)
+            if($linkType)
             {
-                return new Link();
+               return $linkType->getLink([
+                    'type' => $value['type'] ?? '',
+                    'value' => $value['value'] ?? $value['values'][$value['type']] ?? '',
+                    'customText' => $value['customText'] ?? '',
+                    'target' => $value['target'] ?? '',
+                ]);
             }
-            $linkType->value = $value;
         }
 
-        // if (is_array($value))
-        // {
-        //     Craft::dd($value);
-        // }
-
-       return $linkType ? $linkType->getLink() : new Link();
+        return new Link();
     }
 
-    /**
-     * Modifies an element query.
-     *
-     * This method will be called whenever elements are being searched for that may have this field assigned to them.
-     *
-     * If the method returns `false`, the query will be stopped before it ever gets a chance to execute.
-     *
-     * @param ElementQueryInterface $query The element query
-     * @param mixed                 $value The value that was set on this field’s corresponding [[ElementCriteriaModel]] param,
-     *                                     if any.
-     *
-     * @return null|false `false` in the event that the method is sure that no elements are going to be found.
-     */
     public function serializeValue($value, ElementInterface $element = null)
     {
         return parent::serializeValue($value, $element);
@@ -357,7 +346,7 @@ class LinkItField extends Field
         $namespacedId = Craft::$app->getView()->namespaceInputId($id);
 
         // Javascript
-        $jsVariables = Json::encode([
+        $jsVariables = JsonHelper::encode([
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
@@ -371,7 +360,7 @@ class LinkItField extends Field
                 'namespacedId' => $namespacedId,
                 'name' => $this->handle,
                 'field' => $this,
-                'value' => $value,
+                'link' => $value,
             ]
         );
     }
@@ -381,7 +370,14 @@ class LinkItField extends Field
         if(is_null($this->_availableLinkTypes))
         {
             $linkTypes = LinkIt::$plugin->service->getAvailableLinkTypes();
-            $this->_availableLinkTypes = $this->_populateLinkTypeModels($linkTypes);
+            if($linkTypes)
+            {
+                foreach ($linkTypes as $linkType)
+                {
+                   $this->_availableLinkTypes[] = $this->_populateLinkTypeModel($linkType);
+                }
+            }
+
         }
         return $this->_availableLinkTypes;
     }
@@ -433,18 +429,28 @@ class LinkItField extends Field
 
     private function _getLinkTypeModelByType(string $type, bool $populateSettings = true)
     {
-        if(!class_exists($type))
-        {
+        try {
 
+            $linkType = new $type();
+            if($populateSettings)
+            {
+                $linkType = $this->_populateLinkTypeModel($linkType);
+            }
+            return $linkType;
+
+        } catch (Exception $exception) {
+
+            $error = $exception->getMessage();
             return false;
+
         }
 
-        $linkType = new $type();
-        if($populateSettings)
-        {
-            $attributes = $this->typesSettings[$linkType->type] ?? [];
-            $linkType->setAttributes($attributes, false);
-        }
+    }
+
+    private function _populateLinkTypeModel(LinkType $linkType)
+    {
+        $attributes = $this->typesSettings[$linkType->type] ?? [];
+        $linkType->setAttributes($attributes, false);
         return $linkType;
     }
 

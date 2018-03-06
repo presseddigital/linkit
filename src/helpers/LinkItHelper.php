@@ -1,6 +1,6 @@
 <?php
 
-namespace craft\helpers;
+namespace fruitstudios\linkit\helpers;
 
 use Craft;
 
@@ -17,7 +17,7 @@ class LinkItHelper
         	$attributesString .= ' '.$attribute.'="'.$value.'"';
         }
 
-        return '<a href="'.$link.'"'.$attributesString.'>'.$text.'</a>';
+        return '<a href="'.$url.'"'.$attributesString.'>'.$text.'</a>';
     }
 
 }

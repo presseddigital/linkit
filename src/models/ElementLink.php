@@ -2,39 +2,32 @@
 namespace fruitstudios\linkit\models;
 
 use Craft;
-use craft\base\Model;
 
 use fruitstudios\linkit\base\Link;
 use fruitstudios\linkit\helpers\LinkItHelper;
 
 class ElementLink extends Link
 {
-    // Public
+    // Private
     // =========================================================================
 
-    public $_element;
+    private $_element;
 
     // Public Methods
     // =========================================================================
 
-    public function __toString(): string
+    public function getUrl(): string
     {
-        return (string) $this->getLink();
+        return $this->getElement()->getUrl() ?? '';
     }
 
-    public function getLinkType()
+    public function getText(): string
     {
-
-    }
-
-    public function getLink()
-    {
-        return LinkItHelper::getLinkHtml($this->getUrl(), $this->text, $this->getAttributes());
-    }
-
-    public function getUrl()
-    {
-        return $this->_element->getUrl() ?? '';
+        if($this->customText != '')
+        {
+            return $this->customText;
+        }
+        return $this->getElement()->title ?? $this->getUrl() ?? '';
     }
 
     public function getElement()

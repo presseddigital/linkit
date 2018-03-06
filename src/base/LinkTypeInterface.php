@@ -4,6 +4,8 @@ namespace fruitstudios\linkit\base;
 use Craft;
 use craft\base\SavableComponentInterface;
 
+use fruitstudios\linkit\base\LinkInterface;
+
 interface LinkTypeInterface extends SavableComponentInterface
 {
     // Static
@@ -22,7 +24,7 @@ interface LinkTypeInterface extends SavableComponentInterface
 
     public function getSelectionLabel();
 
-    public function getInputHtml($name);
+    public function getInputHtml($name, LinkInterface $link = null);
 
-    public function getLink();
+    public function getLink($value): LinkInterface;
 }

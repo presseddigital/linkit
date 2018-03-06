@@ -5,6 +5,8 @@ use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
+use fruitstudios\linkit\base\LinkInterface;
+use fruitstudios\linkit\models\Link;
 
 class Email extends LinkType
 {
@@ -61,26 +63,23 @@ class Email extends LinkType
         );
     }
 
-    public function getInputHtml($name)
+    public function getInputHtml($name, LinkInterface $link = null)
     {
         return Craft::$app->getView()->renderTemplate(
             $this->_inputHtmlPath,
             [
                 'name' => $name,
                 'type' => $this,
-                'value' => $this->value,
+                'link' => $link,
             ]
         );
     }
 
-    public function getLink()
+    public function getLink($value): LinkInterface
     {
         $link = new Link();
-        $link->type = static::class;
-        $link->url = $this->value['values'][static::class] ?? '';
-        $link->text = $value['customText'] ?? 'The text';
-        $link->target = $this->value['target'] ?? null;
-
+        $link->setAttributes($value, false);
         return $link;
     }
+
 }
