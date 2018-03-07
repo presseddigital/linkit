@@ -114,7 +114,8 @@ class LinkItField extends Field
         {
             if(isset($value['values']))
             {
-                $value['value'] = $value['values'][$value['type']][0] ?? $value['values'][$value['type']] ?? '';
+                $postedValue = $value['values'][$value['type']] ?? '';
+                $value['value'] = is_array($postedValue) ? $postedValue[0] : $postedValue;
                 unset($value['values']);
             }
 
