@@ -17,8 +17,6 @@ class User extends LinkType
     // =========================================================================
 
     private $_elementType = CraftUser::class;
-    private $_settingsHtmlPath = 'link-it/types/settings/_user';
-    private $_inputHtmlPath = 'link-it/types/input/_element';
 
     // Public
     // =========================================================================
@@ -30,6 +28,16 @@ class User extends LinkType
 
     // Static
     // =========================================================================
+
+    public static function settingsTemplatePath(): string
+    {
+        return 'link-it/types/settings/_user';
+    }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'link-it/types/input/_element';
+    }
 
     // Public Methods
     // =========================================================================
@@ -64,28 +72,6 @@ class User extends LinkType
         $rules[] = ['selectionLabel', 'string'];
         $rules[] = ['userPath', 'string'];
         return $rules;
-    }
-
-    public function getSettingsHtml()
-    {
-       return Craft::$app->getView()->renderTemplate(
-            $this->_settingsHtmlPath,
-            [
-                'type' => $this,
-            ]
-        );
-    }
-
-    public function getInputHtml($name, LinkInterface $link = null)
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $link,
-            ]
-        );
     }
 
     public function getLink($value): LinkInterface

@@ -13,9 +13,6 @@ class Email extends LinkType
     // Private
     // =========================================================================
 
-    private $_settingsHtmlPath = 'link-it/types/settings/_default';
-    private $_inputHtmlPath = 'link-it/types/input/_default';
-
     // Public
     // =========================================================================
 
@@ -51,28 +48,6 @@ class Email extends LinkType
         $rules = parent::rules();
         $rules[] = ['customLabel', 'string'];
         return $rules;
-    }
-
-    public function getSettingsHtml()
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_settingsHtmlPath,
-            [
-                'type' => $this,
-            ]
-        );
-    }
-
-    public function getInputHtml($name, LinkInterface $link = null)
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $link,
-            ]
-        );
     }
 
     public function getLink($value): LinkInterface

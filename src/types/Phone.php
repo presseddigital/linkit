@@ -14,9 +14,6 @@ class Phone extends LinkType
     // Private
     // =========================================================================
 
-    private $_settingsHtmlPath = 'link-it/types/settings/_default';
-    private $_inputHtmlPath = 'link-it/types/input/_default';
-
     // Public
     // =========================================================================
 
@@ -28,11 +25,6 @@ class Phone extends LinkType
     public static function defaultLabel(): string
     {
         return Craft::t('link-it', 'Phone Number');
-    }
-
-    public static function defaultValue(): string
-    {
-        return Craft::t('link-it', '+44 00000 000000');
     }
 
     // Public Methods
@@ -52,28 +44,6 @@ class Phone extends LinkType
         $rules = parent::rules();
         $rules[] = ['customLabel', 'string'];
         return $rules;
-    }
-
-    public function getSettingsHtml()
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_settingsHtmlPath,
-            [
-                'type' => $this,
-            ]
-        );
-    }
-
-    public function getInputHtml($name, LinkInterface $link = null)
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $link,
-            ]
-        );
     }
 
     public function getLink($value): LinkInterface

@@ -18,9 +18,14 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return array_pop($classNameParts);
     }
 
-    public static function defaultValue(): string
+    public static function settingsTemplatePath(): string
     {
-        return '';
+        return 'link-it/types/settings/_default';
+    }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'link-it/types/input/_default';
     }
 
     // Static
@@ -59,12 +64,24 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
 
     public function getSettingsHtml()
     {
-        return null;
+       return Craft::$app->getView()->renderTemplate(
+            static::inputTemplatePath(),
+            [
+                'type' => $this,
+            ]
+        );
     }
 
     public function getInputHtml($name, LinkInterface $link = null)
     {
-        return null;
+        return Craft::$app->getView()->renderTemplate(
+            static::inputTemplatePath(),
+            [
+                'name' => $name,
+                'type' => $this,
+                'link' => $link,
+            ]
+        );
     }
 
     public function getLink($value): LinkInterface

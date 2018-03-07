@@ -8,43 +8,67 @@ use fruitstudios\linkit\base\LinkType;
 use fruitstudios\linkit\base\LinkInterface;
 use fruitstudios\linkit\models\ElementLink;
 
-// use craft\elements\Product as CraftProduct;
+use craft\elements\Product as CraftProduct;
 
 class Product extends LinkType
 {
+    // Private
+    // =========================================================================
+
+    private $_elementType = CraftProduct::class;
+
+    // Public
+    // =========================================================================
+
+    public $customLabel;
+    public $sources = '*';
+    public $customSelectionLabel;
 
     // Static
     // =========================================================================
 
+    public static function settingsTemplatePath(): string
+    {
+        return 'link-it/types/settings/_element';
+    }
 
+    public static function inputTemplatePath(): string
+    {
+        return 'link-it/types/input/_element';
+    }
 
     // Public Methods
     // =========================================================================
 
     public function getLabel()
     {
-        if($this->typeLabel != '')
+        if($this->customLabel != '')
         {
-            return $this->typeLabel;
+            return $this->customLabel;
         }
         return static::defaultLabel();
     }
 
-    public function getSettingsHtml()
+    public function getSelectionLabel()
     {
-        return '<p>Product settings here</p>';
+        if($this->customSelectionLabel != '')
+        {
+            return $this->customSelectionLabel;
+        }
+        return static::defaultSelectionLabel();
     }
 
-    public function getInputHtml($name, LinkInterface $link = null)
+    public function getElementType()
     {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $link,
-            ]
-        );
+        return $this->_elementType;
+    }
+
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = ['customLabel', 'string'];
+        $rules[] = ['selectionLabel', 'string'];
+        return $rules;
     }
 
     public function getLink($value): LinkInterface
@@ -53,4 +77,18 @@ class Product extends LinkType
         $link->setAttributes($value, false);
         return $link;
     }
+
+    // Protected Methods
+    // =========================================================================
+
+    /**
+     * Normalizes the available sources into select input options.
+     *
+     * @return array
+     */
+    public function getSourceOptions(): array
+    {
+        return LinkIt::$plugin->service->getSourceOptions($this->_elementType);
+    }
+
 }

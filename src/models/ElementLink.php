@@ -18,6 +18,10 @@ class ElementLink extends Link
 
     public function getUrl(): string
     {
+        if(!$this->getElement())
+        {
+            return '';
+        }
         return $this->getElement()->getUrl() ?? '';
     }
 

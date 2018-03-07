@@ -107,22 +107,21 @@ class LinkItField extends Field
         {
             return $value;
         }
-        if(!is_array($value))
-        {
-            $value = JsonHelper::decodeIfJson($value);
-        }
+
+        $value = !is_array($value) ? JsonHelper::decodeIfJson($value) : $value;
 
         if(isset($value['type']))
         {
+            if(isset($value['values']))
+            {
+                $value['value'] = $value['values'][$value['type']][0] ?? $value['values'][$value['type']] ?? '';
+                unset($value['values']);
+            }
+
             $linkType = $this->_getLinkTypeModelByType($value['type']);
             if($linkType)
             {
-               return $linkType->getLink([
-                    'type' => $value['type'] ?? '',
-                    'value' => $value['value'] ?? $value['values'][$value['type']] ?? '',
-                    'customText' => $value['customText'] ?? '',
-                    'target' => $value['target'] ?? '',
-                ]);
+               return $linkType->getLink($value);
             }
         }
 

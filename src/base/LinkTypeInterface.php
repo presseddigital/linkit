@@ -13,7 +13,9 @@ interface LinkTypeInterface extends SavableComponentInterface
 
     public static function defaultLabel(): string;
 
-    public static function defaultValue(): string;
+    public static function settingsTemplatePath(): string;
+
+    public static function inputTemplatePath(): string;
 
     // Public Methods
     // =========================================================================
