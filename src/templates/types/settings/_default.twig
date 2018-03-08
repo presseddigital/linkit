@@ -3,9 +3,9 @@
 {{ forms.textField({
     label: "Label"|t('link-it'),
     instructions: "Enter the text you want to appear in the LinkIt dropdown."|t('link-it'),
-    id: type.type|id~'-typeLabel',
-    name: 'typesSettings['~type.type~'][typeLabel]',
-    value: type.typeLabel ?? '',
+    id: type.type|id~'-customLabel',
+    name: 'typesSettings['~type.type~'][customLabel]',
+    value: type.customLabel ?? '',
     placeholder: type.defaultLabel,
-    errors: type.getErrors('typeLabel')
+    errors: type.getErrors('customLabel')
 }) }}

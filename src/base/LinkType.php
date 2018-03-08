@@ -2,10 +2,10 @@
 namespace fruitstudios\linkit\base;
 
 use Craft;
-use craft\base\Component;
 use craft\base\SavableComponent;
 
-use fruitstudios\linkit\models\Link;
+use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\base\LinkInterface;
 
 abstract class LinkType extends SavableComponent implements LinkTypeInterface
 {
@@ -18,13 +18,29 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return array_pop($classNameParts);
     }
 
-    public static function defaultValue(): string
+    public static function settingsTemplatePath(): string
     {
-        return '';
+        return 'link-it/types/settings/_default';
     }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'link-it/types/input/_default';
+    }
+
+    // Static
+    // =========================================================================
+
+    public $value;
 
     // Public Methods
     // =========================================================================
+
+
+    public function __construct($value = null)
+    {
+        $this->value = $value;
+    }
 
     public function defaultSelectionLabel(): string
     {
@@ -41,20 +57,37 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
         return $this->defaultLabel();
     }
 
+    public function getSelectionLabel()
+    {
+        return $this->defaultSelectionLabel();
+    }
+
     public function getSettingsHtml()
     {
-        return null;
+       return Craft::$app->getView()->renderTemplate(
+            static::inputTemplatePath(),
+            [
+                'type' => $this,
+            ]
+        );
     }
 
-    public function getInputHtml($name)
+    public function getInputHtml($name, LinkInterface $link = null)
     {
-        return null;
+        return Craft::$app->getView()->renderTemplate(
+            static::inputTemplatePath(),
+            [
+                'name' => $name,
+                'type' => $this,
+                'link' => $link,
+            ]
+        );
     }
 
-    // public function getLink(): Link
-    public function getLink()
+    public function getLink($value): LinkInterface
     {
-        return null;
-        // return new Link();
+        $link = new Link();
+        $link->setAttributes($value, false);
+        return $link;
     }
 }

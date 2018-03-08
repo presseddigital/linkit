@@ -1,24 +1,22 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
+use fruitstudios\linkit\base\LinkInterface;
+use fruitstudios\linkit\models\Link;
 
 class Email extends LinkType
 {
     // Private
     // =========================================================================
 
-    private $_settingsHtmlPath = 'link-it/types/settings/_default';
-    private $_inputHtmlPath = 'link-it/types/input/_default';
-
     // Public
     // =========================================================================
 
-    public $typeLabel;
-
+    public $customLabel;
 
     // Static
     // =========================================================================
@@ -38,41 +36,25 @@ class Email extends LinkType
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
     }
 
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         return $rules;
     }
 
-    public function getSettingsHtml()
+    public function getLink($value): LinkInterface
     {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_settingsHtmlPath,
-            [
-                'type' => $this,
-            ]
-        );
+        $link = new Link();
+        $link->setAttributes($value, false);
+        return $link;
     }
 
-    public function getInputHtml($name)
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $this->getLink(),
-            ]
-        );
-    }
-
-    public function getLink()
-    {
-        return null;
-        // return new Link();
-    }
 }

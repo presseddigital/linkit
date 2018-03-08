@@ -1,16 +1,14 @@
 {% import "_includes/forms" as forms %}
 
+{% set element = (link.element ?? false) ? [link.element] : [] %}
+
 {{ forms.elementSelect({
-    id: name ~ '-value',
-    name: name ~ '[value]',
+    id: name ~ type.type|id ~ '-value',
+    name: name ~ '[values]['~ type.type ~']',
     elementType: type.getElementType(),
-    selectionLabel: type.selectionLabel ?? type.defaultSelectionLabel(),
-    criteria: {
-        enabledForSite: null,
-        status: null,
-        siteId: 1,
-    },
+    selectionLabel: type.selectionLabel,
     sources: type.sources == '*' ? null : type.sources,
     limit: 1,
-    elements: link.value ?? [],
+    elements: element,
 }) }}
+

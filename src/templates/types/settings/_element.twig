@@ -16,9 +16,9 @@
 {{ forms.textField({
     label: "Selection Label"|t('link-it'),
     instructions: "Enter the text you want to appear on the {type} selection input."|t('link-it', { type: type.defaultLabel()|lower }),
-    id: type.type|id~'-selectionLabel',
-    name: 'typesSettings['~type.type~'][selectionLabel]',
-    value: type.selectionLabel,
+    id: type.type|id~'-customSelectionLabel',
+    name: 'typesSettings['~type.type~'][customSelectionLabel]',
+    value: type.customSelectionLabel,
     placeholder: type.defaultSelectionLabel,
-    errors: type.getErrors('selectionLabel')
+    errors: type.getErrors('customSelectionLabel')
 }) }}

@@ -1,10 +1,12 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
+use fruitstudios\linkit\base\LinkInterface;
+use fruitstudios\linkit\models\UserLink;
 
 use craft\elements\User as CraftUser;
 
@@ -15,27 +17,47 @@ class User extends LinkType
     // =========================================================================
 
     private $_elementType = CraftUser::class;
-    private $_settingsHtmlPath = 'link-it/types/settings/_user';
-    private $_inputHtmlPath = 'link-it/types/input/_element';
 
     // Public
     // =========================================================================
 
-    // public $value;
-    public $typeLabel;
+    public $customLabel;
     public $sources = '*';
-    public $selectionLabel;
+    public $customSelectionLabel;
     public $userPath;
 
     // Static
     // =========================================================================
+
+    public static function settingsTemplatePath(): string
+    {
+        return 'link-it/types/settings/_user';
+    }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'link-it/types/input/_element';
+    }
 
     // Public Methods
     // =========================================================================
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
+    }
+
+    public function getSelectionLabel()
+    {
+        if($this->customSelectionLabel != '')
+        {
+            return $this->customSelectionLabel;
+        }
+        return static::defaultSelectionLabel();
     }
 
     public function getElementType()
@@ -46,38 +68,17 @@ class User extends LinkType
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         $rules[] = ['selectionLabel', 'string'];
         $rules[] = ['userPath', 'string'];
         return $rules;
     }
 
-    public function getSettingsHtml()
+    public function getLink($value): LinkInterface
     {
-       return Craft::$app->getView()->renderTemplate(
-            $this->_settingsHtmlPath,
-            [
-                'type' => $this,
-            ]
-        );
-    }
-
-    public function getInputHtml($name)
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $this->getLink(),
-            ]
-        );
-    }
-
-    public function getLink()
-    {
-        return null;
-        // return new Link();
+        $link = new UserLink();
+        $link->setAttributes($value, false);
+        return $link;
     }
 
     // Protected Methods

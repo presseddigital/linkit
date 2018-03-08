@@ -1,7 +1,5 @@
 {% import "_includes/forms" as forms %}
 
-{% set currentType = 'fruitstudios\\linkit\\models\\Url' %}
-
 <div class="linkit">
 
 	{% if field.types|length > 1 %}
@@ -11,7 +9,7 @@
 	        name: name ~ '[type]',
 	        fieldClass: 'linkit--type',
 	        options: field.enabledlinkTypesAsOptions,
-	        value: currentType,
+	        value: link.type ?? '',
 	        errors: field.getErrors('type') ?? null,
 	        toggle: true,
 	    }) }}
@@ -20,22 +18,12 @@
 
 	{% for linkType in field.enabledlinkTypes %}
 
-	    {% set isSelected = linkType.type == currentType %}
+	    {% set isCurrentType = linkType.type == link.type %}
 
-	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not isSelected ? 'hidden' }}">
+	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not isCurrentType ? 'hidden' }}">
 
-			{% namespace linkType.type %}
-	    		{{ linkType.getInputHtml(name)|raw }}
-		    {% endnamespace %}
-
-			{#
-				TODO: Need to understand this before i start using
-				Feel like it may be rather useful
-
-		       	{% namespace 'types['~type~']' %}
-		            {{ _field.getSettingsHtml()|raw }}
-		        {% endnamespace %}
-		    #}
+			{% set currentLink = isCurrentType ? link : null %}
+	    	{{ linkType.getInputHtml(name, currentLink)|raw }}
 
 	    </div>
 
@@ -43,7 +31,7 @@
 
 	{% if field.allowCustomText or field.allowTarget %}
 
-		<div id="{{ id }}-any" class="linkit--settings {{ currentType == '' ? 'hidden' }}">
+		<div id="{{ id }}-any" class="linkit--settings {{ link.type == '' ? 'hidden' }}">
 
 			{% if field.allowCustomText %}
 
@@ -52,7 +40,7 @@
 					name: name~'[customText]',
 					fieldClass: 'linkit--customText',
 					placeholder: field.defaultText ? field.defaultText : 'Link Text'|t('link-it'),
-					value: value.customText ?? ''
+					value: link.customText ?? ''
 				}) }}
 
 			{% endif %}
@@ -65,7 +53,7 @@
 					fieldClass: 'linkit--target',
 					value: true,
 					label: 'Open link in new window?'|t('link-it'),
-					checked: value.target ?? null
+					checked: link.target ?? null
 				}) }}
 
 			{% endif %}

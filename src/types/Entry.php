@@ -1,38 +1,62 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace fruitstudios\linkit\types;
 
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\LinkType;
+use fruitstudios\linkit\base\LinkInterface;
+use fruitstudios\linkit\models\ElementLink;
 
-use craft\elements\Category as CraftCategory;
+use craft\elements\Entry as CraftEntry;
+use craft\base\ElementInterface;
 
-class Category extends LinkType
+class Entry extends LinkType
 {
     // Private
     // =========================================================================
 
-    private $_elementType = CraftCategory::class;
-    private $_settingsHtmlPath = 'link-it/types/settings/_element';
-    private $_inputHtmlPath = 'link-it/types/input/_element';
+    private $_elementType = CraftEntry::class;
 
     // Public
     // =========================================================================
 
-    public $typeLabel;
+    public $customLabel;
     public $sources = '*';
-    public $selectionLabel;
+    public $customSelectionLabel;
 
     // Static
     // =========================================================================
+
+    public static function settingsTemplatePath(): string
+    {
+        return 'link-it/types/settings/_element';
+    }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'link-it/types/input/_element';
+    }
 
     // Public Methods
     // =========================================================================
 
     public function getLabel()
     {
-        return $this->typeLabel ?? self::defaultLabel();
+        if($this->customLabel != '')
+        {
+            return $this->customLabel;
+        }
+        return static::defaultLabel();
+    }
+
+    public function getSelectionLabel()
+    {
+        if($this->customSelectionLabel != '')
+        {
+            return $this->customSelectionLabel;
+        }
+        return static::defaultSelectionLabel();
     }
 
     public function getElementType()
@@ -43,38 +67,16 @@ class Category extends LinkType
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['typeLabel', 'string'];
+        $rules[] = ['customLabel', 'string'];
         $rules[] = ['selectionLabel', 'string'];
         return $rules;
     }
 
-
-    public function getSettingsHtml()
+    public function getLink($value): LinkInterface
     {
-       return Craft::$app->getView()->renderTemplate(
-            $this->_settingsHtmlPath,
-            [
-                'type' => $this,
-            ]
-        );
-    }
-
-    public function getInputHtml($name)
-    {
-        return Craft::$app->getView()->renderTemplate(
-            $this->_inputHtmlPath,
-            [
-                'name' => $name,
-                'type' => $this,
-                'link' => $this->getLink(),
-            ]
-        );
-    }
-
-    public function getLink()
-    {
-        return null;
-        // return new Link();
+        $link = new ElementLink();
+        $link->setAttributes($value, false);
+        return $link;
     }
 
     // Protected Methods
@@ -89,4 +91,5 @@ class Category extends LinkType
     {
         return LinkIt::$plugin->service->getSourceOptions($this->_elementType);
     }
+
 }

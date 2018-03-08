@@ -5,15 +5,17 @@ use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use fruitstudios\linkit\services\LinkItService;
+use fruitstudios\linkit\base\LinkType;
 use fruitstudios\linkit\models\Link;
+use fruitstudios\linkit\models\ElementLink;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Db;
+use craft\helpers\Json as JsonHelper;
+use craft\helpers\Db as DbHelper;
 use yii\db\Schema;
-use craft\helpers\Json;
-
+use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
 
 
@@ -101,38 +103,32 @@ class LinkItField extends Field
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if ($value instanceof Link)
+        if($value instanceof Link)
         {
             return $value;
         }
 
-        // $value needs
-        // - type
-        // - value (link or id etc)
-        // - any other settings
+        $value = !is_array($value) ? JsonHelper::decodeIfJson($value) : $value;
 
-        // Get the linkType model
+        if(isset($value['type']))
+        {
+            if(isset($value['values']))
+            {
+                $postedValue = $value['values'][$value['type']] ?? '';
+                $value['value'] = is_array($postedValue) ? $postedValue[0] : $postedValue;
+                unset($value['values']);
+            }
 
-        // populate the linkType
+            $linkType = $this->_getLinkTypeModelByType($value['type']);
+            if($linkType)
+            {
+               return $linkType->getLink($value);
+            }
+        }
 
-        // Return the link model
-        return $value;
-       //return $linkType->getLink() ?? $value;
+        return new Link();
     }
 
-    /**
-     * Modifies an element query.
-     *
-     * This method will be called whenever elements are being searched for that may have this field assigned to them.
-     *
-     * If the method returns `false`, the query will be stopped before it ever gets a chance to execute.
-     *
-     * @param ElementQueryInterface $query The element query
-     * @param mixed                 $value The value that was set on this field’s corresponding [[ElementCriteriaModel]] param,
-     *                                     if any.
-     *
-     * @return null|false `false` in the event that the method is sure that no elements are going to be found.
-     */
     public function serializeValue($value, ElementInterface $element = null)
     {
         return parent::serializeValue($value, $element);
@@ -350,7 +346,7 @@ class LinkItField extends Field
         $namespacedId = Craft::$app->getView()->namespaceInputId($id);
 
         // Javascript
-        $jsVariables = Json::encode([
+        $jsVariables = JsonHelper::encode([
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
@@ -364,7 +360,7 @@ class LinkItField extends Field
                 'namespacedId' => $namespacedId,
                 'name' => $this->handle,
                 'field' => $this,
-                'link' => false ?? $value,
+                'link' => $value,
             ]
         );
     }
@@ -374,7 +370,14 @@ class LinkItField extends Field
         if(is_null($this->_availableLinkTypes))
         {
             $linkTypes = LinkIt::$plugin->service->getAvailableLinkTypes();
-            $this->_availableLinkTypes = $this->_populateLinkTypeModels($linkTypes);
+            if($linkTypes)
+            {
+                foreach ($linkTypes as $linkType)
+                {
+                   $this->_availableLinkTypes[] = $this->_populateLinkTypeModel($linkType);
+                }
+            }
+
         }
         return $this->_availableLinkTypes;
     }
@@ -388,11 +391,12 @@ class LinkItField extends Field
             {
                 foreach ($this->types as $type)
                 {
-                    $this->_enabledLinkTypes[] = Craft::createObject([
-                      'class' => $type,
-                    ]);
+                    $linkType = $this->_getLinkTypeModelByType($type);
+                    if($linkType)
+                    {
+                        $this->_enabledLinkTypes[] = $linkType;
+                    }
                 }
-                $this->_enabledLinkTypes = $this->_populateLinkTypeModels($this->_enabledLinkTypes);
             }
         }
         return $this->_enabledLinkTypes;
@@ -423,16 +427,26 @@ class LinkItField extends Field
     // Private Methods
     // =========================================================================
 
-    private function _populateLinkTypeModels($linkTypes)
+    private function _getLinkTypeModelByType(string $type, bool $populateSettings = true)
     {
-        $populatedLinkTypeModels = [];
-        foreach ($linkTypes as $linkType)
-        {
-            $attributes = $this->typesSettings[$linkType->type] ?? [];
-            $linkType->setAttributes($attributes, false); // TODO: Check should i use safeonly true here??
-            $populatedLinkTypeModels[] = $linkType;
+        try {
+            $linkType = Craft::createObject($type);
+            if($populateSettings)
+            {
+                $linkType = $this->_populateLinkTypeModel($linkType);
+            }
+            return $linkType;
+        } catch(ErrorException $exception) {
+            $error = $exception->getMessage();
+            return false;
         }
-        return $populatedLinkTypeModels;
+    }
+
+    private function _populateLinkTypeModel(LinkType $linkType)
+    {
+        $attributes = $this->typesSettings[$linkType->type] ?? [];
+        $linkType->setAttributes($attributes, false);
+        return $linkType;
     }
 
 }
