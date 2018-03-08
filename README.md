@@ -1,4 +1,4 @@
-# Link It plugin for Craft CMS 3.x
+# LinkIt plugin for Craft CMS 3.x
 
 One link field to rule them all...
 
@@ -20,24 +20,24 @@ To install the plugin, follow these instructions.
 
         composer require /link-it
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Link It.
+3. In the Control Panel, go to Settings → Plugins and click the “Install” button for LinkIt.
 
-## Link It Overview
-
--Insert text here-
-
-## Configuring Link It
+## LinkIt Overview
 
 -Insert text here-
 
-## Using Link It
+## Configuring LinkIt
 
 -Insert text here-
 
-## Link It Roadmap
+## Using LinkIt
+
+-Insert text here-
+
+## LinkIt Roadmap
 
 Some things to do, and ideas for potential features:
 
 * Release it
 
-Brought to you by [Fruit Studios](https://fruitstudios.co.uk)
+Brought to you by [FRUIT](https://fruitstudios.co.uk)
