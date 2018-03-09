@@ -41,7 +41,7 @@
 	},
 	"extra": {
 		"name": "Link It",
-		"handle": "link-it",
+		"handle": "linkit",
 		"schemaVersion": "1.0.0",
 		"changelogUrl":
 			"https://raw.githubusercontent.com/fruitstudios/linkit/CHANGELOG.md",

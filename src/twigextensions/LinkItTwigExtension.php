@@ -1,6 +1,6 @@
 <?php
 /**
- * Link It plugin for Craft CMS 3.x
+ * LinkIt plugin for Craft CMS 3.x
  *
  * One link field to rule them all...
  *

@@ -39,7 +39,7 @@
 					id: name~'CustomText',
 					name: name~'[customText]',
 					fieldClass: 'linkit--customText',
-					placeholder: field.defaultText ? field.defaultText : 'Link Text'|t('link-it'),
+					placeholder: field.defaultText ? field.defaultText : 'Link Text'|t('linkit'),
 					value: link.customText ?? ''
 				}) }}
 
@@ -52,7 +52,7 @@
 					name: name~'[target]',
 					fieldClass: 'linkit--target',
 					value: true,
-					label: 'Open link in new window?'|t('link-it'),
+					label: 'Open link in new window?'|t('linkit'),
 					checked: link.target ?? null
 				}) }}
 

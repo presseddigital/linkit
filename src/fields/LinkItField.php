@@ -65,7 +65,7 @@ class LinkItField extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('link-it', 'LinkIt');
+        return Craft::t('linkit', 'LinkIt');
     }
 
     // Public Methods
@@ -74,7 +74,7 @@ class LinkItField extends Field
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = [['types'], ArrayValidator::class, 'min' => 1, 'tooFew' => Craft::t('link-it', 'You must select at least one link type.'), 'skipOnEmpty' => false];
+        $rules[] = [['types'], ArrayValidator::class, 'min' => 1, 'tooFew' => Craft::t('linkit', 'You must select at least one link type.'), 'skipOnEmpty' => false];
         return $rules;
     }
 
@@ -232,7 +232,7 @@ class LinkItField extends Field
 
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
-            'link-it/fields/_settings',
+            'linkit/fields/_settings',
             [
                 'field' => $this,
             ]
@@ -354,7 +354,7 @@ class LinkItField extends Field
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
-            'link-it/fields/_input',
+            'linkit/fields/_input',
             [
                 'id' => $id,
                 'namespacedId' => $namespacedId,
@@ -407,7 +407,7 @@ class LinkItField extends Field
         $enabledLinkTypes = $this->getEnabledLinkTypes();
         $options = [
             [
-                'label' => Craft::t('link-it', 'Select link type...'),
+                'label' => Craft::t('linkit', 'Select link type...'),
                 'value' => '',
             ],
         ];

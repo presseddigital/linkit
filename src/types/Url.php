@@ -23,7 +23,7 @@ class Url extends LinkType
 
     public static function defaultLabel(): string
     {
-        return Craft::t('link-it', 'URL');
+        return Craft::t('linkit', 'URL');
     }
 
     // Public Methods

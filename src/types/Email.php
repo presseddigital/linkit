@@ -23,12 +23,12 @@ class Email extends LinkType
 
     public static function defaultLabel(): string
     {
-        return Craft::t('link-it', 'Email Address');
+        return Craft::t('linkit', 'Email Address');
     }
 
     public static function defaultValue(): string
     {
-        return Craft::t('link-it', 'email@domain.co.uk');
+        return Craft::t('linkit', 'email@domain.co.uk');
     }
 
     // Public Methods

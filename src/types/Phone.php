@@ -24,7 +24,7 @@ class Phone extends LinkType
 
     public static function defaultLabel(): string
     {
-        return Craft::t('link-it', 'Phone Number');
+        return Craft::t('linkit', 'Phone Number');
     }
 
     // Public Methods

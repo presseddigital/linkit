@@ -3,8 +3,8 @@
 <div class="linkit--fieldSettings">
 
 	{{ forms.field({
-		label: "Link Types"|t('link-it'),
-		instructions: "Select and configure the link types you like to make available"|t('link-it'),
+		label: "Link Types"|t('linkit'),
+		instructions: "Select and configure the link types you like to make available"|t('linkit'),
 		errors: field.getErrors('enabledLinkTypes'),
 	}) }}
 
@@ -33,21 +33,21 @@
 	<hr>
 
 	{{ forms.textField({
-		label: "Default Link Text"|t('link-it'),
-		instructions: "Set a default text value for this link, can be overridden if custom link text option is selected."|t('link-it'),
+		label: "Default Link Text"|t('linkit'),
+		instructions: "Set a default text value for this link, can be overridden if custom link text option is selected."|t('linkit'),
 		name: 'defaultText',
 		value: field.defaultText,
 		errors: field.getFirstError('defaultText'),
 	}) }}
 
 	{{ forms.checkboxField({
-		label: "Allow custom link text"|t('link-it'),
+		label: "Allow custom link text"|t('linkit'),
 		name: 'allowCustomText',
 		checked: field.allowCustomText
 	}) }}
 
 	{{ forms.checkboxField({
-		label: "Show option to open link in new window"|t('link-it'),
+		label: "Show option to open link in new window"|t('linkit'),
 		name: 'allowTarget',
 		checked: field.allowTarget
 	}) }}

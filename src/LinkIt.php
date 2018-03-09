@@ -51,7 +51,7 @@ class LinkIt extends Plugin
 
         // Log
         Craft::info(
-            Craft::t('link-it', '{name} plugin loaded', [
+            Craft::t('linkit', '{name} plugin loaded', [
                 'name' => $this->name
             ]),
             __METHOD__

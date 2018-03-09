@@ -20,12 +20,12 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
 
     public static function settingsTemplatePath(): string
     {
-        return 'link-it/types/settings/_default';
+        return 'linkit/types/settings/_default';
     }
 
     public static function inputTemplatePath(): string
     {
-        return 'link-it/types/input/_default';
+        return 'linkit/types/input/_default';
     }
 
     // Static
@@ -44,7 +44,7 @@ abstract class LinkType extends SavableComponent implements LinkTypeInterface
 
     public function defaultSelectionLabel(): string
     {
-        return Craft::t('link-it', 'Select') . ' ' . $this->defaultLabel();
+        return Craft::t('linkit', 'Select') . ' ' . $this->defaultLabel();
     }
 
     public function getType(): string

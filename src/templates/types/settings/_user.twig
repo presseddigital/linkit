@@ -1,13 +1,13 @@
 {% import "_includes/forms" as forms %}
 
-{% include 'link-it/types/settings/_element' %}
+{% include 'linkit/types/settings/_element' %}
 
 {{ forms.textField({
-    label: "User Path"|t('link-it'),
-    instructions: "Enter the path that you would like to use to link to each user. Note that the path can contain variables like {username} or {id}."|t('link-it', { type: type.defaultLabel()|lower }),
+    label: "User Path"|t('linkit'),
+    instructions: "Enter the path that you would like to use to link to each user. Note that the path can contain variables like {username} or {id}."|t('linkit', { type: type.defaultLabel()|lower }),
     id: type.type|id~'-userPath',
     name: 'typesSettings['~type.type~'][userPath]',
     value: type.userPath,
-    placeholder: "members/{username}"|t('link-it'),
+    placeholder: "members/{username}"|t('linkit'),
     errors: type.getErrors('userPath')
 }) }}

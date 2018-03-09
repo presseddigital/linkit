@@ -31,12 +31,12 @@ class User extends LinkType
 
     public static function settingsTemplatePath(): string
     {
-        return 'link-it/types/settings/_user';
+        return 'linkit/types/settings/_user';
     }
 
     public static function inputTemplatePath(): string
     {
-        return 'link-it/types/input/_element';
+        return 'linkit/types/input/_element';
     }
 
     // Public Methods
