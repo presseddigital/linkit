@@ -39,30 +39,30 @@ class Entry extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getUrl(): string
-    {
-        if(!$this->getEntries())
-        {
-            return '';
-        }
-        return $this->getEntries()->getUrl() ?? '';
-    }
+    // public function getUrl(): string
+    // {
+    //     if(!$this->getEntries())
+    //     {
+    //         return '';
+    //     }
+    //     return $this->getEntries()->getUrl() ?? '';
+    // }
 
-    public function getText(): string
-    {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getEntries()->title ?? $this->getUrl() ?? '';
-    }
+    // public function getText(): string
+    // {
+    //     if($this->customText != '')
+    //     {
+    //         return $this->customText;
+    //     }
+    //     return $this->getEntries()->title ?? $this->getUrl() ?? '';
+    // }
 
-    public function getEntries()
-    {
-        if(is_null($this->_entry))
-        {
-            $this->_entry = Craft::$app->getEntries()->getEntryById((int) $this->value);
-        }
-        return $this->_entry;
-    }
+    // public function getEntries()
+    // {
+    //     if(is_null($this->_entry))
+    //     {
+    //         $this->_entry = Craft::$app->getEntries()->getEntryById((int) $this->value);
+    //     }
+    //     return $this->_entry;
+    // }
 }

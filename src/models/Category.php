@@ -39,30 +39,30 @@ class Category extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getUrl(): string
-    {
-        if(!$this->getCategories())
-        {
-            return '';
-        }
-        return $this->getCategories()->getUrl() ?? '';
-    }
+    // public function getUrl(): string
+    // {
+    //     if(!$this->getCategories())
+    //     {
+    //         return '';
+    //     }
+    //     return $this->getCategories()->getUrl() ?? '';
+    // }
 
-    public function getText(): string
-    {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getCategories()->title ?? $this->getUrl() ?? '';
-    }
+    // public function getText(): string
+    // {
+    //     if($this->customText != '')
+    //     {
+    //         return $this->customText;
+    //     }
+    //     return $this->getCategories()->title ?? $this->getUrl() ?? '';
+    // }
 
-    public function getCategories()
-    {
-        if(is_null($this->_category))
-        {
-            $this->_category = Craft::$app->getCategories()->getCategoryById((int) $this->value);
-        }
-        return $this->_category;
-    }
+    // public function getCategories()
+    // {
+    //     if(is_null($this->_category))
+    //     {
+    //         $this->_category = Craft::$app->getCategories()->getCategoryById((int) $this->value);
+    //     }
+    //     return $this->_category;
+    // }
 }

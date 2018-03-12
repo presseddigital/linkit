@@ -1,6 +1,8 @@
 <?php
 namespace fruitstudios\linkit\base;
 
+use fruitstudios\linkit\LinkIt;
+
 use Craft;
 use craft\base\Element;
 
