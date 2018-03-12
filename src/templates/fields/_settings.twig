@@ -10,21 +10,23 @@
 
 	{% for linkType in field.availableLinkTypes %}
 
-		{% set isEnabled = linkType.type in field.types %}
-		{% set hasSettings = linkType.settings|length %}
+		{% set name = 'types['~linkType.type~']' %}
+		{% set isEnabled = field.types[linkType.type].enabled ?? false %}
 
 		{{ forms.checkboxField({
 			id: linkType.type|id,
-			name: 'types[]',
+			name: name~'[enabled]',
 			label: linkType.defaultLabel(),
-			value: linkType.type,
-			toggle: hasSettings ? '#' ~ linkType.type|id ~ '-settings' : null,
+			value: true,
+			toggle: linkType.hasSettings ? '#' ~ linkType.type|id ~ '-settings' : null,
 			checked: isEnabled,
 		}) }}
 
-		{% if hasSettings %}
+		{% if linkType.hasSettings %}
 			<div id="{{ linkType.type|id }}-settings" class="{{ not isEnabled ? 'hidden' }}">
-				{{ linkType.getSettingsHtml()|raw }}
+				{% namespace name %}
+					{{ linkType.getSettingsHtml()|raw }}
+				{% endnamespace %}
 			</div>
 		{% endif %}
 

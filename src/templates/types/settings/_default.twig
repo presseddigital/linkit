@@ -4,7 +4,7 @@
     label: "Label"|t('linkit'),
     instructions: "Enter the text you want to appear in the LinkIt dropdown."|t('linkit'),
     id: type.type|id~'-customLabel',
-    name: 'typesSettings['~type.type~'][customLabel]',
+    name: 'customLabel',
     value: type.customLabel ?? '',
     placeholder: type.defaultLabel,
     errors: type.getErrors('customLabel')

@@ -1,0 +1,68 @@
+<?php
+namespace fruitstudios\linkit\models;
+
+use Craft;
+
+use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\base\ElementLink;
+
+use craft\elements\Asset as CraftAsset;
+
+class Asset extends ElementLink
+{
+    // Private
+    // =========================================================================
+
+    private $_asset;
+
+    // Public
+    // =========================================================================
+
+    // Static
+    // =========================================================================
+
+    public static function elementType()
+    {
+        return CraftAsset::class;
+    }
+
+    public static function settingsTemplatePath(): string
+    {
+        return 'linkit/types/settings/_element';
+    }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'linkit/types/input/_element';
+    }
+
+    // Public Methods
+    // =========================================================================
+
+    public function getUrl(): string
+    {
+        if(!$this->getAssets())
+        {
+            return '';
+        }
+        return $this->getAssets()->getUrl() ?? '';
+    }
+
+    public function getText(): string
+    {
+        if($this->customText != '')
+        {
+            return $this->customText;
+        }
+        return $this->getAssets()->title ?? $this->getUrl() ?? '';
+    }
+
+    public function getAssets()
+    {
+        if(is_null($this->_asset))
+        {
+            $this->_asset = Craft::$app->getAssets()->getAssetById((int) $this->value);
+        }
+        return $this->_asset;
+    }
+}

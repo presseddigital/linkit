@@ -1,44 +1,19 @@
 <?php
-/**
- * LinkIt plugin for Craft CMS 3.x
- *
- * One link field to rule them all...
- *
- * @link      https://fruitstudios.co.uk
- * @copyright Copyright (c) 2017 Fruit Studios
- */
-
 namespace fruitstudios\linkit\services;
 
 use Craft;
 use craft\base\Component;
 
 use fruitstudios\linkit\LinkIt;
-use fruitstudios\linkit\types\LinkTypeModel;
-use fruitstudios\linkit\types\Phone;
-use fruitstudios\linkit\types\Url;
-use fruitstudios\linkit\types\Email;
-use fruitstudios\linkit\types\Asset;
-use fruitstudios\linkit\types\Entry;
-use fruitstudios\linkit\types\Category;
-use fruitstudios\linkit\types\User;
+use fruitstudios\linkit\models\Phone;
+use fruitstudios\linkit\models\Url;
+use fruitstudios\linkit\models\Email;
+use fruitstudios\linkit\models\Asset;
+use fruitstudios\linkit\models\Entry;
+use fruitstudios\linkit\models\Category;
+use fruitstudios\linkit\models\User;
 // use fruitstudios\linkit\types\Product;
 
-
-
-/**
- * LinkItService Service
- *
- * All of your plugin’s business logic should go in services, including saving data,
- * retrieving data, etc. They provide APIs that your controllers, template variables,
- * and other plugins can interact with.
- *
- * https://craftcms.com/docs/plugins/services
- *
- * @author    Fruit Studios
- * @package   LinkIt
- * @since     1.0.0
- */
 class LinkItService extends Component
 {
     // Public Methods

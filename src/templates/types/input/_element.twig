@@ -5,7 +5,7 @@
 {{ forms.elementSelect({
     id: name ~ type.type|id ~ '-value',
     name: name ~ '[values]['~ type.type ~']',
-    elementType: type.getElementType(),
+    elementType: type.elementType(),
     selectionLabel: type.selectionLabel,
     sources: type.sources == '*' ? null : type.sources,
     limit: 1,

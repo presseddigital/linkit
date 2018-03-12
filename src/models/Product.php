@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\linkit\types;
+namespace fruitstudios\linkit\models;
 
 use Craft;
 
@@ -40,7 +40,7 @@ class Product extends LinkType
     // Public Methods
     // =========================================================================
 
-    public function getLabel()
+    public function getLabel(): string
     {
         if($this->customLabel != '')
         {
@@ -49,7 +49,7 @@ class Product extends LinkType
         return static::defaultLabel();
     }
 
-    public function getSelectionLabel()
+    public function getSelectionLabel(): string
     {
         if($this->customSelectionLabel != '')
         {
@@ -69,13 +69,6 @@ class Product extends LinkType
         $rules[] = ['customLabel', 'string'];
         $rules[] = ['selectionLabel', 'string'];
         return $rules;
-    }
-
-    public function getLink($value): LinkInterface
-    {
-        $link = new ElementLink();
-        $link->setAttributes($value, false);
-        return $link;
     }
 
     // Protected Methods

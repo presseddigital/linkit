@@ -18,7 +18,7 @@
 
 	{% for linkType in field.enabledlinkTypes %}
 
-	    {% set isCurrentType = linkType.type == link.type %}
+	    {% set isCurrentType = link and linkType.type == link.type %}
 
 	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not isCurrentType ? 'hidden' }}">
 

@@ -6,7 +6,7 @@
     label: "User Path"|t('linkit'),
     instructions: "Enter the path that you would like to use to link to each user. Note that the path can contain variables like {username} or {id}."|t('linkit', { type: type.defaultLabel()|lower }),
     id: type.type|id~'-userPath',
-    name: 'typesSettings['~type.type~'][userPath]',
+    name: 'userPath',
     value: type.userPath,
     placeholder: "members/{username}"|t('linkit'),
     errors: type.getErrors('userPath')

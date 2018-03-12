@@ -16,7 +16,6 @@ class LinkItHelper
         {
         	$attributesString .= ' '.$attribute.'="'.$value.'"';
         }
-
         return '<a href="'.$url.'"'.$attributesString.'>'.$text.'</a>';
     }
 
