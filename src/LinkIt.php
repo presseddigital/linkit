@@ -49,6 +49,11 @@ class LinkIt extends Plugin
             }
         });
 
+        // Register linkit link types
+        // Event::on(LinkIt::className(), LinkIt::EVENT_REGISTER_LINKIT_LINK_TYPES, function (RegisterComponentTypesEvent $event) {
+        //     $event->types[] = Facebook::class;
+        // });
+
         // Log
         Craft::info(
             Craft::t('linkit', '{name} plugin loaded', [

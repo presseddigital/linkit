@@ -18,6 +18,13 @@ use craft\validators\ArrayValidator;
 
 class LinkItField extends Field
 {
+    // Constants
+    // =========================================================================
+
+    /**
+     * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
+     */
+    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkItLinkTypes';
 
     // Private Properties
     // =========================================================================

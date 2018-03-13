@@ -42,6 +42,41 @@ class LinkItService extends Component
         return $linkTypes;
     }
 
+    // Thrid Party Field Types
+    //
+    // public function getAllFieldTypes(): array
+    // {
+    //     $fieldTypes = [
+    //         AssetsField::class,
+    //         CategoriesField::class,
+    //         CheckboxesField::class,
+    //         ColorField::class,
+    //         DateField::class,
+    //         DropdownField::class,
+    //         EmailField::class,
+    //         EntriesField::class,
+    //         LightswitchField::class,
+    //         MatrixField::class,
+    //         MultiSelectField::class,
+    //         NumberField::class,
+    //         PlainTextField::class,
+    //         RadioButtonsField::class,
+    //         TableField::class,
+    //         TagsField::class,
+    //         UrlField::class,
+    //         UsersField::class,
+    //     ];
+
+    //     $event = new RegisterComponentTypesEvent([
+    //         'types' => $fieldTypes
+    //     ]);
+    //     $this->trigger(self::EVENT_REGISTER_FIELD_TYPES, $event);
+
+    //     return $event->types;
+    // }
+
+
+
     public function getSourceOptions($elementType): array
     {
         $sources = Craft::$app->getElementIndexes()->getSources($elementType, 'modal');
