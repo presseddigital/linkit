@@ -2,63 +2,76 @@
 
 <div class="linkit">
 
-	{% if field.types|length > 1 %}
+	{% if field.enabledLinkTypes|length %}
 
-	    {{ forms.selectField({
-	        id: id ~ '-type',
-	        name: name ~ '[type]',
-	        fieldClass: 'linkit--type',
-	        options: field.enabledlinkTypesAsOptions,
-	        value: link.type ?? '',
-	        errors: field.getErrors('type') ?? null,
-	        toggle: true,
-	    }) }}
+		{% set singleLinkType = field.enabledLinkTypes|length == 1 %}
 
-	{% endif %}
+		<div class="flex">
 
-	{% for linkType in field.enabledlinkTypes %}
+			{% if not singleLinkType %}
+		        <div>
+		        	{{ forms.selectField({
+		        	    id: id ~ '-type',
+		        	    name: name ~ '[type]',
+		        	    fieldClass: 'linkit--type',
+		        	    options: field.enabledlinkTypesAsOptions,
+		        	    value: currentLink.type ?? '',
+		        	    errors: field.getErrors('type') ?? null,
+		        	    toggle: true,
+		        	}) }}
+		        </div>
+		    {% endif %}
 
-	    {% set isCurrentType = link and linkType.type == link.type %}
+	        <div class="flex-grow">
+	        	{% for linkType in field.enabledlinkTypes %}
 
-	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not isCurrentType ? 'hidden' }}">
+	        	    {% set isCurrentType = currentLink and currentLink.type == linkType.type %}
 
-			{% set currentLink = isCurrentType ? link : null %}
-	    	{{ linkType.getInputHtml(name, currentLink)|raw }}
+	        	    <div id="{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not singleLinkType and not isCurrentType ? 'hidden' }}">
+	        	    	{{ linkType.getInputHtml(name, (isCurrentType ? currentLink : null))|raw }}
+	        	    </div>
+
+	        	{% endfor %}
+	        </div>
 
 	    </div>
 
-	{% endfor %}
+		{% if field.allowCustomText or field.allowTarget %}
 
-	{% if field.allowCustomText or field.allowTarget %}
+			<div id="{{ id }}-any" class="flex linkit--settings {{ not singleLinkType and (not currentLink or currentLink.type == '') ? 'hidden' }}">
 
-		<div id="{{ id }}-any" class="linkit--settings {{ link.type == '' ? 'hidden' }}">
+				{% if field.allowCustomText %}
+					<div class="flex-grow">
+						{{ forms.textField({
+							id: name~'CustomText',
+							name: name~'[customText]',
+							fieldClass: 'linkit--customText',
+							placeholder: field.defaultText ? field.defaultText : 'Link Text'|t('linkit'),
+							value: currentLink.customText ?? ''
+						}) }}
+					</div>
+				{% endif %}
 
-			{% if field.allowCustomText %}
+				{% if field.allowTarget %}
+					<div>
+						{{ forms.checkboxField({
+							id: name~'Target',
+							name: name~'[target]',
+							fieldClass: 'linkit--target',
+							value: true,
+							label: 'Open link in new window?'|t('linkit'),
+							checked: currentLink.target ?? null
+						}) }}
+					</div>
+				{% endif %}
 
-				{{ forms.textField({
-					id: name~'CustomText',
-					name: name~'[customText]',
-					fieldClass: 'linkit--customText',
-					placeholder: field.defaultText ? field.defaultText : 'Link Text'|t('linkit'),
-					value: link.customText ?? ''
-				}) }}
+			</div>
 
-			{% endif %}
+		{% endif %}
 
-			{% if field.allowTarget %}
+	{% else %}
 
-				{{ forms.checkboxField({
-					id: name~'Target',
-					name: name~'[target]',
-					fieldClass: 'linkit--target',
-					value: true,
-					label: 'Open link in new window?'|t('linkit'),
-					checked: link.target ?? null
-				}) }}
-
-			{% endif %}
-
-		</div>
+		<p class="warning">{{ 'There are no enabled link types for this field'|t('linkit') }}
 
 	{% endif %}
 

@@ -2,6 +2,15 @@
 
 <div class="linkit--fieldSettings">
 
+	{{ forms.textField({
+		label: "Select Link Text"|t('linkit'),
+		instructions: "Set the first item to be displayed in the link select."|t('linkit'),
+		name: 'selectLinkText',
+		placeholder: field.selectLinkText,
+		placeholder: field.defaultSelectLinkText,
+		errors: field.getErrors('selectLinkText'),
+	}) }}
+
 	{{ forms.field({
 		label: "Link Types"|t('linkit'),
 		instructions: "Select and configure the link types you like to make available"|t('linkit'),
@@ -39,7 +48,7 @@
 		instructions: "Set a default text value for this link, can be overridden if custom link text option is selected."|t('linkit'),
 		name: 'defaultText',
 		value: field.defaultText,
-		errors: field.getFirstError('defaultText'),
+		errors: field.getErrors('defaultText'),
 	}) }}
 
 	{{ forms.checkboxField({

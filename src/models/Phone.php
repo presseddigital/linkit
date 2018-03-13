@@ -22,6 +22,11 @@ class Phone extends Link
         return Craft::t('linkit', 'Phone Number');
     }
 
+    public static function defaultPlaceholder(): string
+    {
+        return Craft::t('linkit', '+44(0)0000 000000');
+    }
+
     // Public Methods
     // =========================================================================
 

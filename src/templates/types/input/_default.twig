@@ -1,10 +1,10 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.textField({
-    id: name ~ type.type|id ~ '-value',
-    name: name ~ '[values]['~ type.type ~']',
-    value: link.value ?? '',
-    placeholder: 'PLACEHOLDER ??',
+    id: name ~ link.type|id ~ '-value',
+    name: name ~ '[values]['~ link.type ~']',
+    value: currentLink.value ?? '',
+    placeholder: link.defaultPlaceholder,
     errors: link.getErrors('value') ?? null
 }) }}
 

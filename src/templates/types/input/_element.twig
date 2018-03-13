@@ -1,14 +1,12 @@
 {% import "_includes/forms" as forms %}
 
-{% set element = (link.element ?? false) ? [link.element] : [] %}
-
 {{ forms.elementSelect({
-    id: name ~ type.type|id ~ '-value',
-    name: name ~ '[values]['~ type.type ~']',
-    elementType: type.elementType(),
-    selectionLabel: type.selectionLabel,
-    sources: type.sources == '*' ? null : type.sources,
+    id: name ~ link.type|id ~ '-value',
+    name: name ~ '[values]['~ link.type ~']',
+    elementType: link.elementType(),
+    selectionLabel: link.selectionLabel,
+    sources: link.sources == '*' ? null : link.sources,
     limit: 1,
-    elements: element,
+    elements: (currentLink.element ?? false) ? [currentLink.element] : [],
 }) }}
 

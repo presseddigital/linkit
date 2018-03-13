@@ -22,6 +22,11 @@ class Url extends Link
         return Craft::t('linkit', 'URL');
     }
 
+    public static function defaultPlaceholder(): string
+    {
+        return Craft::t('linkit', 'https://domain.com');
+    }
+
     // Public Methods
     // =========================================================================
 

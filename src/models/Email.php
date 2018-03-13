@@ -22,6 +22,11 @@ class Email extends Link
         return Craft::t('linkit', 'Email Address');
     }
 
+    public static function defaultPlaceholder(): string
+    {
+        return Craft::t('linkit', 'email@domain.com');
+    }
+
     // Public Methods
     // =========================================================================
 

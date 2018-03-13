@@ -21,6 +21,16 @@ abstract class ElementLink extends Link
         return Element::class;
     }
 
+    public static function settingsTemplatePath(): string
+    {
+        return 'linkit/types/settings/_element';
+    }
+
+    public static function inputTemplatePath(): string
+    {
+        return 'linkit/types/input/_element';
+    }
+
     // Public
     // =========================================================================
 
@@ -37,6 +47,10 @@ abstract class ElementLink extends Link
 
     public function getSelectionLabel(): string
     {
+        if(!is_null($this->customSelectionLabel) && $this->customSelectionLabel != '')
+        {
+            return $this->customSelectionLabel;
+        }
         return $this->defaultSelectionLabel();
     }
 

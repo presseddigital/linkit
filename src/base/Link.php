@@ -18,6 +18,11 @@ abstract class Link extends SavableComponent implements LinkInterface
         return array_pop($classNameParts);
     }
 
+    public static function defaultPlaceholder(): string
+    {
+        return static::defaultLabel();
+    }
+
     public static function settingsTemplatePath(): string
     {
         return 'linkit/types/settings/_default';
@@ -85,13 +90,14 @@ abstract class Link extends SavableComponent implements LinkInterface
         );
     }
 
-    public function getInputHtml($name): string
+    public function getInputHtml(string $name, Link $currentLink = null): string
     {
         return Craft::$app->getView()->renderTemplate(
             static::inputTemplatePath(),
             [
                 'name' => $name,
-                'type' => $this,
+                'link' => $this,
+                'currentLink' => $currentLink,
             ]
         );
     }

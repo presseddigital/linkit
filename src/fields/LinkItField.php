@@ -28,6 +28,7 @@ class LinkItField extends Field
     //  Properties
     // =========================================================================
 
+    public $selectLinkText = '';
     public $types;
     public $allowCustomText;
     public $defaultText;
@@ -43,6 +44,11 @@ class LinkItField extends Field
     public static function displayName(): string
     {
         return Craft::t('linkit', 'Link It');
+    }
+
+    public static function defaultSelectLinkText(): string
+    {
+        return Craft::t('linkit', 'Select link type...');
     }
 
     // Public Methods
@@ -67,14 +73,19 @@ class LinkItField extends Field
 
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if($value instanceof LinkType)
+        if($value instanceof Link)
         {
             return $value;
         }
 
-        // $value = !is_array($value) ? JsonHelper::decodeIfJson($value) : $value;
+        if(is_string($value))
+        {
+            $value = JsonHelper::decodeIfJson($value);
+        }
 
-        if(isset($value['type']))
+        $link = null;
+
+        if(isset($value['type']) && $value['type'] != '')
         {
             if(isset($value['values']))
             {
@@ -83,20 +94,27 @@ class LinkItField extends Field
                 unset($value['values']);
             }
 
-            $linkType = $this->_getLinkTypeModelByType($value['type']);
-            if($linkType)
-            {
-               return $linkType->getLink($value);
-            }
+            $link = $this->_getLinkTypeModelByType($value['type']);
+            $link->setAttributes($value, false); // TODO: Get Rules added for these and remove false
         }
 
-        return false;
+        return $link;
     }
 
     public function serializeValue($value, ElementInterface $element = null)
     {
-        // Craft::dd($value);
-        return parent::serializeValue($value, $element);
+        $serialized = [];
+        if($value instanceof Link)
+        {
+            $serialized = [
+                'type' => $value->type,
+                'value' => $value->value,
+                'customText' => $value->customText,
+                'target' => $value->target,
+            ];
+        }
+
+        return parent::serializeValue($serialized, $element);
     }
 
     public function getSettingsHtml()
@@ -135,10 +153,9 @@ class LinkItField extends Field
             'linkit/fields/_input',
             [
                 'id' => $id,
-                'namespacedId' => $namespacedId,
                 'name' => $this->handle,
                 'field' => $this,
-                'link' => $value,
+                'currentLink' => $value,
             ]
         );
     }
@@ -168,10 +185,12 @@ class LinkItField extends Field
             {
                 foreach ($this->types as $type => $settings)
                 {
-                    $linkType = $this->_getLinkTypeModelByType($type);
-                    if($linkType)
-                    {
-                        $this->_enabledLinkTypes[] = $linkType;
+                    if($settings['enabled'] ?? false) {
+                        $linkType = $this->_getLinkTypeModelByType($type);
+                        if($linkType)
+                        {
+                            $this->_enabledLinkTypes[] = $linkType;
+                        }
                     }
                 }
             }
@@ -181,19 +200,23 @@ class LinkItField extends Field
 
     public function getEnabledLinkTypesAsOptions()
     {
+        $options = [];
         $enabledLinkTypes = $this->getEnabledLinkTypes();
-        $options = [
-            [
-                'label' => Craft::t('linkit', 'Select link type...'),
-                'value' => '',
-            ],
-        ];
-
-        foreach ($enabledLinkTypes as $enabledLinkType) {
-            $options[] = [
-                'label' => $enabledLinkType->label,
-                'value' => $enabledLinkType->type,
+        if($enabledLinkTypes)
+        {
+            $options = [
+                [
+                    'label' => $this->selectLinkText != '' ? $this->selectLinkText : static::defaultSelectLinkText(),
+                    'value' => '',
+                ],
             ];
+
+            foreach ($enabledLinkTypes as $enabledLinkType) {
+                $options[] = [
+                    'label' => $enabledLinkType->label,
+                    'value' => $enabledLinkType->type,
+                ];
+            }
         }
 
         return $options;
@@ -222,7 +245,7 @@ class LinkItField extends Field
         // Get Type Settings
         $attributes = $this->types[$linkType->type] ?? [];
         $linkType->setAttributes($attributes, false);
-        $linkType->field = $this;
+        $linkType->field = $this->getSettings();
         return $linkType;
     }
 

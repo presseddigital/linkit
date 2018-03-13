@@ -26,43 +26,24 @@ class Asset extends ElementLink
         return CraftAsset::class;
     }
 
-    public static function settingsTemplatePath(): string
-    {
-        return 'linkit/types/settings/_element';
-    }
-
-    public static function inputTemplatePath(): string
-    {
-        return 'linkit/types/input/_element';
-    }
-
     // Public Methods
     // =========================================================================
 
-    // public function getUrl(): string
-    // {
-    //     if(!$this->getAssets())
-    //     {
-    //         return '';
-    //     }
-    //     return $this->getAssets()->getUrl() ?? '';
-    // }
+    public function getText(): string
+    {
+        if($this->customText != '')
+        {
+            return $this->customText;
+        }
+        return $this->getAsset()->filename ?? $this->getUrl() ?? '';
+    }
 
-    // public function getText(): string
-    // {
-    //     if($this->customText != '')
-    //     {
-    //         return $this->customText;
-    //     }
-    //     return $this->getAssets()->title ?? $this->getUrl() ?? '';
-    // }
-
-    // public function getAssets()
-    // {
-    //     if(is_null($this->_asset))
-    //     {
-    //         $this->_asset = Craft::$app->getAssets()->getAssetById((int) $this->value);
-    //     }
-    //     return $this->_asset;
-    // }
+    public function getAsset()
+    {
+        if(is_null($this->_asset))
+        {
+            $this->_asset = Craft::$app->getAssets()->getAssetById((int) $this->value);
+        }
+        return $this->_asset;
+    }
 }
