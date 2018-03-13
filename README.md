@@ -2,11 +2,11 @@
 
 One link field to rule them all...
 
-![Screenshot](resources/img/plugin-logo.png)
-
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+DO NOT INSTALL - This is a PRE-RELEASE
+
+This plugin requires Craft CMS 3.0.0-beta or later.
 
 ## Installation
 

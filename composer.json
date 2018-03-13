@@ -1,5 +1,5 @@
 {
-	"name": "shornuk/linkit",
+	"name": "fruitstudios/linkit",
 	"description": "One link field to rule them all.",
 	"type": "craft-plugin",
 	"version": "1.0.0",
@@ -14,9 +14,9 @@
 	],
 	"support": {
 		"email": "hi@fruitstudios.co.uk",
-		"issues": "https://github.com/shornuk/linkit/issues/issues?state=open",
-		"source": "https://github.com/shornuk/linkit/issues",
-		"docs": "https://github.com/shornuk/linkit/issues"
+		"issues": "https://github.com/fruitstudios/craft-linkit/issues/issues?state=open",
+		"source": "https://github.com/fruitstudios/craft-linkit/issues",
+		"docs": "https://github.com/fruitstudios/craft-linkit/issues"
 	},
 	"license": "MIT",
 	"authors": [
@@ -46,7 +46,7 @@
 		"hasCpSettings": false,
         "hasCpSection": false,
 		"changelogUrl":
-			"https://raw.githubusercontent.com/fruitstudios/linkit/CHANGELOG.md",
+			"https://raw.githubusercontent.com/fruitstudios/craft-linkit/CHANGELOG.md",
 		"components": {
 			"linkItService": "fruitstudios\\linkit\\services\\LinkItService"
 		},
