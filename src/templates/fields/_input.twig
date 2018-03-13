@@ -4,11 +4,18 @@
 
 	{% if field.enabledLinkTypes|length %}
 
-		{% set singleLinkType = field.enabledLinkTypes|length == 1 %}
+		{% set singleLinkType = field.enabledLinkTypes|length == 1 ? field.enabledLinkTypes[0] : false %}
 
 		<div class="flex">
 
-			{% if not singleLinkType %}
+			{% if singleLinkType %}
+				{{ forms.hidden({
+	        	    id: id ~ '-type',
+	        	    name: name ~ '[type]',
+	        	    fieldClass: 'linkit--type',
+	        	    value: singleLinkType.type,
+	        	}) }}
+			{% else %}
 		        <div>
 		        	{{ forms.selectField({
 		        	    id: id ~ '-type',
