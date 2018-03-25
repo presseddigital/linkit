@@ -43,13 +43,18 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public $customLabel;
 
-    public $field;
+    public $fieldSettings;
     public $value;
     public $customText;
     public $target;
 
     // Public Methods
     // =========================================================================
+
+    public function __toString(): string
+    {
+        return $this->getLink(false);
+    }
 
     public function defaultSelectionLabel(): string
     {
@@ -119,7 +124,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         {
             return $this->customText;
         }
-        return $this->field->defaultText ?? $this->getUrl() ?? '';
+        return $this->fieldSettings['defaultText'] ?? $this->getUrl() ?? '';
     }
 
     public function rules()

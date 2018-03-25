@@ -31,6 +31,8 @@ class LinkItField extends Field
 
     private $_availableLinkTypes;
     private $_enabledLinkTypes;
+    public $_columnType = Schema::TYPE_TEXT;
+
 
     //  Properties
     // =========================================================================
@@ -40,7 +42,6 @@ class LinkItField extends Field
     public $allowCustomText;
     public $defaultText;
     public $allowTarget;
-    public $columnType = Schema::TYPE_TEXT;
 
     // Static Methods
     // =========================================================================
@@ -68,9 +69,14 @@ class LinkItField extends Field
         return $rules;
     }
 
+    public function isValueEmpty($value, ElementInterface $element = null): bool
+    {
+        return empty($value->value ?? '');
+    }
+
     public function getContentColumnType(): string
     {
-        return Schema::TYPE_TEXT;
+        return $this->_columnType;
     }
 
     public static function hasContentColumn(): bool
@@ -252,54 +258,7 @@ class LinkItField extends Field
         // Get Type Settings
         $attributes = $this->types[$linkType->type] ?? [];
         $linkType->setAttributes($attributes, false);
-        $linkType->field = $this->getSettings();
+        $linkType->fieldSettings = $this->getSettings();
         return $linkType;
     }
-
-
-
-    //// Custom Validation Example
-
-    //     /**
-    //  * @inheritdoc
-    //  */
-    // public function rules()
-    // {
-    //     return [
-    //         [['id', 'structureId', 'maxLevels'], 'number', 'integerOnly' => true],
-    //         [['handle'], HandleValidator::class, 'reservedWords' => ['id', 'dateCreated', 'dateUpdated', 'uid', 'title']],
-    //         [['type'], 'in', 'range' => ['single', 'channel', 'structure']],
-    //         [['name', 'handle'], UniqueValidator::class, 'targetClass' => SectionRecord::class],
-    //         [['name', 'handle', 'type', 'siteSettings'], 'required'],
-    //         [['name', 'handle'], 'string', 'max' => 255],
-    //         [['siteSettings'], 'validateSiteSettings'],
-    //     ];
-    // }
-
-    // /**
-    //  * Validates the site settings.
-    //  */
-    // public function validateSiteSettings()
-    // {
-    //     // If this is an existing section, make sure they aren't moving it to a
-    //     // completely different set of sites in one fell swoop
-    //     if ($this->id) {
-    //         $currentSiteIds = (new Query())
-    //             ->select(['siteId'])
-    //             ->from(['{{%sections_sites}}'])
-    //             ->where(['sectionId' => $this->id])
-    //             ->column();
-
-    //         if (empty(array_intersect($currentSiteIds, array_keys($this->getSiteSettings())))) {
-    //             $this->addError('siteSettings', Craft::t('app', 'At least one currently-enabled site must remain enabled.'));
-    //         }
-    //     }
-
-    //     foreach ($this->getSiteSettings() as $i => $siteSettings) {
-    //         if (!$siteSettings->validate()) {
-    //             $this->addModelErrors($siteSettings, "siteSettings[{$i}]");
-    //         }
-    //     }
-    // }
-
 }
