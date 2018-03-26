@@ -164,6 +164,7 @@ class LinkItField extends Field
                 'name' => $this->handle,
                 'field' => $this,
                 'currentLink' => $value,
+                'element' => $element,
             ]
         );
     }
@@ -181,32 +182,12 @@ class LinkItField extends Field
 
     public function validateLinkValue(ElementInterface $element)
     {
-        $value = $element->getFieldValue($this->handle);
-
-        if (!$value->validate())
+        $fieldValue = $element->getFieldValue($this->handle);
+        if(!$fieldValue->validate())
         {
-            $element->addModelErrors($value);
+            $element->addModelErrors($fieldValue, 'linkit');
         }
-
-
-
-        // /** @var Element $element */
-        // /** @var MatrixBlockQuery $value */
-        // $value = $element->getFieldValue($this->handle);
-
-        // foreach ($value->all() as $i => $block) {
-        //     /** @var MatrixBlock $block */
-        //     if ($element->getScenario() === Element::SCENARIO_LIVE) {
-        //         $block->setScenario(Element::SCENARIO_LIVE);
-        //     }
-
-        //     if (!$block->validate()) {
-        //         $element->addModelErrors($block, "{$this->handle}[{$i}]");
-        //     }
-        // }
     }
-
-
 
     public function getSearchKeywords($value, ElementInterface $element): string
     {
@@ -225,19 +206,6 @@ class LinkItField extends Field
         }
         return '';
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function getAvailableLinkTypes()
     {

@@ -38,7 +38,7 @@ class Email extends Link
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['value', 'email'];
+        $rules[] = ['value', 'email', 'message' => 'Custom message about email address goes here :)'];
         return $rules;
     }
 

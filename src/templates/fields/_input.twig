@@ -76,6 +76,9 @@
 
 		{% endif %}
 
+		{% set errors = element.getErrors('linkit.value') ?? [] %}
+		{{ forms.errorList(errors) }}
+
 	{% else %}
 
 		<p class="warning">{{ 'There are no enabled link types for this field'|t('linkit') }}
