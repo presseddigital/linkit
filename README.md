@@ -1,3 +1,6 @@
+![LinkIt](resources/img/linkit.svg)
+
+
 # LinkIt plugin for Craft CMS 3.x
 
 One link field to rule them all...
