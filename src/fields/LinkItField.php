@@ -69,11 +69,6 @@ class LinkItField extends Field
         return $rules;
     }
 
-    public function isValueEmpty($value, ElementInterface $element = null): bool
-    {
-        return empty($value->value ?? '');
-    }
-
     public function getContentColumnType(): string
     {
         return $this->_columnType;
@@ -172,6 +167,77 @@ class LinkItField extends Field
             ]
         );
     }
+
+
+    public function getElementValidationRules(): array
+    {
+        return ['validateLinkValue'];
+    }
+
+    public function isValueEmpty($value, ElementInterface $element): bool
+    {
+        return empty($value->value ?? '');
+    }
+
+    public function validateLinkValue(ElementInterface $element)
+    {
+        $value = $element->getFieldValue($this->handle);
+
+        if (!$value->validate())
+        {
+            $element->addModelErrors($value);
+        }
+
+
+
+        // /** @var Element $element */
+        // /** @var MatrixBlockQuery $value */
+        // $value = $element->getFieldValue($this->handle);
+
+        // foreach ($value->all() as $i => $block) {
+        //     /** @var MatrixBlock $block */
+        //     if ($element->getScenario() === Element::SCENARIO_LIVE) {
+        //         $block->setScenario(Element::SCENARIO_LIVE);
+        //     }
+
+        //     if (!$block->validate()) {
+        //         $element->addModelErrors($block, "{$this->handle}[{$i}]");
+        //     }
+        // }
+    }
+
+
+
+    public function getSearchKeywords($value, ElementInterface $element): string
+    {
+        if($value)
+        {
+            return $value->getText();
+        }
+        return '';
+    }
+
+    public function getTableAttributeHtml($value, ElementInterface $element): string
+    {
+        if($value)
+        {
+            return $value->getLink(false) ?? '';
+        }
+        return '';
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getAvailableLinkTypes()
     {

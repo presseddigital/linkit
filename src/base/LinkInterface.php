@@ -37,4 +37,5 @@ interface LinkInterface extends SavableComponentInterface
     public function getUrl(): string;
     public function getText(): string;
 
+    public function validateLinkValue(): bool;
 }

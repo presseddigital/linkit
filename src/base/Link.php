@@ -134,6 +134,10 @@ abstract class Link extends SavableComponent implements LinkInterface
         return $rules;
     }
 
+    public function validateLinkValue(): bool
+    {
+        return true;
+    }
 
     // Protected Methods
     // =========================================================================

@@ -24,7 +24,7 @@ class Email extends Link
 
     public static function defaultPlaceholder(): string
     {
-        return Craft::t('linkit', 'email@domain.com');
+        return Craft::t('linkit', 'name@domain.com');
     }
 
     // Public Methods
@@ -34,5 +34,26 @@ class Email extends Link
     {
         return (string) 'mailto:'.$this->value;
     }
+
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = ['value', 'email'];
+        return $rules;
+    }
+
+    // public function validateLinkValue(): bool
+    // {
+    //     return true;
+    // }
+
+
+
+    // public function customLinkValue(): bool
+    // {
+
+
+    //     return true;
+    // }
 
 }
