@@ -33,7 +33,7 @@ class User extends ElementLink
         return 'linkit/types/settings/_user';
     }
 
-    public static function defualtUserPath(): string
+    public static function defaultUserPath(): string
     {
         return 'user/{id}';
     }
@@ -45,7 +45,7 @@ class User extends ElementLink
     {
         if($this->getUser())
         {
-            $userPath = static::defualtUserPath();
+            $userPath = static::defaultUserPath();
             if($this->userPath && $this->userPath != '')
             {
                 $userPath = $this->userPath;
