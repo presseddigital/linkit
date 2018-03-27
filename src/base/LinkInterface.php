@@ -11,6 +11,8 @@ interface LinkInterface extends SavableComponentInterface
     // Static
     // =========================================================================
 
+    public static function group(): string;
+    public static function groupTitle(): string;
     public static function defaultLabel(): string;
     public static function defaultPlaceholder(): string;
     public static function settingsTemplatePath(): string;

@@ -16,6 +16,11 @@ abstract class ElementLink extends Link
     // Static
     // =========================================================================
 
+    public static function group(): string
+    {
+        return Craft::t('linkit', 'Element');
+    }
+
     public static function elementType()
     {
         return Element::class;

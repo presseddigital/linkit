@@ -13,40 +13,50 @@
 	}) }} #}
 
 	{{ forms.field({
-		label: "Link Types"|t('linkit'),
-		instructions: "Select and configure the link types you would like to make available"|t('linkit'),
 		errors: field.getErrors('enabledLinkTypes'),
+		first: true
 	}) }}
 
-	{% for linkType in field.availableLinkTypes %}
+	{% set availableLinkFieldsByGroup = field.availableLinkTypes|group('groupTitle')  %}
 
-		{% set name = 'types['~linkType.type~']' %}
-		{% set isEnabled = field.types[linkType.type].enabled ?? false %}
+	{% for groupTitle, linksTypesInGroup in availableLinkFieldsByGroup %}
 
-		{{ forms.checkboxField({
-			id: linkType.type|id,
-			name: name~'[enabled]',
-			label: linkType.defaultLabel(),
-			value: true,
-			toggle: linkType.hasSettings ? '#' ~ linkType.type|id ~ '-settings' : null,
-			checked: isEnabled,
+		{{ forms.field({
+			label: groupTitle,
+			instructions: "Select and configure the {groupTitle} you would like to make available."|t('linkit', {groupTitle: groupTitle|lower}),
+			first: true
 		}) }}
 
-		{% if linkType.hasSettings %}
-			<div id="{{ linkType.type|id }}-settings" class="{{ not isEnabled ? 'hidden' }}">
-				{% namespace name %}
-					{{ linkType.getSettingsHtml()|raw }}
-				{% endnamespace %}
-			</div>
-		{% endif %}
+		{% for linkType in linksTypesInGroup %}
+
+			{% set name = 'types['~linkType.type~']' %}
+			{% set isEnabled = field.types[linkType.type].enabled ?? false %}
+
+			{{ forms.lightSwitchField({
+				id: linkType.type|id,
+				name: name~'[enabled]',
+				label: linkType.defaultLabel(),
+				toggle: linkType.hasSettings ? '#' ~ linkType.type|id ~ '-settings' : null,
+				on: isEnabled,
+			}) }}
+
+			{% if linkType.hasSettings %}
+				<div id="{{ linkType.type|id }}-settings" class="{{ not isEnabled ? 'hidden' }}">
+					{% namespace name %}
+						{{ linkType.getSettingsHtml()|raw }}
+					{% endnamespace %}
+				</div>
+			{% endif %}
+
+		{% endfor %}
+
+		<hr>
 
 	{% endfor %}
 
-	<hr>
-
 	{{ forms.textField({
 		label: "Default Link Text"|t('linkit'),
-		instructions: "Set a default text value for this link, can be overridden if custom link text option is selected."|t('linkit'),
+		instructions: "Set a default text value for this link, can be overridden if 'Allow custom link text' is selected."|t('linkit'),
 		name: 'defaultText',
 		value: field.defaultText,
 		errors: field.getErrors('defaultText'),

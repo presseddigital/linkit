@@ -16,6 +16,11 @@ class Twitter extends Link
     // Static
     // =========================================================================
 
+    public static function group(): string
+    {
+        return Craft::t('linkit', 'Social');
+    }
+
     public static function defaultLabel(): string
     {
         return Craft::t('linkit', 'Twitter');

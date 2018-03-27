@@ -12,6 +12,16 @@ abstract class Link extends SavableComponent implements LinkInterface
     // Static
     // =========================================================================
 
+    public static function group(): string
+    {
+        return Craft::t('linkit', 'Basic');
+    }
+
+    public static function groupTitle(): string
+    {
+        return static::group().' '.Craft::t('linkit', 'Links');
+    }
+
     public static function defaultLabel(): string
     {
         $classNameParts = explode('\\', static::class);
