@@ -3,7 +3,7 @@ namespace fruitstudios\linkit\models;
 
 use Craft;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\Link;
 
 class Twitter extends Link

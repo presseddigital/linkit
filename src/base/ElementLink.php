@@ -1,7 +1,7 @@
 <?php
 namespace fruitstudios\linkit\base;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 
 use Craft;
 use craft\base\Element;
@@ -93,7 +93,7 @@ abstract class ElementLink extends Link
 
     public function getSourceOptions(): array
     {
-        return LinkIt::$plugin->service->getSourceOptions($this->elementType());
+        return Linkit::$plugin->service->getSourceOptions($this->elementType());
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 namespace fruitstudios\linkit\base;
 
-use fruitstudios\linkit\helpers\LinkItHelper;
+use fruitstudios\linkit\helpers\LinkitHelper;
 
 use Craft;
 use craft\base\SavableComponent;
@@ -110,7 +110,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getLink($customAttributes = [], $raw = true)
     {
-        $html = LinkItHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
+        $html = LinkitHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
         return $raw ? TemplateHelper::raw($html) : $html;
     }
 

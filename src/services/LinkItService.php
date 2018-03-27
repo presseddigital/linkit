@@ -1,10 +1,9 @@
 <?php
 namespace fruitstudios\linkit\services;
 
-use Craft;
-use craft\base\Component;
+use fruitstudios\linkit\Linkit;
+use fruitstudios\linkit\events\RegisterLinkTypesEvent;
 
-use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\models\Phone;
 use fruitstudios\linkit\models\Url;
 use fruitstudios\linkit\models\Email;
@@ -18,8 +17,16 @@ use fruitstudios\linkit\models\Facebook;
 use fruitstudios\linkit\models\LinkedIn;
 use fruitstudios\linkit\models\Instagram;
 
-class LinkItService extends Component
+use Craft;
+use craft\base\Component;
+
+class LinkitService extends Component
 {
+    // Constants
+    // =========================================================================
+
+    const EVENT_REGISTER_LINKIT_FIELD_TYPES = 'registerLinkitFieldTypes';
+
     // Public Methods
     // =========================================================================
 
@@ -54,13 +61,13 @@ class LinkItService extends Component
 
         return $linkTypes;
 
-        // // Third Party
-        // $event = new RegisterComponentTypesEvent([
-        //     'types' => $fieldTypes
-        // ]);
-        // $this->trigger(self::EVENT_REGISTER_LINKIT_FIELD_TYPES, $event);
+        // Third Party
+        $event = new RegisterLinkTypesEvent([
+            'types' => $fieldTypes
+        ]);
+        $this->trigger(self::EVENT_REGISTER_LINKIT_FIELD_TYPES, $event);
 
-        // return $event->types;
+        return $event->types;
     }
 
     // Thrid Party Field Types

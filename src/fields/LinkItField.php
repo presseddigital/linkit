@@ -1,10 +1,10 @@
 <?php
 namespace fruitstudios\linkit\fields;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
-use fruitstudios\linkit\services\LinkItService;
+use fruitstudios\linkit\services\LinkitService;
 use fruitstudios\linkit\base\Link;
 
 use Craft;
@@ -16,7 +16,7 @@ use yii\db\Schema;
 use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
 
-class LinkItField extends Field
+class LinkitField extends Field
 {
     // Constants
     // =========================================================================
@@ -24,7 +24,7 @@ class LinkItField extends Field
     /**
      * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
      */
-    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkItLinkTypes';
+    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkitLinkTypes';
 
     // Private Properties
     // =========================================================================
@@ -51,7 +51,7 @@ class LinkItField extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('linkit', 'Link It');
+        return Craft::t('linkit', 'Linkit');
     }
 
     public static function defaultSelectLinkText(): string
@@ -154,7 +154,7 @@ class LinkItField extends Field
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
-        $view->registerJs('new Garnish.LinkItField('.$jsVariables.');');
+        $view->registerJs('new Garnish.LinkitField('.$jsVariables.');');
 
         // Render the input template
         return $view->renderTemplate(
@@ -210,7 +210,7 @@ class LinkItField extends Field
     {
         if(is_null($this->_availableLinkTypes))
         {
-            $linkTypes = LinkIt::$plugin->service->getAvailableLinkTypes();
+            $linkTypes = Linkit::$plugin->service->getAvailableLinkTypes();
             if($linkTypes)
             {
                 foreach ($linkTypes as $linkType)

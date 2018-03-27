@@ -1,8 +1,7 @@
-Garnish.LinkItField = Garnish.Base.extend({
-
+Garnish.LinkitField = Garnish.Base.extend({
 	defaults: {
 		id: null,
-		name: null,
+		name: null
 	},
 
 	id: null,
@@ -14,34 +13,28 @@ Garnish.LinkItField = Garnish.Base.extend({
 
 	$settingsInputs: null,
 
-	init: function(settings)
-	{
-        this.setSettings(settings, this.defaults);
+	init: function(settings) {
+		this.setSettings(settings, this.defaults);
 
-        this.id = settings.id || null;
-        this.name = settings.name ||null;
-        this.$field = $('#' + settings.id + '-field');
+		this.id = settings.id || null;
+		this.name = settings.name || null;
+		this.$field = $("#" + settings.id + "-field");
 
-        this.$typeSelect = this.$field.find('#' + settings.id + '-type');
+		this.$typeSelect = this.$field.find("#" + settings.id + "-type");
 		this.currentType = this.$typeSelect.val();
-		this.addListener(this.$typeSelect, 'change', 'onChangeType');
+		this.addListener(this.$typeSelect, "change", "onChangeType");
 
-        this.$settingsInputs = this.$field.find('.linkit--settings');
-
+		this.$settingsInputs = this.$field.find(".linkit--settings");
 	},
 
-	onChangeType: function(e)
-	{
+	onChangeType: function(e) {
 		var $select = $(e.currentTarget);
 
 		this.type = $select.val();
-		if(this.type === '')
-		{
-			this.$settingsInputs.addClass('hidden');
-		}
-		else
-		{
-			this.$settingsInputs.removeClass('hidden');
+		if (this.type === "") {
+			this.$settingsInputs.addClass("hidden");
+		} else {
+			this.$settingsInputs.removeClass("hidden");
 		}
 	}
 });

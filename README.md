@@ -1,6 +1,6 @@
 <p align="left"><a href="https://github.com/fruitstudios/craft-linkit" target="_blank"><img width="100" height="100" src="resources/img/linkit.svg" alt="Linkit"></a></p>
 
-# Link It plugin for Craft 3
+# Linkit plugin for Craft 3
 
 One link field to rule them all...
 This plugin adds a custom fieldtype which enables support for linking to email addresses, telephone numbers, URL's and Craft element types.
@@ -24,11 +24,11 @@ To install the plugin, follow these steps:
 
         composer require fruitstudios/linkit
 
-2.  In the Control Panel, go to Settings → Plugins and click the “Install” button for LinkIt.
+2.  In the Control Panel, go to Settings → Plugins and click the “Install” button for Linkit.
 
-## Configuring LinkIt
+## Configuring Linkit
 
-Once installed, create a new field and choose the LinkIt fieldtype. You'll then have the option of configuring what link type will be available to this field.
+Once installed, create a new field and choose the Linkit fieldtype. You'll then have the option of configuring what link type will be available to this field.
 
 The following link type are available:
 
@@ -60,7 +60,7 @@ You can also customise the dropdown labels that appear on the field.
 
 <p align="left"><img width="450px" src="resources/img/customise-labels.png" alt="Linkit"></a></p>
 
-## Using LinkIt
+## Using Linkit
 
 **Template Variables (Basic Use)**
 
@@ -84,7 +84,7 @@ Create a customised html link...
 
 **Template Variables (Advanced Use)**
 
-Each LinkIt field returns a LinkIt model with the following tags...
+Each Linkit field returns a Linkit model with the following tags...
 
     {{ entry.linkItField.url }} or {{ entry.linkItField.getUrl() }}
     {{ entry.linkItField.text }} or {{ entry.linkItField.getText() }}
@@ -114,6 +114,31 @@ If you have created a field called 'link' with a User link type like so...
 would output `<a href="/profile/USERNAME">Visit Profile</a>` which is the default user path that is created in the setting and the user would be available at...
 
     {{ entry.link.user }}
+
+## Custom Link Types
+
+You can easily create your own link types,
+
+Full documenation is coming soon, for now, take a look at the models folder. Each link type is a seperate model, just extend Link or ElementLink, depending on your needs, and everything will be set up for you.
+
+Hook up the requirements and register custom link types in your plugin (or modules) init()...
+
+    <?php
+    use fruitstudios\linkit\Linkit;
+    use fruitstudios\linkit\events\RegisterLinkTypesEvent;
+
+    ...
+
+    public function init()
+    {
+        parent::init();
+
+        Event::on(Linkit::className(), Linkit::EVENT_REGISTER_LINKIT_LINK_TYPES, function (RegisterLinkTypesEvent $event) {
+            $event->types[] = new CustomLinkType();
+        });
+    }
+
+If you think they are super useful and you agree we can look to add them to the core plugin for everyone to use.
 
 ## Roadmap
 
