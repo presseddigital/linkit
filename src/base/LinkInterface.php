@@ -20,6 +20,8 @@ interface LinkInterface extends SavableComponentInterface
     // Public Methods
     // =========================================================================
 
+    public function __toString(): string;
+
     public function defaultSelectionLabel(): string;
 
     public function getLabel(): string;
@@ -34,5 +36,4 @@ interface LinkInterface extends SavableComponentInterface
     public function getLink($raw = true);
     public function getUrl(): string;
     public function getText(): string;
-
 }

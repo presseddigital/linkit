@@ -19,7 +19,7 @@ class FieldSettingsAssetBundle extends AssetBundle
         ];
 
         $this->js = [
-            'js/LinkItFieldSettings.js',
+            'js/LinkitFieldSettings.js',
         ];
 
         $this->css = [

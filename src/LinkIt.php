@@ -1,8 +1,8 @@
 <?php
 namespace fruitstudios\linkit;
 
-use fruitstudios\linkit\fields\LinkItField;
-use fruitstudios\linkit\services\LinkItService;
+use fruitstudios\linkit\fields\LinkitField;
+use fruitstudios\linkit\services\LinkitService;
 
 use Craft;
 use craft\base\Plugin;
@@ -15,7 +15,7 @@ use craft\services\Plugins;
 use craft\services\Fields;
 
 
-class LinkIt extends Plugin
+class Linkit extends Plugin
 {
     // Static Properties
     // =========================================================================
@@ -31,30 +31,25 @@ class LinkIt extends Plugin
 
         self::$plugin = $this;
 
-        // Register Components (Services)
         $this->setComponents([
-            'service' => LinkItService::class,
+            'service' => LinkitService::class,
         ]);
 
-        // Register our fields
         Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
-            $event->types[] = LinkItField::class;
+            $event->types[] = LinkitField::class;
         });
 
-        // Do something after we're installed
         Event::on(Plugins::className(), Plugins::EVENT_AFTER_INSTALL_PLUGIN, function (PluginEvent $event) {
             if ($event->plugin === $this)
             {
-                // Just installed
+
             }
         });
 
-        // Register linkit link types
-        // Event::on(LinkIt::className(), LinkIt::EVENT_REGISTER_LINKIT_LINK_TYPES, function (RegisterComponentTypesEvent $event) {
-        //     $event->types[] = Facebook::class;
+        // Event::on(Linkit::className(), Linkit::EVENT_REGISTER_LINKIT_LINK_TYPES, function (RegisterLinkTypesEvent $event) {
+        //     $event->types[] = new SomeCustomClass();
         // });
 
-        // Log
         Craft::info(
             Craft::t('linkit', '{name} plugin loaded', [
                 'name' => $this->name

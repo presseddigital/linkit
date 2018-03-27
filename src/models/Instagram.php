@@ -6,19 +6,24 @@ use Craft;
 use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\Link;
 
-class Email extends Link
+class Instagram extends Link
 {
+    // Private
+    // =========================================================================
+
+    private $_match = '/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/i';
+
     // Static
     // =========================================================================
 
     public static function defaultLabel(): string
     {
-        return Craft::t('linkit', 'Email Address');
+        return Craft::t('linkit', 'Instagram');
     }
 
     public static function defaultPlaceholder(): string
     {
-        return Craft::t('linkit', 'support@craftcms.com');
+        return Craft::t('linkit', 'https://www.instagram.com/username');
     }
 
     // Public Methods
@@ -26,14 +31,18 @@ class Email extends Link
 
     public function getUrl(): string
     {
-        return (string) 'mailto:'.$this->value;
+        return (string) $this->value;
     }
 
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['value', 'email', 'message' => Craft::t('linkit', 'Please enter a valid email address.')];
+        $rules[] = [
+            ['value'],
+            'match',
+            'pattern' => $this->_match,
+            'message' => Craft::t('linkit', 'Please enter a valid Instagram link.')
+        ];
         return $rules;
     }
-
 }

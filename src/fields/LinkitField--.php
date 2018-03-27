@@ -1,10 +1,10 @@
 <?php
 namespace fruitstudios\linkit\fields;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
-use fruitstudios\linkit\services\LinkItService;
+use fruitstudios\linkit\services\LinkitService;
 use fruitstudios\linkit\base\Link;
 
 use Craft;
@@ -16,7 +16,7 @@ use yii\db\Schema;
 use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
 
-class LinkItField extends Field
+class LinkitField extends Field
 {
     // Constants
     // =========================================================================
@@ -24,13 +24,15 @@ class LinkItField extends Field
     /**
      * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
      */
-    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkItLinkTypes';
+    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkitLinkTypes';
 
     // Private Properties
     // =========================================================================
 
     private $_availableLinkTypes;
     private $_enabledLinkTypes;
+    private $_columnType = Schema::TYPE_TEXT;
+
 
     //  Properties
     // =========================================================================
@@ -40,7 +42,6 @@ class LinkItField extends Field
     public $allowCustomText;
     public $defaultText;
     public $allowTarget;
-    public $columnType = Schema::TYPE_TEXT;
 
     // Static Methods
     // =========================================================================
@@ -50,7 +51,7 @@ class LinkItField extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('linkit', 'Link It');
+        return Craft::t('linkit', 'Linkit');
     }
 
     public static function defaultSelectLinkText(): string
@@ -70,7 +71,7 @@ class LinkItField extends Field
 
     public function getContentColumnType(): string
     {
-        return Schema::TYPE_TEXT;
+        return $this->_columnType;
     }
 
     public static function hasContentColumn(): bool
@@ -153,7 +154,7 @@ class LinkItField extends Field
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
-        $view->registerJs('new Garnish.LinkItField('.$jsVariables.');');
+        $view->registerJs('new Garnish.LinkitField('.$jsVariables.');');
 
         // Render the input template
         return $view->renderTemplate(
@@ -162,16 +163,54 @@ class LinkItField extends Field
                 'id' => $id,
                 'name' => $this->handle,
                 'field' => $this,
+                'element' => $element,
                 'currentLink' => $value,
             ]
         );
+    }
+
+    public function getElementValidationRules(): array
+    {
+        return ['validateLinkValue'];
+    }
+
+    public function isValueEmpty($value, ElementInterface $element): bool
+    {
+        return empty($value->value ?? '');
+    }
+
+    public function validateLinkValue(ElementInterface $element)
+    {
+        $fieldValue = $element->getFieldValue($this->handle);
+        if(!$fieldValue->validate())
+        {
+            $element->addModelErrors($fieldValue, $this->handle);
+        }
+    }
+
+    public function getSearchKeywords($value, ElementInterface $element): string
+    {
+        if($value)
+        {
+            return $value->getText();
+        }
+        return '';
+    }
+
+    public function getTableAttributeHtml($value, ElementInterface $element): string
+    {
+        if($value)
+        {
+            return $value->getLink(false) ?? '';
+        }
+        return '';
     }
 
     public function getAvailableLinkTypes()
     {
         if(is_null($this->_availableLinkTypes))
         {
-            $linkTypes = LinkIt::$plugin->service->getAvailableLinkTypes();
+            $linkTypes = Linkit::$plugin->service->getAvailableLinkTypes();
             if($linkTypes)
             {
                 foreach ($linkTypes as $linkType)
@@ -252,8 +291,7 @@ class LinkItField extends Field
         // Get Type Settings
         $attributes = $this->types[$linkType->type] ?? [];
         $linkType->setAttributes($attributes, false);
-        $linkType->field = $this->getSettings();
+        $linkType->fieldSettings = $this->getSettings();
         return $linkType;
     }
-
 }
