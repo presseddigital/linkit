@@ -15,6 +15,9 @@ use craft\services\Plugins;
 use craft\services\Fields;
 
 
+use fruitstudios\linkit\models\Twitter;
+
+
 class Linkit extends Plugin
 {
     // Static Properties
@@ -45,10 +48,6 @@ class Linkit extends Plugin
 
             }
         });
-
-        // Event::on(Linkit::className(), Linkit::EVENT_REGISTER_LINKIT_LINK_TYPES, function (RegisterLinkTypesEvent $event) {
-        //     $event->types[] = new SomeCustomClass();
-        // });
 
         Craft::info(
             Craft::t('linkit', '{name} plugin loaded', [

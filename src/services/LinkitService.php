@@ -59,14 +59,13 @@ class LinkitService extends Component
         //     //$error = $exception->getMessage();
         // }
 
-        return $linkTypes;
+        // return $linkTypes;
 
         // Third Party
         $event = new RegisterLinkTypesEvent([
-            'types' => $fieldTypes
+            'types' => $linkTypes
         ]);
         $this->trigger(self::EVENT_REGISTER_LINKIT_FIELD_TYPES, $event);
-
         return $event->types;
     }
 
