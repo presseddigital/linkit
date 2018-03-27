@@ -38,11 +38,11 @@ The following link type are available:
 
 Each link type has additional option to allow further customisation. For example, the User link type allows you to set a default path...
 
-<p align="left"><img src="resources/img/user-settings.png" alt="Linkit"></a></p>
+<p align="left"><img width="450px" src="resources/img/user-settings.png" alt="Linkit"></a></p>
 
 You can also customise the dropdown labels that appear on the field. 
 
-<p align="left"><img src="resources/img/customise-labels.png" alt="Linkit"></a></p>
+<p align="left"><img width="450px" src="resources/img/customise-labels.png" alt="Linkit"></a></p>
 
 ## Using LinkIt
 
@@ -90,7 +90,7 @@ or via the specific element types...
 **Example Usage**
 
 If you have created a field called 'link' with a User link type like so...
-<p align="left"><img src="resources/img/member-select.png" alt="Linkit"></a></p>
+<p align="left"><img width="450px" src="resources/img/member-select.png" alt="Linkit"></a></p>
 
     {{ entry.link.user }}
     
