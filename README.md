@@ -124,8 +124,14 @@ Full documenation is coming soon, for now, take a look at the models folder. Eac
 Hook up the requirements and register custom link types in your plugin (or modules) init()...
 
     <?php
+
+    ...
+
     use fruitstudios\linkit\Linkit;
     use fruitstudios\linkit\events\RegisterLinkTypesEvent;
+    use fruitstudios\linkit\services\LinkitService;
+
+    use developer\plugin\models\CustomType;
 
     ...
 
@@ -133,9 +139,10 @@ Hook up the requirements and register custom link types in your plugin (or modul
     {
         parent::init();
 
-        Event::on(Linkit::className(), Linkit::EVENT_REGISTER_LINKIT_LINK_TYPES, function (RegisterLinkTypesEvent $event) {
-            $event->types[] = new CustomLinkType();
+        Event::on(Linkit::class, LinkitService::EVENT_REGISTER_LINKIT_FIELD_TYPES, function (RegisterLinkTypesEvent $event) {
+            $event->types[] = new CustomType();
         });
+
     }
 
 If you think they are super useful and you agree we can look to add them to the core plugin for everyone to use.
