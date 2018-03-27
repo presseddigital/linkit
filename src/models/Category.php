@@ -3,7 +3,7 @@ namespace fruitstudios\linkit\models;
 
 use Craft;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\ElementLink;
 
 use craft\elements\Category as CraftCategory;
@@ -14,9 +14,6 @@ class Category extends ElementLink
     // =========================================================================
 
     private $_category;
-
-    // Public
-    // =========================================================================
 
     // Static
     // =========================================================================

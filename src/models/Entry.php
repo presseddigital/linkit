@@ -3,7 +3,7 @@ namespace fruitstudios\linkit\models;
 
 use Craft;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\ElementLink;
 
 use craft\elements\Entry as CraftEntry;
@@ -14,9 +14,6 @@ class Entry extends ElementLink
     // =========================================================================
 
     private $_entry;
-
-    // Public
-    // =========================================================================
 
     // Static
     // =========================================================================

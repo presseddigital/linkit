@@ -4,7 +4,7 @@ namespace fruitstudios\linkit\helpers;
 
 use Craft;
 
-class LinkItHelper
+class LinkitHelper
 {
     // Public Methods
     // =========================================================================

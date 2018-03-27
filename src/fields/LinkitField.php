@@ -1,10 +1,10 @@
 <?php
 namespace fruitstudios\linkit\fields;
 
-use fruitstudios\linkit\LinkIt;
+use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
-use fruitstudios\linkit\services\LinkItService;
+use fruitstudios\linkit\services\LinkitService;
 use fruitstudios\linkit\base\Link;
 
 use Craft;
@@ -16,7 +16,7 @@ use yii\db\Schema;
 use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
 
-class LinkItField extends Field
+class LinkitField extends Field
 {
     // Constants
     // =========================================================================
@@ -24,14 +24,14 @@ class LinkItField extends Field
     /**
      * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
      */
-    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkItLinkTypes';
+    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkitLinkTypes';
 
     // Private Properties
     // =========================================================================
 
     private $_availableLinkTypes;
     private $_enabledLinkTypes;
-    public $_columnType = Schema::TYPE_TEXT;
+    private $_columnType = Schema::TYPE_TEXT;
 
 
     //  Properties
@@ -51,7 +51,7 @@ class LinkItField extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('linkit', 'Link It');
+        return Craft::t('linkit', 'Linkit');
     }
 
     public static function defaultSelectLinkText(): string
@@ -154,7 +154,7 @@ class LinkItField extends Field
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
-        $view->registerJs('new Garnish.LinkItField('.$jsVariables.');');
+        $view->registerJs('new Garnish.LinkitField('.$jsVariables.');');
 
         // Render the input template
         return $view->renderTemplate(
@@ -163,11 +163,11 @@ class LinkItField extends Field
                 'id' => $id,
                 'name' => $this->handle,
                 'field' => $this,
+                'element' => $element,
                 'currentLink' => $value,
             ]
         );
     }
-
 
     public function getElementValidationRules(): array
     {
@@ -181,32 +181,12 @@ class LinkItField extends Field
 
     public function validateLinkValue(ElementInterface $element)
     {
-        $value = $element->getFieldValue($this->handle);
-
-        if (!$value->validate())
+        $fieldValue = $element->getFieldValue($this->handle);
+        if(!$fieldValue->validate())
         {
-            $element->addModelErrors($value);
+            $element->addModelErrors($fieldValue, $this->handle);
         }
-
-
-
-        // /** @var Element $element */
-        // /** @var MatrixBlockQuery $value */
-        // $value = $element->getFieldValue($this->handle);
-
-        // foreach ($value->all() as $i => $block) {
-        //     /** @var MatrixBlock $block */
-        //     if ($element->getScenario() === Element::SCENARIO_LIVE) {
-        //         $block->setScenario(Element::SCENARIO_LIVE);
-        //     }
-
-        //     if (!$block->validate()) {
-        //         $element->addModelErrors($block, "{$this->handle}[{$i}]");
-        //     }
-        // }
     }
-
-
 
     public function getSearchKeywords($value, ElementInterface $element): string
     {
@@ -226,24 +206,11 @@ class LinkItField extends Field
         return '';
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function getAvailableLinkTypes()
     {
         if(is_null($this->_availableLinkTypes))
         {
-            $linkTypes = LinkIt::$plugin->service->getAvailableLinkTypes();
+            $linkTypes = Linkit::$plugin->service->getAvailableLinkTypes();
             if($linkTypes)
             {
                 foreach ($linkTypes as $linkType)

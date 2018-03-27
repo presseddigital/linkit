@@ -23,7 +23,6 @@
 		        	    fieldClass: 'linkit--type',
 		        	    options: field.enabledlinkTypesAsOptions,
 		        	    value: currentLink.type ?? '',
-		        	    errors: field.getErrors('type') ?? null,
 		        	    toggle: true,
 		        	}) }}
 		        </div>
@@ -75,6 +74,9 @@
 			</div>
 
 		{% endif %}
+
+		{% set errors = element.getErrors(field.handle~'.value') ?? [] %}
+		{{ forms.errorList(errors) }}
 
 	{% else %}
 
