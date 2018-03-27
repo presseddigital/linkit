@@ -2,7 +2,7 @@
 	"name": "fruitstudios/linkit",
 	"description": "One link field to rule them all.",
 	"type": "craft-plugin",
-	"version": "1.0.0-beta.6",
+	"version": "1.0.0",
 	"keywords": [
 		"craft",
 		"cms",
@@ -16,7 +16,7 @@
 		"email": "hi@fruitstudios.co.uk",
 		"issues":
 			"https://github.com/fruitstudios/craft-linkit/issues/issues?state=open",
-		"source": "https://github.com/fruitstudios/craft-linkit/issues",
+		"source": "https://github.com/fruitstudios/craft-linkit",
 		"docs": "https://github.com/fruitstudios/craft-linkit/README.md"
 	},
 	"license": "MIT",
@@ -43,7 +43,7 @@
 	"extra": {
 		"name": "Linkit",
 		"handle": "linkit",
-		"schemaVersion": "1.0.0-beta.5",
+		"schemaVersion": "1.0.0",
 		"hasCpSettings": false,
 		"hasCpSection": false,
 		"changelogUrl":
