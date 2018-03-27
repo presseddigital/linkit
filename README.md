@@ -149,6 +149,7 @@ If you think they are super useful and you agree we can look to add them to the 
 
 ## Roadmap
 
+*   [ ] Craft 2 migration script
 *   [ ] Add Product link type
 *   [ ] Enable third party field type registration
 *   [ ] Add docs for creating third party field types
