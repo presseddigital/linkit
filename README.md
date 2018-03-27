@@ -10,7 +10,7 @@ This plugin adds a custom fieldtype which enables support for linking to email a
 *   Link to Users and specify a profile url rule
 *   New social links
 *   Completely rewritten for Craft 3
-*   Easily extenable, create your own custom link types
+*   Easily extendable, create your own custom link types
 
 ### Requirements
 
@@ -30,7 +30,7 @@ To install the plugin, follow these steps:
 
 Once installed, create a new field and choose the Linkit fieldtype. You'll then have the option of configuring what link type will be available to this field.
 
-The following link type are available:
+The following link types are available:
 
 Basic
 
@@ -45,7 +45,7 @@ Social
 6.  Instagram
 7.  Linked In
 
-Element
+Elements
 
 8.  Entry
 9.  Category
@@ -153,5 +153,7 @@ If you think they are super useful and you agree we can look to add them to the 
 *   [ ] Enable third party field type registration
 *   [ ] Add docs for creating third party field types
 *   [ ] Restructure linkit field settings template (it's a bit busy we know!)
+
+Note: This plugin may become a paid add-on when the Craft Plugin store becomes available.
 
 Brought to you by [FRUIT](https://fruitstudios.co.uk)
