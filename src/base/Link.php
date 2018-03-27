@@ -53,7 +53,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function __toString(): string
     {
-        return $this->getLink(false);
+        return $this->getLink([], false);
     }
 
     public function defaultSelectionLabel(): string
@@ -68,7 +68,8 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getTypeHandle(): string
     {
-        return $this->type;
+        $typeParts = explode('\\', $this->type);
+        return strtolower(array_pop($typeParts));
     }
 
     public function getLabel(): string
@@ -107,9 +108,9 @@ abstract class Link extends SavableComponent implements LinkInterface
         );
     }
 
-    public function getLink($raw = true)
+    public function getLink($customAttributes = [], $raw = true)
     {
-        $html = LinkItHelper::getLinkHtml($this->getUrl(), $this->text, $this->getLinkAttributes());
+        $html = LinkItHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
         return $raw ? TemplateHelper::raw($html) : $html;
     }
 
@@ -142,7 +143,7 @@ abstract class Link extends SavableComponent implements LinkInterface
     // Protected Methods
     // =========================================================================
 
-    protected function getLinkAttributes(): array
+    protected function prepLinkAttributes($customAttributes = []): array
     {
         $attributes = [];
         if($this->target)
@@ -152,6 +153,6 @@ abstract class Link extends SavableComponent implements LinkInterface
             $attributes['target'] = '_blank';
             $attributes['rel'] = 'noopener noreferrer';
         }
-        return $attributes;
+        return array_merge($attributes, $customAttributes);;
     }
 }

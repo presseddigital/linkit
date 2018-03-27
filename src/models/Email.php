@@ -8,12 +8,6 @@ use fruitstudios\linkit\base\Link;
 
 class Email extends Link
 {
-    // Private
-    // =========================================================================
-
-    // Public
-    // =========================================================================
-
     // Static
     // =========================================================================
 
@@ -24,7 +18,7 @@ class Email extends Link
 
     public static function defaultPlaceholder(): string
     {
-        return Craft::t('linkit', 'name@domain.com');
+        return Craft::t('linkit', 'support@craftcms.com');
     }
 
     // Public Methods
@@ -38,22 +32,8 @@ class Email extends Link
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['value', 'email', 'message' => 'Custom message about email address goes here :)'];
+        $rules[] = ['value', 'email', 'message' => Craft::t('linkit', 'Please enter a valid email address.')];
         return $rules;
     }
-
-    // public function validateLinkValue(): bool
-    // {
-    //     return true;
-    // }
-
-
-
-    // public function customLinkValue(): bool
-    // {
-
-
-    //     return true;
-    // }
 
 }

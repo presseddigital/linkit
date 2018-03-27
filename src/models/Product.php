@@ -4,84 +4,44 @@ namespace fruitstudios\linkit\models;
 use Craft;
 
 use fruitstudios\linkit\LinkIt;
-use fruitstudios\linkit\base\LinkType;
-use fruitstudios\linkit\base\LinkInterface;
-use fruitstudios\linkit\models\ElementLink;
+use fruitstudios\linkit\base\ElementLink;
 
-use craft\elements\Product as CraftProduct;
+use craft\commerce\Plugin;
+use craft\commerce\elements\Product as CraftCommerceProduct;
 
-class Product extends LinkType
+class Product extends ElementLink
 {
     // Private
     // =========================================================================
 
-    private $_elementType = CraftProduct::class;
-
-    // Public
-    // =========================================================================
-
-    public $customLabel;
-    public $sources = '*';
-    public $customSelectionLabel;
+    private $_product;
 
     // Static
     // =========================================================================
 
-    public static function settingsTemplatePath(): string
+    public static function elementType()
     {
-        return 'linkit/types/settings/_element';
-    }
-
-    public static function inputTemplatePath(): string
-    {
-        return 'linkit/types/input/_element';
+        return CraftCommerceProduct::class;
     }
 
     // Public Methods
     // =========================================================================
 
-    public function getLabel(): string
+    public function getText(): string
     {
-        if($this->customLabel != '')
+        if($this->customText != '')
         {
-            return $this->customLabel;
+            return $this->customText;
         }
-        return static::defaultLabel();
+        return $this->getProduct()->title ?? $this->getUrl() ?? '';
     }
 
-    public function getSelectionLabel(): string
+    public function getProduct()
     {
-        if($this->customSelectionLabel != '')
+        if(is_null($this->_product))
         {
-            return $this->customSelectionLabel;
+            $this->_product = Plugin::getInstance()->getProducts()->getProductById((int) $this->productId);
         }
-        return static::defaultSelectionLabel();
+        return $this->_product;
     }
-
-    public function getElementType()
-    {
-        return $this->_elementType;
-    }
-
-    public function rules()
-    {
-        $rules = parent::rules();
-        $rules[] = ['customLabel', 'string'];
-        $rules[] = ['selectionLabel', 'string'];
-        return $rules;
-    }
-
-    // Protected Methods
-    // =========================================================================
-
-    /**
-     * Normalizes the available sources into select input options.
-     *
-     * @return array
-     */
-    public function getSourceOptions(): array
-    {
-        return LinkIt::$plugin->service->getSourceOptions($this->_elementType);
-    }
-
 }

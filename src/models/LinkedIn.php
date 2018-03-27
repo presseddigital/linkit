@@ -6,24 +6,24 @@ use Craft;
 use fruitstudios\linkit\LinkIt;
 use fruitstudios\linkit\base\Link;
 
-class Phone extends Link
+class LinkedIn extends Link
 {
     // Private
     // =========================================================================
 
-    private $_match = '/^(?:\+\d{1,3}|0\d{1,3}|00\d{1,2})?(?:\s?\(\d+\))?(?:[-\/\s.]|\d)+$/';
+    private $_match = '/^http(?:s)?:\/\/[a-z]{2,3}\\.linkedin\\.com\\/.*$/';
 
     // Static
     // =========================================================================
 
     public static function defaultLabel(): string
     {
-        return Craft::t('linkit', 'Phone Number');
+        return Craft::t('linkit', 'Linked In');
     }
 
     public static function defaultPlaceholder(): string
     {
-        return Craft::t('linkit', '+44(0)0000 000000');
+        return Craft::t('linkit', 'https://www.linkedin.com/in/username');
     }
 
     // Public Methods
@@ -31,7 +31,7 @@ class Phone extends Link
 
     public function getUrl(): string
     {
-        return (string) 'tel:'.$this->value;
+        return (string) $this->value;
     }
 
     public function rules()
@@ -41,7 +41,7 @@ class Phone extends Link
             ['value'],
             'match',
             'pattern' => $this->_match,
-            'message' => Craft::t('linkit', 'Please enter a valid phone number.')
+            'message' => Craft::t('linkit', 'Please enter a valid Linked In link.')
         ];
         return $rules;
     }

@@ -31,7 +31,7 @@ class LinkItField extends Field
 
     private $_availableLinkTypes;
     private $_enabledLinkTypes;
-    public $_columnType = Schema::TYPE_TEXT;
+    private $_columnType = Schema::TYPE_TEXT;
 
 
     //  Properties
@@ -163,12 +163,11 @@ class LinkItField extends Field
                 'id' => $id,
                 'name' => $this->handle,
                 'field' => $this,
-                'currentLink' => $value,
                 'element' => $element,
+                'currentLink' => $value,
             ]
         );
     }
-
 
     public function getElementValidationRules(): array
     {
@@ -185,7 +184,7 @@ class LinkItField extends Field
         $fieldValue = $element->getFieldValue($this->handle);
         if(!$fieldValue->validate())
         {
-            $element->addModelErrors($fieldValue, 'linkit');
+            $element->addModelErrors($fieldValue, $this->handle);
         }
     }
 

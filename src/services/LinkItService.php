@@ -12,7 +12,11 @@ use fruitstudios\linkit\models\Asset;
 use fruitstudios\linkit\models\Entry;
 use fruitstudios\linkit\models\Category;
 use fruitstudios\linkit\models\User;
-// use fruitstudios\linkit\types\Product;
+use fruitstudios\linkit\models\Product;
+use fruitstudios\linkit\models\Twitter;
+use fruitstudios\linkit\models\Facebook;
+use fruitstudios\linkit\models\LinkedIn;
+use fruitstudios\linkit\models\Instagram;
 
 class LinkItService extends Component
 {
@@ -28,6 +32,12 @@ class LinkItService extends Component
         $linkTypes[] = new Phone();
         $linkTypes[] = new Url();
 
+        // Social link types
+        $linkTypes[] = new Twitter();
+        $linkTypes[] = new Facebook();
+        $linkTypes[] = new Instagram();
+        $linkTypes[] = new LinkedIn();
+
         // Element link types
         $linkTypes[] = new Entry();
         $linkTypes[] = new Category();
@@ -35,11 +45,22 @@ class LinkItService extends Component
         $linkTypes[] = new User();
 
         // Product link
-        // $linkTypes[] = new Product();
-
-        // TODO: Register any third party link types here
+        // try{
+        //     Craft::createObject('craft\commerce\Plugin');
+        //     $linkTypes[] = new Product();
+        // } catch(ErrorException $exception) {
+        //     //$error = $exception->getMessage();
+        // }
 
         return $linkTypes;
+
+        // // Third Party
+        // $event = new RegisterComponentTypesEvent([
+        //     'types' => $fieldTypes
+        // ]);
+        // $this->trigger(self::EVENT_REGISTER_LINKIT_FIELD_TYPES, $event);
+
+        // return $event->types;
     }
 
     // Thrid Party Field Types
