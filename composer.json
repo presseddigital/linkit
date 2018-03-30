@@ -42,7 +42,7 @@
 	"extra": {
 		"name": "Linkit",
 		"handle": "linkit",
-		"schemaVersion": "1.0.3",
+		"schemaVersion": "1.0.4",
 		"hasCpSettings": false,
 		"hasCpSection": false,
 		"changelogUrl":
