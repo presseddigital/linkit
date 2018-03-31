@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.5 - 2018-03-31
+
+*	Case fix - thanks Brad!
+
 ## 1.0.4 - 2018-03-30
 
 *	Updated naming - thanks Brandon!

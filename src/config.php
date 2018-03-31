@@ -5,7 +5,7 @@
  * One link field to rule them all...
  *
  * @link      https://fruitstudios.co.uk
- * @copyright Copyright (c) 2017 Fruit Studios
+ * @copyright Copyright (c) 2018 Fruit Studios
  */
 
 /**
