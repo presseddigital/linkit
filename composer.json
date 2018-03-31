@@ -42,13 +42,13 @@
 	"extra": {
 		"name": "Linkit",
 		"handle": "linkit",
-		"schemaVersion": "1.0.4",
+		"schemaVersion": "1.0.5",
 		"hasCpSettings": false,
 		"hasCpSection": false,
 		"changelogUrl":
 			"https://raw.githubusercontent.com/fruitstudios/craft-linkit/CHANGELOG.md",
 		"components": {
-			"linkItService": "fruitstudios\\linkit\\services\\LinkitService"
+			"linkitService": "fruitstudios\\linkit\\services\\LinkitService"
 		},
 		"class": "fruitstudios\\linkit\\Linkit"
 	}
