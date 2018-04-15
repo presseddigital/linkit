@@ -1,4 +1,5 @@
 <?php
+
 namespace fruitstudios\linkit\fields;
 
 use fruitstudios\linkit\Linkit;
@@ -81,22 +82,21 @@ class LinkitField extends Field
 
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if($value instanceof Link)
-        {
+        if ($value instanceof Link) {
             return $value;
         }
 
-        if(is_string($value))
-        {
+        if (is_string($value)) {
             $value = JsonHelper::decodeIfJson($value);
         }
 
         $link = null;
 
-        if(isset($value['type']) && $value['type'] != '')
-        {
-            if(isset($value['values']))
-            {
+        if (isset($value['type']) && $value['type'] != '') {
+            // remove unique identifier from field
+            $value['type'] = str_replace($this->handle.'\\', '', $value['type']);
+
+            if (isset($value['values'])) {
                 $postedValue = $value['values'][$value['type']] ?? '';
                 $value['value'] = is_array($postedValue) ? $postedValue[0] : $postedValue;
                 unset($value['values']);
@@ -112,8 +112,7 @@ class LinkitField extends Field
     public function serializeValue($value, ElementInterface $element = null)
     {
         $serialized = [];
-        if($value instanceof Link)
-        {
+        if ($value instanceof Link) {
             $serialized = [
                 'type' => $value->type,
                 'value' => $value->value,
@@ -154,13 +153,14 @@ class LinkitField extends Field
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
-        $view->registerJs('new Garnish.LinkitField('.$jsVariables.');');
+        $view->registerJs('new Garnish.LinkitField(' . $jsVariables . ');');
 
         // Render the input template
         return $view->renderTemplate(
             'linkit/fields/_input',
             [
                 'id' => $id,
+                'namespacedId' => $namespacedId,
                 'name' => $this->handle,
                 'field' => $this,
                 'element' => $element,
@@ -182,16 +182,14 @@ class LinkitField extends Field
     public function validateLinkValue(ElementInterface $element)
     {
         $fieldValue = $element->getFieldValue($this->handle);
-        if(!$fieldValue->validate())
-        {
+        if (!$fieldValue->validate()) {
             $element->addModelErrors($fieldValue, $this->handle);
         }
     }
 
     public function getSearchKeywords($value, ElementInterface $element): string
     {
-        if($value)
-        {
+        if ($value) {
             return $value->getText();
         }
         return '';
@@ -199,8 +197,7 @@ class LinkitField extends Field
 
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
-        if($value)
-        {
+        if ($value) {
             return $value->getLink(false) ?? '';
         }
         return '';
@@ -208,14 +205,11 @@ class LinkitField extends Field
 
     public function getAvailableLinkTypes()
     {
-        if(is_null($this->_availableLinkTypes))
-        {
+        if (is_null($this->_availableLinkTypes)) {
             $linkTypes = Linkit::$plugin->service->getAvailableLinkTypes();
-            if($linkTypes)
-            {
-                foreach ($linkTypes as $linkType)
-                {
-                   $this->_availableLinkTypes[] = $this->_populateLinkTypeModel($linkType);
+            if ($linkTypes) {
+                foreach ($linkTypes as $linkType) {
+                    $this->_availableLinkTypes[] = $this->_populateLinkTypeModel($linkType);
                 }
             }
         }
@@ -224,17 +218,13 @@ class LinkitField extends Field
 
     public function getEnabledLinkTypes()
     {
-        if(is_null($this->_enabledLinkTypes))
-        {
+        if (is_null($this->_enabledLinkTypes)) {
             $this->_enabledLinkTypes = [];
-            if(is_array($this->types))
-            {
-                foreach ($this->types as $type => $settings)
-                {
-                    if($settings['enabled'] ?? false) {
+            if (is_array($this->types)) {
+                foreach ($this->types as $type => $settings) {
+                    if ($settings['enabled'] ?? false) {
                         $linkType = $this->_getLinkTypeModelByType($type);
-                        if($linkType)
-                        {
+                        if ($linkType) {
                             $this->_enabledLinkTypes[] = $linkType;
                         }
                     }
@@ -248,8 +238,7 @@ class LinkitField extends Field
     {
         $options = [];
         $enabledLinkTypes = $this->getEnabledLinkTypes();
-        if($enabledLinkTypes)
-        {
+        if ($enabledLinkTypes) {
             $options = [
                 [
                     'label' => $this->selectLinkText != '' ? $this->selectLinkText : static::defaultSelectLinkText(),
@@ -260,7 +249,7 @@ class LinkitField extends Field
             foreach ($enabledLinkTypes as $enabledLinkType) {
                 $options[] = [
                     'label' => $enabledLinkType->label,
-                    'value' => $enabledLinkType->type,
+                    'value' => $this->handle . '\\' . $enabledLinkType->type,
                 ];
             }
         }
@@ -274,13 +263,13 @@ class LinkitField extends Field
     private function _getLinkTypeModelByType(string $type, bool $populate = true)
     {
         try {
+            $type = str_replace($this->handle . '\\', '', $type);
             $linkType = Craft::createObject($type);
-            if($populate)
-            {
+            if ($populate) {
                 $linkType = $this->_populateLinkTypeModel($linkType);
             }
             return $linkType;
-        } catch(ErrorException $exception) {
+        } catch (ErrorException $exception) {
             $error = $exception->getMessage();
             return false;
         }
