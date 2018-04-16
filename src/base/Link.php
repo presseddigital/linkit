@@ -131,11 +131,29 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getText(): string
     {
-        if($this->customText != '')
+        if($this->fieldSettings['allowCustomText'] && $this->customText != '')
         {
             return $this->customText;
         }
-        return $this->fieldSettings['defaultText'] ?? $this->getUrl() ?? '';
+        return $this->fieldSettings['defaultText'] != '' ? $this->fieldSettings['defaultText'] : $this->getUrl() ?? '';
+    }
+
+    public function getLinkAttributes(): array
+    {
+        $attributes = [];
+        if($this->fieldSettings['allowTarget'] && $this->target)
+        {
+            // Target="_blank" - the most underestimated vulnerability ever
+            // https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
+            $attributes['target'] = '_blank';
+            $attributes['rel'] = 'noopener noreferrer';
+        }
+        return $attributes;
+    }
+
+    public function getTargetString(): string
+    {
+        return $this->fieldSettings['allowTarget'] && $this->target ? '_blank' : '_self';
     }
 
     public function rules()
@@ -155,14 +173,21 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     protected function prepLinkAttributes($customAttributes = []): array
     {
-        $attributes = [];
-        if($this->target)
+        return array_merge($this->getLinkAttributes(), $customAttributes);;
+    }
+
+    protected function getCustomOrDefaultText()
+    {
+        if($this->fieldSettings['allowCustomText'] && $this->customText != '')
         {
-            // Target="_blank" - the most underestimated vulnerability ever
-            // https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
-            $attributes['target'] = '_blank';
-            $attributes['rel'] = 'noopener noreferrer';
+            return $this->customText;
         }
-        return array_merge($attributes, $customAttributes);;
+
+        if($this->fieldSettings['defaultText'] && $this->fieldSettings['defaultText'] != '')
+        {
+            return $this->fieldSettings['defaultText'];
+        }
+
+        return null;
     }
 }

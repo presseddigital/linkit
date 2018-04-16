@@ -90,7 +90,10 @@ Each Linkit field returns a Linkit model with the following tags...
     {{ entry.linkItField.text }} or {{ entry.linkItField.getText() }}
     {{ entry.linkItField.type }}
     {{ entry.linkItField.typeHandle }}
+
     {{ entry.linkItField.target }}
+    {{ entry.linkItField.targetString }}
+    {{ entry.linkItField.linkAttributes }}
 
 If your link is an element link you also have access to the following...
 
@@ -153,7 +156,7 @@ If you think they are super useful and you agree we can look to add them to the 
 *   [ ] Add Product link type
 *   [ ] Enable third party field type registration
 *   [ ] Add docs for creating third party field types
-*   [ ] Restructure linkit field settings template (it's a bit busy we know!)
+*   [ ] Improve link model docs
 
 Note: This plugin may become a paid add-on when the Craft Plugin store becomes available.
 

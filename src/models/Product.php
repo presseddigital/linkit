@@ -27,15 +27,6 @@ class Product extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getText(): string
-    {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getProduct()->title ?? $this->getUrl() ?? '';
-    }
-
     public function getProduct()
     {
         if(is_null($this->_product))

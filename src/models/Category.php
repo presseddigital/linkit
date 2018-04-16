@@ -26,15 +26,6 @@ class Category extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getText(): string
-    {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getCategory()->title ?? $this->getUrl() ?? '';
-    }
-
     public function getCategory()
     {
         if(is_null($this->_category))
