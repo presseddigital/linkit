@@ -58,11 +58,7 @@ class User extends ElementLink
 
     public function getText(): string
     {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getUser()->fullName ?? $this->getUser()->name ?? $this->getUrl() ?? '';
+        return $this->getCustomOrDefaultText() ?? $this->getUser()->fullName ?? $this->getUser()->name ?? $this->getUrl() ?? '';
     }
 
     public function getUser()

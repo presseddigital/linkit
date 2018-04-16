@@ -70,11 +70,7 @@ abstract class ElementLink extends Link
 
     public function getText(): string
     {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getElement()->title ?? $this->getUrl() ?? '';
+        return $this->getCustomOrDefaultText() ?? $this->getElement()->title ?? $this->getUrl() ?? '';
     }
 
     public function getElement()

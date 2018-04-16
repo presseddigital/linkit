@@ -26,15 +26,6 @@ class Entry extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getText(): string
-    {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getEntry()->title ?? $this->getUrl() ?? '';
-    }
-
     public function getEntry()
     {
         if(is_null($this->_entry))

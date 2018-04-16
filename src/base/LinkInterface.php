@@ -38,4 +38,7 @@ interface LinkInterface extends SavableComponentInterface
     public function getLink($raw = true);
     public function getUrl(): string;
     public function getText(): string;
+
+    public function getLinkAttributes(): array;
+    public function getTargetString(): string;
 }

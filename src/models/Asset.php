@@ -28,11 +28,7 @@ class Asset extends ElementLink
 
     public function getText(): string
     {
-        if($this->customText != '')
-        {
-            return $this->customText;
-        }
-        return $this->getAsset()->filename ?? $this->getUrl() ?? '';
+        return $this->getCustomOrDefaultText() ?? $this->getAsset()->filename ?? $this->getUrl() ?? '';
     }
 
     public function getAsset()
