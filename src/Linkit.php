@@ -59,7 +59,7 @@ class Linkit extends Plugin
             }
         });
 
-        $this->_upgradeFromCraft2();
+        // $this->_upgradeFromCraft2();
 
 
         Craft::info(
