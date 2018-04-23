@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.7 - 2018-04-23
+
+### Added
+
+*   Added Craft 2 migration scripts
+
+### Fixed
+
+*   Fixed email & phone links text value returning the full url
+*   Fixed documentation link
+
 ## 1.0.6 - 2018-04-16
 
 ### Fixed

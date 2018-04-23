@@ -14,10 +14,6 @@ use craft\events\RegisterComponentTypesEvent;
 use craft\services\Plugins;
 use craft\services\Fields;
 
-
-use fruitstudios\linkit\models\Twitter;
-
-
 class Linkit extends Plugin
 {
     // Static Properties
@@ -27,6 +23,8 @@ class Linkit extends Plugin
 
     // Public Methods
     // =========================================================================
+
+    public $schemaVersion = '1.0.7';
 
     public function init()
     {
@@ -45,7 +43,6 @@ class Linkit extends Plugin
         Event::on(Plugins::className(), Plugins::EVENT_AFTER_INSTALL_PLUGIN, function (PluginEvent $event) {
             if ($event->plugin === $this)
             {
-
             }
         });
 

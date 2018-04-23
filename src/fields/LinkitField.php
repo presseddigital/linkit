@@ -6,6 +6,13 @@ use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use fruitstudios\linkit\services\LinkitService;
 use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\models\Email;
+use fruitstudios\linkit\models\Phone;
+use fruitstudios\linkit\models\Url;
+use fruitstudios\linkit\models\Entry;
+use fruitstudios\linkit\models\Category;
+use fruitstudios\linkit\models\Asset;
+use fruitstudios\linkit\models\Product;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -91,8 +98,13 @@ class LinkitField extends Field
             $value = JsonHelper::decodeIfJson($value);
         }
 
-        $link = null;
+        // Handle any Craft2 content
+        if(!isset($value['value']))
+        {
+            $value = $this->_normalizeValueCraft2($value);
+        }
 
+        $link = null;
         if(isset($value['type']) && $value['type'] != '')
         {
             if(isset($value['values']))
@@ -293,5 +305,65 @@ class LinkitField extends Field
         $linkType->setAttributes($attributes, false);
         $linkType->fieldSettings = $this->getSettings();
         return $linkType;
+    }
+
+    private function _normalizeValueCraft2($content)
+    {
+        if(!$content)
+        {
+            return null;
+        }
+
+        $newContent = [
+            'customText' => $content['customText'] ?? null,
+            'target' => ($content['target'] ?? false) ? true : false,
+        ];
+
+        if($content['type'])
+        {
+            switch ($content['type'])
+            {
+                case 'email':
+                    $newContent['type'] = Email::class;
+                    $newContent['value'] = $content['email'] ?? '';
+                    break;
+
+                case 'custom':
+                    $newContent['type'] = Url::class;
+                    $newContent['value'] = $content['custom'] ?? '';
+                    break;
+
+                case 'tel':
+                    $newContent['type'] = Phone::class;
+                    $newContent['value'] = $content['tel'] ?? '';
+                    break;
+
+                case 'entry':
+                    $newContent['type'] = Entry::class;
+                    $newContent['value'] = $content['entry'][0] ?? '';
+                    break;
+
+                case 'category':
+                    $newContent['type'] = Category::class;
+                    $newContent['value'] = $content['category'][0] ?? '';
+                    break;
+
+                case 'asset':
+                    $newContent['type'] = Asset::class;
+                    $newContent['value'] = $content['asset'][0] ?? '';
+                    break;
+
+                case 'product':
+                    $newContent['type'] = Product::class;
+                    $newContent['value'] = $content['product'][0] ?? '';
+                    break;
+
+                default:
+                    return $content;
+                    break;
+            }
+        }
+
+        return $newContent;
     }
 }
