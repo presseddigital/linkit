@@ -135,7 +135,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         {
             return $this->customText;
         }
-        return $this->fieldSettings['defaultText'] != '' ? $this->fieldSettings['defaultText'] : $this->getUrl() ?? '';
+        return $this->fieldSettings['defaultText'] != '' ? $this->fieldSettings['defaultText'] : $this->value ?? '';
     }
 
     public function getLinkAttributes(): array

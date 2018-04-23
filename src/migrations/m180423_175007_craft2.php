@@ -1,4 +1,5 @@
 <?php
+
 namespace fruitstudios\linkit\migrations;
 
 use Craft;
@@ -15,8 +16,9 @@ use fruitstudios\linkit\models\Category;
 use fruitstudios\linkit\models\Asset;
 use fruitstudios\linkit\models\Product;
 
-class Install extends Migration
+class m180423_175007_craft2 extends Migration
 {
+
     public function safeUp()
     {
         if ($this->_upgradeFromCraft2()) {
@@ -143,14 +145,12 @@ class Install extends Migration
             }
         }
 
-
         return $newSettings;
     }
 
     public function safeDown()
     {
-        return true;
+        echo "m180423_175007_craft2 cannot be reverted.\n";
+        return false;
     }
 }
-
-

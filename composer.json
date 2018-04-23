@@ -15,9 +15,9 @@
 	"support": {
 		"email": "hi@fruitstudios.co.uk",
 		"issues":
-			"https://github.com/fruitstudios/craft-linkit/issues/issues?state=open",
+			"https://github.com/fruitstudios/craft-linkit/issues?state=open",
 		"source": "https://github.com/fruitstudios/craft-linkit",
-		"docs": "https://github.com/fruitstudios/craft-linkit/README.md"
+		"docs": "https://github.com/fruitstudios/craft-linkit"
 	},
 	"license": "proprietary",
 	"authors": [
@@ -43,13 +43,7 @@
 	"extra": {
 		"name": "Linkit",
 		"handle": "linkit",
-		"hasCpSettings": false,
-		"hasCpSection": false,
 		"changelogUrl":
-			"https://raw.githubusercontent.com/fruitstudios/craft-linkit/CHANGELOG.md",
-		"components": {
-			"linkitService": "fruitstudios\\linkit\\services\\LinkitService"
-		},
-		"class": "fruitstudios\\linkit\\Linkit"
+			"https://raw.githubusercontent.com/fruitstudios/craft-linkit/master/CHANGELOG.md"
 	}
 }
