@@ -1,10 +1,6 @@
 <?php
 namespace fruitstudios\linkit\migrations;
 
-use Craft;
-use craft\db\Migration;
-use craft\helpers\Json;
-
 use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\fields\LinkitField;
 use fruitstudios\linkit\models\Email;
@@ -14,6 +10,10 @@ use fruitstudios\linkit\models\Entry;
 use fruitstudios\linkit\models\Category;
 use fruitstudios\linkit\models\Asset;
 use fruitstudios\linkit\models\Product;
+
+use Craft;
+use craft\db\Migration;
+use craft\helpers\Json;
 
 class Install extends Migration
 {
