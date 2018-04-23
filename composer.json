@@ -44,6 +44,9 @@
 		"name": "Linkit",
 		"handle": "linkit",
 		"changelogUrl":
-			"https://raw.githubusercontent.com/fruitstudios/craft-linkit/master/CHANGELOG.md"
+			"https://raw.githubusercontent.com/fruitstudios/craft-linkit/master/CHANGELOG.md",
+		"class": "fruitstudios\\linkit\\Linkit"
 	}
 }
+
+

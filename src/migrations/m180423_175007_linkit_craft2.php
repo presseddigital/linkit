@@ -15,7 +15,7 @@ use Craft;
 use craft\db\Migration;
 use craft\helpers\Json;
 
-class m180423_175007_craft2 extends Migration
+class m180423_175007_linkit_craft2 extends Migration
 {
 
     public function safeUp()
