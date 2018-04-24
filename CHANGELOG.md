@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 *   Fixed email & phone links text value returning the full url
 *   Fixed documentation link
+*   Fixed product link type
 
 ## 1.0.6 - 2018-04-16
 

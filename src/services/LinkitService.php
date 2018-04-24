@@ -19,6 +19,7 @@ use fruitstudios\linkit\models\Instagram;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\Component as ComponentHelper;
 
 class LinkitService extends Component
 {
@@ -52,14 +53,10 @@ class LinkitService extends Component
         $linkTypes[] = new User();
 
         // Product link
-        // try{
-        //     Craft::createObject('craft\commerce\Plugin');
-        //     $linkTypes[] = new Product();
-        // } catch(ErrorException $exception) {
-        //     //$error = $exception->getMessage();
-        // }
-
-        // return $linkTypes;
+        if(Craft::$app->getPlugins()->getPlugin('commerce'))
+        {
+            $linkTypes[] = new Product();
+        }
 
         // Third Party
         $event = new RegisterLinkTypesEvent([

@@ -89,12 +89,21 @@ abstract class ElementLink extends Link
         return $rules;
     }
 
-    // Protected Methods
-    // =========================================================================
-
     public function getSourceOptions(): array
     {
         return Linkit::$plugin->service->getSourceOptions($this->elementType());
+    }
+
+    public function getCriteria(): array
+    {
+        $site = Craft::$app->getSites()->getCurrentSite();
+        $criteria = [
+            // 'siteId' => $site->id,
+            // 'status' => null,
+            // 'enabledForSite' => false,
+        ];
+
+        return $criteria;
     }
 
 }
