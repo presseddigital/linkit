@@ -26,6 +26,14 @@ To install the plugin, follow these steps:
 
 2.  In the Control Panel, go to Settings → Plugins and click the “Install” button for Linkit.
 
+## Updating from Craft 2
+
+Version 1.0.7 includes migration scripts for Craft 2, just install or update via the plugin store and Linkit will handle everything else.
+
+> Backup before installing / updating and note that only native link types (email, url, phone, entry, asset, category and product) can be updated. Settings for custom link types will be overwritten and although content will remain in place, it may cause issues unexpected issues with your templates.
+
+For help on migrating custom link types see the docs and if you run into issues during the update just open a GitHub issue.
+
 ## Configuring Linkit
 
 Once installed, create a new field and choose the Linkit fieldtype. You'll then have the option of configuring what link type will be available to this field.
