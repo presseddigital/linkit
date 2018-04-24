@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.8 - 2018-04-24
+
+### Fixed
+
+*   Fixed element select - now repects selected site in the cp
+
+## 1.0.7.1 - 2018-04-24
+
+### Added
+
+*   Fixed version issue
+
 ## 1.0.7 - 2018-04-24
 
 ### Added

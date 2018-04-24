@@ -1,5 +1,7 @@
 {% import "_includes/forms" as forms %}
 
+{{ element.siteId }}
+
 {{ forms.elementSelect({
     id: name ~ link.type|id ~ '-value',
     name: name ~ '[values]['~ link.type ~']',
@@ -8,5 +10,9 @@
     sources: link.sources == '*' ? null : link.sources,
     limit: 1,
     elements: (currentLink.element ?? false) ? [currentLink.element] : [],
-    criteria: link.criteria
+    criteria: {
+    	siteId: element.siteId ?? null,
+    	status: null,
+    	enabledForSite: false
+	}
 }) }}

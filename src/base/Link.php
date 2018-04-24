@@ -4,6 +4,7 @@ namespace fruitstudios\linkit\base;
 use fruitstudios\linkit\helpers\LinkitHelper;
 
 use Craft;
+use craft\base\ElementInterface;
 use craft\base\SavableComponent;
 use craft\helpers\Template as TemplateHelper;
 
@@ -106,7 +107,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         );
     }
 
-    public function getInputHtml(string $name, Link $currentLink = null): string
+    public function getInputHtml(string $name, Link $currentLink = null, ElementInterface $element = null): string
     {
         return Craft::$app->getView()->renderTemplate(
             static::inputTemplatePath(),
@@ -114,6 +115,7 @@ abstract class Link extends SavableComponent implements LinkInterface
                 'name' => $name,
                 'link' => $this,
                 'currentLink' => $currentLink,
+                'element' => $element,
             ]
         );
     }

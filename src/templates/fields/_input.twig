@@ -16,8 +16,6 @@
 	        	    value: singleLinkType.type,
 	        	}) }}
 			{% else %}
-
-
 		        <div>
 		        	{{ forms.selectField({
 		        	    id: id ~ '-type',
@@ -37,7 +35,7 @@
 	        	    {% set isCurrentType = currentLink and currentLink.type == linkType.type %}
 
 	        	    <div id="{{ name }}-{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not singleLinkType and not isCurrentType ? 'hidden' }}">
-	        	    	{{ linkType.getInputHtml(name, (isCurrentType ? currentLink : null))|raw }}
+	        	    	{{ linkType.getInputHtml(name, (isCurrentType ? currentLink : null), element)|raw }}
 	        	    </div>
 
 	        	{% endfor %}
