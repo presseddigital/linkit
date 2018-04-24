@@ -6,7 +6,7 @@ use Craft;
 use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\ElementLink;
 
-use craft\commerce\Plugin;
+use craft\commerce\Plugin as CraftCommercePlugin;
 use craft\commerce\elements\Product as CraftCommerceProduct;
 
 class Product extends ElementLink
@@ -31,7 +31,7 @@ class Product extends ElementLink
     {
         if(is_null($this->_product))
         {
-            $this->_product = Plugin::getInstance()->getProducts()->getProductById((int) $this->productId);
+            $this->_product = CraftCommercePlugin::getInstance()->getProducts()->getProductById((int) $this->value);
         }
         return $this->_product;
     }

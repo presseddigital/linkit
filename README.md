@@ -59,6 +59,7 @@ Elements
 9.  Category
 10. User
 11. Asset
+12. Product
 
 Each link type has additional option to allow further customisation. For example, the User link type allows you to set a default path...
 
@@ -160,13 +161,11 @@ If you think they are super useful and you agree we can look to add them to the 
 
 ## Roadmap
 
-*   [ ] Craft 2 migration script
-*   [ ] Add Product link type
+*   [x] Craft 2 migration script
+*   [x] Add Product link type
 *   [ ] Enable third party field type registration
 *   [ ] Add docs for creating third party field types
 *   [x] Restructure linkit field settings template (it's a bit busy we know!)
 *   [ ] Improve link model docs
-
-Note: This plugin may become a paid add-on when the Craft Plugin store becomes available.
 
 Brought to you by [FRUIT](https://fruitstudios.co.uk)
