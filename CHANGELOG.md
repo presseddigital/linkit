@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 
-*   Fixed element select - now repects selected site in the cp
+*   Fixed element select - now respects selected site in the cp
 
 ## 1.0.7.1 - 2018-04-24
 
