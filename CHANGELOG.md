@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.8.1 - 2018-05-08
+
+### Fixed
+
+*   Fixed issue with the Craft 2 normailise function when a type is not specified
+
 ## 1.0.8 - 2018-04-24
 
 ### Fixed

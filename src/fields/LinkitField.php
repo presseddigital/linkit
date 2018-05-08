@@ -319,7 +319,7 @@ class LinkitField extends Field
             'target' => ($content['target'] ?? false) ? true : false,
         ];
 
-        if($content['type'])
+        if($content['type'] ?? false)
         {
             switch ($content['type'])
             {

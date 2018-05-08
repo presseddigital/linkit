@@ -49,6 +49,11 @@ abstract class Link extends SavableComponent implements LinkInterface
         return true;
     }
 
+    public static function isElementLink(): bool
+    {
+        return (static::elementType() ?? false) ? true : false;
+    }
+
     // Public
     // =========================================================================
 

@@ -18,6 +18,7 @@ interface LinkInterface extends SavableComponentInterface
     public static function settingsTemplatePath(): string;
     public static function inputTemplatePath(): string;
     public static function hasSettings(): bool;
+    public static function isElementLink(): bool;
 
     // Public Methods
     // =========================================================================
