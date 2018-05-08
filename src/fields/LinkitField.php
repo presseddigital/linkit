@@ -188,13 +188,14 @@ class LinkitField extends Field
 
     public function isValueEmpty($value, ElementInterface $element): bool
     {
+        // return empty($value->type ?? ''); // TODO: Not sure what i need to do here for single links
         return empty($value->value ?? '');
     }
 
     public function validateLinkValue(ElementInterface $element)
     {
         $fieldValue = $element->getFieldValue($this->handle);
-        if(!$fieldValue->validate())
+        if($fieldValue && !$fieldValue->validate())
         {
             $element->addModelErrors($fieldValue, $this->handle);
         }

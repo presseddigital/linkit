@@ -49,6 +49,11 @@ abstract class Link extends SavableComponent implements LinkInterface
         return true;
     }
 
+    public static function elementType()
+    {
+        return null;
+    }
+
     public static function isElementLink(): bool
     {
         return (static::elementType() ?? false) ? true : false;
@@ -167,6 +172,9 @@ abstract class Link extends SavableComponent implements LinkInterface
     {
         $rules = parent::rules();
         $rules[] = ['customLabel', 'string'];
+        // $rules[] = ['value', 'required', 'message' => Craft::t('linkit', 'A {type} is required.', [
+        //     'type' => 'value'
+        // ])];
         return $rules;
     }
 
