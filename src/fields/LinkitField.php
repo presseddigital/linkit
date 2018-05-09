@@ -188,7 +188,6 @@ class LinkitField extends Field
 
     public function isValueEmpty($value, ElementInterface $element): bool
     {
-        // return empty($value->type ?? ''); // TODO: Not sure what i need to do here for single links
         return empty($value->value ?? '');
     }
 

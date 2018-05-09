@@ -43,4 +43,6 @@ interface LinkInterface extends SavableComponentInterface
 
     public function getLinkAttributes(): array;
     public function getTargetString(): string;
+
+    public function isAvailable(): bool;
 }

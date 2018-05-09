@@ -132,6 +132,11 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getLink($customAttributes = [], $raw = true)
     {
+        if(!$this->isAvailable())
+        {
+            return '';
+        }
+
         $html = LinkitHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
         return $raw ? TemplateHelper::raw($html) : $html;
     }
@@ -166,6 +171,11 @@ abstract class Link extends SavableComponent implements LinkInterface
     public function getTargetString(): string
     {
         return $this->fieldSettings['allowTarget'] && $this->target ? '_blank' : '_self';
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->value && $this->value != '';
     }
 
     public function rules()
