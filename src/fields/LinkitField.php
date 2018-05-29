@@ -16,6 +16,7 @@ use fruitstudios\linkit\models\Product;
 
 use Craft;
 use craft\base\ElementInterface;
+use craft\base\PreviewableFieldInterface;
 use craft\base\Field;
 use craft\helpers\Json as JsonHelper;
 use craft\helpers\Db as DbHelper;
@@ -23,7 +24,7 @@ use yii\db\Schema;
 use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
 
-class LinkitField extends Field
+class LinkitField extends Field implements PreviewableFieldInterface
 {
     // Constants
     // =========================================================================
@@ -203,7 +204,7 @@ class LinkitField extends Field
 
     public function getSearchKeywords($value, ElementInterface $element): string
     {
-        if($value)
+        if($value instanceof Link)
         {
             return $value->getText();
         }
@@ -212,9 +213,11 @@ class LinkitField extends Field
 
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
-        if($value)
+        if($value instanceof Link)
         {
-            return $value->getLink(false) ?? '';
+            return $value->getLink([
+                // 'title' => 'Some custom title here'
+            ], false) ?? '';
         }
         return '';
     }
