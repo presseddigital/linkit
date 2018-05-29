@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 
+*   Linkit fields are now previewable table colums in table view
 *   Fixed issue with the Craft 2 normailise function when a type is not specified
 
 ## 1.0.8 - 2018-04-24

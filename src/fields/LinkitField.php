@@ -105,9 +105,13 @@ class LinkitField extends Field implements PreviewableFieldInterface
             $value = $this->_normalizeValueCraft2($value);
         }
 
-        $link = null;
-        if(isset($value['type']) && $value['type'] != '')
+        if(isset($value['type']) && $value['type'] != '' )
         {
+            if(isset($value['value']) && $value['value'] == '')
+            {
+                return null;
+            }
+
             if(isset($value['values']))
             {
                 $postedValue = $value['values'][$value['type']] ?? '';
@@ -117,9 +121,10 @@ class LinkitField extends Field implements PreviewableFieldInterface
 
             $link = $this->_getLinkTypeModelByType($value['type']);
             $link->setAttributes($value, false); // TODO: Get Rules added for these and remove false
+            return $link;
         }
 
-        return $link;
+        return null;
     }
 
     public function serializeValue($value, ElementInterface $element = null)

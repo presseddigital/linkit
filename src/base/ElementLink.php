@@ -77,7 +77,6 @@ abstract class ElementLink extends Link
     {
         if(is_null($this->_element))
         {
-            //$this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), 2);
             $this->_element = Craft::$app->getElements()->getElementById((int) $this->value);
         }
         return $this->_element;
