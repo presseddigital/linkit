@@ -83,6 +83,11 @@ abstract class ElementLink extends Link
         return $this->_element;
     }
 
+    public function isAvailable(): bool
+    {
+        return $this->getElement()->enabled ?? false;
+    }
+
     public function rules()
     {
         $rules = parent::rules();
