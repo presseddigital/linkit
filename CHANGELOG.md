@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.0.9- 2018-05-09
+## 1.0.9- 2018-07-16
+
+### Changed
+
+*   Changed - Improved Linked In link validation
+*   Changed - Improved url link validation
 
 ### Added
 
@@ -14,7 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 
 *   Linkit fields are now previewable table colums in table view
-*   Fixed issue with the Craft 2 normailise function when a type is not specified
+*   Fixed issue with the Craft 2 normailize function when a type is not specified
 
 ## 1.0.8 - 2018-04-24
 

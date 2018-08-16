@@ -2,7 +2,7 @@
 	"name": "fruitstudios/linkit",
 	"description": "One link field to rule them all.",
 	"type": "craft-plugin",
-	"version": "v1.0.8",
+	"version": "1.0.9",
 	"keywords": [
 		"craft",
 		"cms",

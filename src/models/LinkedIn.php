@@ -5,13 +5,14 @@ use Craft;
 
 use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\validators\UrlValidator;
 
 class LinkedIn extends Link
 {
     // Private
     // =========================================================================
 
-    private $_match = '/^http(?:s)?:\/\/[a-z]{2,3}\\.linkedin\\.com\\/.*$/';
+    private $_match = '/^http(?:s)?:\/\/([a-z]{2,3}\\.)?linkedin\\.com\\/.*$/';
 
     // Static
     // =========================================================================
@@ -42,6 +43,12 @@ class LinkedIn extends Link
     public function rules()
     {
         $rules = parent::rules();
+        $rules[] = [
+            ['value'],
+            UrlValidator::class,
+            'defaultScheme' => 'https',
+            'message' => Craft::t('linkit', 'Please enter a valid url.')
+        ];
         $rules[] = [
             ['value'],
             'match',

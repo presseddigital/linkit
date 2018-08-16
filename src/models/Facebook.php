@@ -5,6 +5,7 @@ use Craft;
 
 use fruitstudios\linkit\Linkit;
 use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\validators\UrlValidator;
 
 class Facebook extends Link
 {
@@ -42,6 +43,12 @@ class Facebook extends Link
     public function rules()
     {
         $rules = parent::rules();
+        $rules[] = [
+            ['value'],
+            UrlValidator::class,
+            'defaultScheme' => 'https',
+            'message' => Craft::t('linkit', 'Please enter a valid url.')
+        ];
         $rules[] = [
             ['value'],
             'match',
