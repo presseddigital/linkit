@@ -36,15 +36,13 @@ class Linkit extends Plugin
             'service' => LinkitService::class,
         ]);
 
-        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
-            $event->types[] = LinkitField::class;
-        });
-
-        Event::on(Plugins::className(), Plugins::EVENT_AFTER_INSTALL_PLUGIN, function (PluginEvent $event) {
-            if ($event->plugin === $this)
-            {
+        Event::on(
+            Fields::className(),
+            Fields::EVENT_REGISTER_FIELD_TYPES,
+            function (RegisterComponentTypesEvent $event) {
+                $event->types[] = LinkitField::class;
             }
-        });
+        );
 
         Craft::info(
             Craft::t('linkit', '{name} plugin loaded', [
