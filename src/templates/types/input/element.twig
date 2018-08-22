@@ -5,12 +5,13 @@
     name: name ~ '[values]['~ link.type ~']',
     elementType: link.elementType(),
     selectionLabel: link.selectionLabel,
-    sources: link.sources == '*' ? null : link.sources,
+    sources: link.sources ?? '*',
+    sourceElementId: element.id,
     limit: 1,
     elements: (currentLink.element ?? false) ? [currentLink.element] : [],
     criteria: {
+        enabledForSite: null,
     	siteId: element.siteId ?? null,
-    	status: null,
-    	enabledForSite: false
-	}
+	},
+    storageKey: 'field.'~field.id,
 }) }}

@@ -220,9 +220,7 @@ class LinkitField extends Field implements PreviewableFieldInterface
     {
         if($value instanceof Link)
         {
-            return $value->getLink([
-                // 'title' => 'Some custom title here'
-            ], false) ?? '';
+           return '<span title="Link '.($value->isAvailable() ? 'Enabled' : 'Disabled').'" class="status '.($value->isAvailable() ? 'enabled' : 'disabled').'"></span>'.$value->getLinkPreview();
         }
         return '';
     }

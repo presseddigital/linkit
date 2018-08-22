@@ -11,18 +11,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 *   Changed - Improved Linked In link validation
 *   Changed - Improved url link validation
 *   Changed - Element link types now allowed to select disabled elements to match the first party Craft element fieldtypes
-
+*   Changed - Updated element select to match first party fields
 
 ### Added
 
 *   Added `isElementLink()` check to link models to quickly determine if the link is an element type
 *   Added `isAvailable()` check to link models to quickly determine if the link is an element type
+*   Added setting to override the default placeholder text for basic and social link types
+*   Added `getTableAttributeHtmlLink()` Linkit fields are now previewable table colums in table view
+*   Added status indicators to preview to determine if a link is available
+*   Added plugin setting to configure how you handle disabled element types
 
 ### Fixed
 
-*   Linkit fields are now previewable table colums in table view #32
 *   Fixed issue with the Craft 2 normailize function when a type is not specified
-*   Fixed issue
+*   Fixed cp translation bug on element link types when using multiple sites
+
+
+## 1.1.0 - 2018-04-24
 
 
 ## 1.0.8 - 2018-04-24

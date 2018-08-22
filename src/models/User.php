@@ -30,7 +30,7 @@ class User extends ElementLink
 
     public static function settingsTemplatePath(): string
     {
-        return 'linkit/types/settings/_user';
+        return 'linkit/types/settings/user';
     }
 
     public static function defaultUserPath(): string

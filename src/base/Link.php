@@ -36,12 +36,12 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public static function settingsTemplatePath(): string
     {
-        return 'linkit/types/settings/_default';
+        return 'linkit/types/settings/text';
     }
 
     public static function inputTemplatePath(): string
     {
-        return 'linkit/types/input/_default';
+        return 'linkit/types/input/text';
     }
 
     public static function hasSettings(): bool
@@ -66,6 +66,7 @@ abstract class Link extends SavableComponent implements LinkInterface
     public $ownerElement;
 
     public $customLabel;
+    public $customPlaceholder;
 
     public $fieldSettings;
     public $value;
@@ -110,6 +111,15 @@ abstract class Link extends SavableComponent implements LinkInterface
         return $this->defaultSelectionLabel();
     }
 
+    public function getPlaceholder(): string
+    {
+        if(!is_null($this->customPlaceholder) && $this->customPlaceholder != '')
+        {
+            return $this->customPlaceholder;
+        }
+        return static::defaultPlaceholder();
+    }
+
     public function getSettingsHtml(): string
     {
        return Craft::$app->getView()->renderTemplate(
@@ -120,7 +130,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         );
     }
 
-    public function getInputHtml(string $name, Link $currentLink = null, ElementInterface $element = null): string
+    public function getInputHtml(string $name, $field, Link $currentLink = null, ElementInterface $element = null): string
     {
         return Craft::$app->getView()->renderTemplate(
             static::inputTemplatePath(),
@@ -129,19 +139,25 @@ abstract class Link extends SavableComponent implements LinkInterface
                 'link' => $this,
                 'currentLink' => $currentLink,
                 'element' => $element,
+                'field' => $field,
             ]
         );
     }
 
-    public function getLink($customAttributes = [], $raw = true)
+    public function getLink($customAttributes = [], $raw = true, $preview = false)
     {
-        if(!$this->isAvailable())
+        if(!$preview && !$this->isAvailable())
         {
             return '';
         }
 
         $html = LinkitHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
         return $raw ? TemplateHelper::raw($html) : $html;
+    }
+
+    public function getLinkPreview($customAttributes = [])
+    {
+        return $this->getLink($customAttributes, false, true);
     }
 
     public function getUrl(): string

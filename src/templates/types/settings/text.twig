@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+{% include 'linkit/types/settings/_default' %}
+
+{{ forms.textField({
+    label: "Placeholder"|t('linkit'),
+    instructions: "Override the default placeholder"|t('linkit'),
+    id: type.type|id~'-customPlaceholder',
+    name: 'customPlaceholder',
+    value: type.customPlaceholder ?? '',
+    placeholder: type.defaultPlaceholder,
+    errors: type.getErrors('customPlaceholder')
+}) }}

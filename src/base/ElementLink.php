@@ -28,12 +28,12 @@ abstract class ElementLink extends Link
 
     public static function settingsTemplatePath(): string
     {
-        return 'linkit/types/settings/_element';
+        return 'linkit/types/settings/element';
     }
 
     public static function inputTemplatePath(): string
     {
-        return 'linkit/types/input/_element';
+        return 'linkit/types/input/element';
     }
 
     // Public

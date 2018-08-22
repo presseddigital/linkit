@@ -35,7 +35,7 @@
 	        	    {% set isCurrentType = currentLink and currentLink.type == linkType.type %}
 
 	        	    <div id="{{ name }}-{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not singleLinkType and not isCurrentType ? 'hidden' }}">
-	        	    	{{ linkType.getInputHtml(name, (isCurrentType ? currentLink : null), (element ?? null))|raw }}
+	        	    	{{ linkType.getInputHtml(name, field, (isCurrentType ? currentLink : null), (element ?? null))|raw }}
 	        	    </div>
 
 	        	{% endfor %}
