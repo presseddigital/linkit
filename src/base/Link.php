@@ -62,6 +62,9 @@ abstract class Link extends SavableComponent implements LinkInterface
     // Public
     // =========================================================================
 
+    // Need to pass the element that owns this field to ensure multisite stuff works ok!
+    public $ownerElement;
+
     public $customLabel;
 
     public $fieldSettings;

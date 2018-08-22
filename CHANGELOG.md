@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 *   Changed - Improved Linked In link validation
 *   Changed - Improved url link validation
+*   Changed - Element link types now allowed to select disabled elements to match the first party Craft element fieldtypes
+
 
 ### Added
 
@@ -18,8 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 
-*   Linkit fields are now previewable table colums in table view
+*   Linkit fields are now previewable table colums in table view #32
 *   Fixed issue with the Craft 2 normailize function when a type is not specified
+*   Fixed issue
 
 ## 1.0.8 - 2018-04-24
 

@@ -31,7 +31,7 @@ class Product extends ElementLink
     {
         if(is_null($this->_product))
         {
-            $this->_product = CraftCommercePlugin::getInstance()->getProducts()->getProductById((int) $this->value);
+            $this->_product = CraftCommercePlugin::getInstance()->getProducts()->getProductById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
         }
         return $this->_product;
     }

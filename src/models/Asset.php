@@ -35,7 +35,7 @@ class Asset extends ElementLink
     {
         if(is_null($this->_asset))
         {
-            $this->_asset = Craft::$app->getAssets()->getAssetById((int) $this->value);
+            $this->_asset = Craft::$app->getAssets()->getAssetById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
         }
         return $this->_asset;
     }

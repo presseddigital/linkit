@@ -121,6 +121,7 @@ class LinkitField extends Field implements PreviewableFieldInterface
 
             $link = $this->_getLinkTypeModelByType($value['type']);
             $link->setAttributes($value, false); // TODO: Get Rules added for these and remove false
+            $link->ownerElement = $element;
             return $link;
         }
 
