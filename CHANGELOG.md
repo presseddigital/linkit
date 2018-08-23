@@ -16,9 +16,8 @@
 *   Added `hasElement()` method to link models to quickly determine if the link is an element link type
 *   Added `isAvailable()` method to link models to quickly determine if a link is available
 *   Added setting to override the default placeholder text for basic and social link types
-*   Added `getTableAttributeHtmlLink()` method, Linkit fields are now previewable table colums in table view
+*   Added `getTableAttributeHtmlLink()` method, Linkit fields are now previewable table columns in table view
 *   Added status indicators to preview to determine if a link is available
-*   Added plugin setting to configure how you handle disabled element types
 
 ### Fixed
 
