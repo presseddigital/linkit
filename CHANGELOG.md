@@ -1,6 +1,12 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.1 - 2018-08-23
+
+### Fixed
+
+*   Fixed a couple of changelog typos :)
+
 ## 1.1.0 - 2018-08-23
 
 ### Changed
