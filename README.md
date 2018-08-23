@@ -97,8 +97,12 @@ Each Linkit field returns a Linkit model with the following tags...
 
     {{ entry.linkItField.url }} or {{ entry.linkItField.getUrl() }}
     {{ entry.linkItField.text }} or {{ entry.linkItField.getText() }}
+
     {{ entry.linkItField.type }}
     {{ entry.linkItField.typeHandle }}
+
+    {{ entry.linkItField.hasElement }}
+    {{ entry.linkItField.avialable }} or {{ entry.linkItField.isAvialable() }}
 
     {{ entry.linkItField.target }}
     {{ entry.linkItField.targetString }}
@@ -114,18 +118,40 @@ or via the specific element types...
     {{ entry.linkItField.asset }} or {{ entry.linkItField.getAsset() }}
     {{ entry.linkItField.category }} or {{ entry.linkItField.getCategory() }}
     {{ entry.linkItField.user }} or {{ entry.linkItField.getUser() }}
+    {{ entry.linkItField.product }} or {{ entry.linkItField.getProduct() }}
 
 **Example Usage**
 
-If you have created a field called 'link' with a User link type like so...
+If you have created a field called 'linkItField' with a User link type like so...
 
 <p align="left"><img width="450px" src="resources/img/member-select.png" alt="Linkit"></a></p>
 
-    {{ entry.link.getLink }}
+    {{ entry.linkItField.link }}
 
 would output `<a href="/profile/USERNAME">Visit Profile</a>` which is the default user path that is created in the setting and the user would be available at...
 
-    {{ entry.link.user }}
+    {{ entry.linkItField.user }}
+
+
+**A Note On Element Status**
+
+To match first party element fieldtypes, Linkit now links to and allows users to select disabled elements when using element link types, we have added a new method to allow you to determine if a link is available (enabled) for the current site, as such the following will return a boolean value
+
+    {{ entry.linkItField.avialable }} or {{ entry.linkItField.isAvialable() }}
+
+you can use this to work out if you should display a link
+
+    {% if entry.linkItField.available %}
+        {{ entry.linkItField.link | raw }}
+    {% endif %}
+
+You can still access the linked element and any other attributes should you need to access a disabled element
+
+    {# So long as it exists the link is always returned irrelevant of status #}
+    {% set element = entry.linkItField.element %}
+    {% if element %}
+        {{ element.title }} - {{ element.url }}
+    {% endif %}
 
 ## Custom Link Types
 
@@ -158,14 +184,5 @@ Hook up the requirements and register custom link types in your plugin (or modul
     }
 
 If you think they are super useful and you agree we can look to add them to the core plugin for everyone to use.
-
-## Roadmap
-
-*   [x] Craft 2 migration script
-*   [x] Add Product link type
-*   [ ] Enable third party field type registration
-*   [ ] Add docs for creating third party field types
-*   [x] Restructure linkit field settings template (it's a bit busy we know!)
-*   [ ] Improve link model docs
 
 Brought to you by [FRUIT](https://fruitstudios.co.uk)

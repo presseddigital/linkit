@@ -30,7 +30,7 @@ class Entry extends ElementLink
     {
         if(is_null($this->_entry))
         {
-            $this->_entry = Craft::$app->getEntries()->getEntryById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
+            $this->_entry = Craft::$app->getEntries()->getEntryById((int) $this->value, $this->ownerElement->siteId ?? null);
         }
         return $this->_entry;
     }

@@ -77,7 +77,7 @@ class Install extends Migration
         $newSettings['allowTarget'] = $oldSettings['allowTarget'] ?? 0;
         $newSettings['allowCustomText'] = $oldSettings['allowCustomText'] ?? 0;
 
-        if($oldSettings['types'])
+        if($oldSettings['types'] ?? false)
         {
             foreach ($oldSettings['types'] as $oldType)
             {

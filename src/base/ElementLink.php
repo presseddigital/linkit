@@ -45,6 +45,11 @@ abstract class ElementLink extends Link
     // Public Methods
     // =========================================================================
 
+    public function __toString(): string
+    {
+        return $this->isAvailable() ? $this->getLink([], false) : '';
+    }
+
     public function defaultSelectionLabel(): string
     {
         return Craft::t('linkit', 'Select') . ' ' . $this->defaultLabel();
@@ -84,7 +89,8 @@ abstract class ElementLink extends Link
 
     public function isAvailable(): bool
     {
-        return $this->getElement()->enabled ?? false;
+        $element = $this->getElement();
+        return $element && $element->enabled && $element->enabledForSite;
     }
 
     public function rules()

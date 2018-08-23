@@ -30,7 +30,7 @@ class Category extends ElementLink
     {
         if(is_null($this->_category))
         {
-            $this->_category = Craft::$app->getCategories()->getCategoryById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
+            $this->_category = Craft::$app->getCategories()->getCategoryById((int) $this->value, $this->ownerElement->siteId ?? null);
         }
         return $this->_category;
     }

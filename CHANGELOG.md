@@ -1,10 +1,7 @@
 # Linkit Changelog
+> One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [Unreleased]
+## 1.1.0 - 2018-08-23
 
 ### Changed
 
@@ -12,13 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 *   Changed - Improved url link validation
 *   Changed - Element link types now allowed to select disabled elements to match the first party Craft element fieldtypes
 *   Changed - Updated element select to match first party fields
+*   Changed - Improved support for multisite setup
 
 ### Added
 
-*   Added `isElementLink()` check to link models to quickly determine if the link is an element type
-*   Added `isAvailable()` check to link models to quickly determine if the link is an element type
+*   Added `hasElement()` method to link models to quickly determine if the link is an element link type
+*   Added `isAvailable()` method to link models to quickly determine if a link is available
 *   Added setting to override the default placeholder text for basic and social link types
-*   Added `getTableAttributeHtmlLink()` Linkit fields are now previewable table colums in table view
+*   Added `getTableAttributeHtmlLink()` method, Linkit fields are now previewable table colums in table view
 *   Added status indicators to preview to determine if a link is available
 *   Added plugin setting to configure how you handle disabled element types
 
@@ -26,10 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 *   Fixed issue with the Craft 2 normailize function when a type is not specified
 *   Fixed cp translation bug on element link types when using multiple sites
-
-
-## 1.1.0 - 2018-04-24
-
+*   Fixed an issue with the Craft 2 > Craft 3 migration script related to an undefined type index
 
 ## 1.0.8 - 2018-04-24
 

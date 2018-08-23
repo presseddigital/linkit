@@ -3,14 +3,23 @@
 <div class="linkit--fieldSettings">
 
 	{# TODO: Feels a bit too loose to select the first item. Rework to include reordering #}
-	{# {{ forms.textField({
+	{#
+	{{ forms.textField({
 		label: "Select Link Text"|t('linkit'),
 		instructions: "Set the first item to be displayed in the link select."|t('linkit'),
 		name: 'selectLinkText',
 		placeholder: field.selectLinkText,
 		placeholder: field.defaultSelectLinkText,
 		errors: field.getErrors('selectLinkText'),
-	}) }} #}
+	}) }}
+	#}
+
+	{{ forms.lightSwitchField({
+		id: 'enableAllTypes',
+		label: 'Enable all link types',
+		instructions: 'Switch on all link types for this field',
+		on: false,
+	}) }}
 
 	{{ forms.field({
 		errors: field.getErrors('enabledLinkTypes'),
@@ -30,18 +39,18 @@
 		{% for linkType in linksTypesInGroup %}
 
 			{% set name = 'types['~linkType.type~']' %}
-			{% set isEnabled = field.types[linkType.type].enabled ?? false %}
+			{% set isAvailable = field.types[linkType.type].enabled ?? false %}
 
 			{{ forms.lightSwitchField({
 				id: linkType.type|id,
 				name: name~'[enabled]',
 				label: linkType.defaultLabel(),
 				toggle: linkType.hasSettings ? '#' ~ linkType.type|id ~ '-settings' : null,
-				on: isEnabled,
+				on: isAvailable,
 			}) }}
 
 			{% if linkType.hasSettings %}
-				<div id="{{ linkType.type|id }}-settings" class="{{ not isEnabled ? 'hidden' }}">
+				<div id="{{ linkType.type|id }}-settings" class="{{ not isAvailable ? 'hidden' }}">
 					{% namespace name %}
 						{{ linkType.getSettingsHtml()|raw }}
 					{% endnamespace %}
