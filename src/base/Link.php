@@ -8,6 +8,11 @@ use craft\base\ElementInterface;
 use craft\base\SavableComponent;
 use craft\helpers\Template as TemplateHelper;
 
+/**
+ * Class Link
+ *
+ * @property ElementInterface $ownerElement
+ */
 abstract class Link extends SavableComponent implements LinkInterface
 {
     // Static
@@ -62,9 +67,6 @@ abstract class Link extends SavableComponent implements LinkInterface
     // Public
     // =========================================================================
 
-    // Need to pass the element that owns this field to ensure multisite stuff works ok!
-    public $ownerElement;
-
     public $customLabel;
     public $customPlaceholder;
 
@@ -73,12 +75,36 @@ abstract class Link extends SavableComponent implements LinkInterface
     public $customText;
     public $target;
 
+    // Private
+    // =========================================================================
+
+    // Need to pass the element that owns this field to ensure multisite stuff works ok!
+    /* @var ElementInterface|null */
+    private $_ownerElement;
+
     // Public Methods
     // =========================================================================
 
     public function __toString(): string
     {
         return $this->getLink([], false);
+    }
+
+    public function setOwnerElement(ElementInterface $ownerElement = null)
+    {
+        $this->_ownerElement = $ownerElement;
+    }
+
+    public function getOwnerElement()
+    {
+        return $this->_ownerElement;
+    }
+
+    public function extraFields()
+    {
+        $names = parent::extraFields();
+        $names[] = 'owner';
+        return $names;
     }
 
     public function defaultSelectionLabel(): string
