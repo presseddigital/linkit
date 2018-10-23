@@ -1,6 +1,12 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.4 - 2018-10-23
+
+### Fixed
+
+*   Fixed some recursive infinite loop issues and Solpace Calendar crashes (All credit goes to Craft's Brad Bell)
+
 ## 1.1.3 - 2018-09-28
 
 ### Changed
