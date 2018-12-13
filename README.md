@@ -102,7 +102,7 @@ Each Linkit field returns a Linkit model with the following tags...
     {{ entry.linkItField.typeHandle }}
 
     {{ entry.linkItField.hasElement }}
-    {{ entry.linkItField.avialable }} or {{ entry.linkItField.isAvialable() }}
+    {{ entry.linkItField.available }} or {{ entry.linkItField.isAvailable() }}
 
     {{ entry.linkItField.target }}
     {{ entry.linkItField.targetString }}
