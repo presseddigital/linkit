@@ -1,0 +1,27 @@
+{% import "_includes/forms" as forms %}
+
+{% include 'linkit/types/settings/text' %}
+
+{{ forms.checkboxField({
+	label: "Allow aliases in links"|t('linkit'),
+	name: 'allowAlias',
+	checked: type.allowAlias ?? true
+}) }}
+
+{{ forms.checkboxField({
+	label: "Allow mailto links"|t('linkit'),
+	name: 'allowMailto',
+	checked: type.allowMailto ?? true
+}) }}
+
+{{ forms.checkboxField({
+	label: "Allow links to start with a #"|t('linkit'),
+	name: 'allowHash',
+	checked: type.allowHash ?? true
+}) }}
+
+{{ forms.checkboxField({
+	label: "Allow links to be absolute paths"|t('linkit'),
+	name: 'allowPaths',
+	checked: type.allowPaths ?? true
+}) }}
