@@ -1,6 +1,15 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+
+## 1.1.5 - 2019-01-32
+
+### Added
+
+*	Added support for @web alias in the URL link type
+*	Added support for mailto links in the URL link type
+*	Added settings to control whether the URL link type allows hashes, mailto, aliases or paths
+
 ## 1.1.4 - 2018-10-23
 
 ### Fixed
