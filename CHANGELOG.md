@@ -1,8 +1,13 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.5.1 - 2019-01-15
 
-## 1.1.5 - 2019-01-32
+### Fixed
+
+*	Fixed Changelog date
+
+## 1.1.5 - 2019-01-14
 
 ### Added
 
