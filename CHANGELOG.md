@@ -1,6 +1,12 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.6 - 2019-01-17
+
+### Fixed
+
+*	Fixed Craft 2 migration error preventing install on Craft 3.1.x
+
 ## 1.1.5.1 - 2019-01-15
 
 ### Fixed
