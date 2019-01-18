@@ -6,6 +6,8 @@
 ### Fixed
 
 *	Fixed Craft 2 migration error preventing install on Craft 3.1.x
+*   Removed some unused template tags
+*   Fixed issues bug on the about page
 
 ## 1.1.5.1 - 2019-01-15
 

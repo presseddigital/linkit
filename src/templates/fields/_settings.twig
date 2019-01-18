@@ -14,12 +14,14 @@
 	}) }}
 	#}
 
-	{{ forms.lightSwitchField({
-		id: 'enableAllTypes',
-		label: 'Enable all link types',
-		instructions: 'Switch on all link types for this field',
-		on: false,
-	}) }}
+	{#
+		{{ forms.lightSwitchField({
+			id: 'enableAllTypes',
+			label: 'Enable all link types',
+			instructions: 'Switch on all link types for this field',
+			on: false,
+		}) }}
+    #}
 
 	{{ forms.field({
 		errors: field.getErrors('enabledLinkTypes'),

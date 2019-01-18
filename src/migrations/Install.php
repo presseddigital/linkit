@@ -15,6 +15,7 @@ use Craft;
 use craft\db\Migration;
 use craft\helpers\Json;
 use craft\services\Fields;
+use craft\services\Plugins;
 
 class Install extends Migration
 {
@@ -30,26 +31,27 @@ class Install extends Migration
         // Get Project Config
         $projectConfig = Craft::$app->getProjectConfig();
 
-        // // Don't make the same config changes twice
-        // $schemaVersion = $projectConfig->get('system.schemaVersion', true);
-        // if (version_compare($schemaVersion, '3.1.17', '>='))
-        // {
-        //     return;
-        // }
+        // Don't make the same config changes twice
+        $schemaVersion = $projectConfig->get('plugins.linkit.schemaVersion', true);
+        if (version_compare($schemaVersion, '3.1.8', '>='))
+        {
+            return;
+        }
 
         // Locate and remove old linkit
-        $plugins = $projectConfig->get(Fields::CONFIG_PLUGINS_KEY) ?? [];
-        foreach ($plugins as $pluginUid => $pluginData)
+        $plugins = $projectConfig->get(Plugins::CONFIG_PLUGINS_KEY) ?? [];
+        foreach ($plugins as $pluginHandle => $pluginData)
         {
-            switch ($pluginData['handle'])
+            switch ($pluginHandle)
             {
                 case 'fruitlinkit':
                 case 'fruit-link-it':
                 case 'fruit-linkit':
-                    $projectConfig->remove(Fields::CONFIG_PLUGINS_KEY . '.' . $pluginUid);
+                    $projectConfig->remove(Plugins::CONFIG_PLUGINS_KEY . '.' . $pluginHandle);
                     break;
             }
         }
+
 
         // Get the field data from the project config
         $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
