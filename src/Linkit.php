@@ -24,7 +24,7 @@ class Linkit extends Plugin
     // Public Methods
     // =========================================================================
 
-    public $schemaVersion = '1.0.7.1';
+    public $schemaVersion = '1.0.8';
 
     public function init()
     {
