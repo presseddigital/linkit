@@ -1,6 +1,17 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.7 - 2019-01-28
+
+### Fixed
+
+*	Fixed README.md typos
+
+### Added
+
+*   Added `{{ customText }}` info to the docs
+
+
 ## 1.1.6 - 2019-01-17
 
 ### Fixed

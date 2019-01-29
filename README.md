@@ -102,11 +102,13 @@ Each Linkit field returns a Linkit model with the following tags...
     {{ entry.linkItField.typeHandle }}
 
     {{ entry.linkItField.hasElement }}
-    {{ entry.linkItField.avialable }} or {{ entry.linkItField.isAvialable() }}
+    {{ entry.linkItField.available }} or {{ entry.linkItField.isAvailable() }}
 
     {{ entry.linkItField.target }}
     {{ entry.linkItField.targetString }}
     {{ entry.linkItField.linkAttributes }}
+    {{ entry.linkItField.customText }}
+
 
 If your link is an element link you also have access to the following...
 
