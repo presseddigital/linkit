@@ -33,7 +33,7 @@ class m180423_175007_linkit_craft2 extends Migration
 
         // Don't make the same config changes twice
         $schemaVersion = $projectConfig->get('plugins.linkit.schemaVersion', true);
-        if (version_compare($schemaVersion, '3.1.8', '>='))
+        if ($schemaVersion && version_compare($schemaVersion, '1.0.8', '>='))
         {
             return;
         }
