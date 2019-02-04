@@ -12,19 +12,24 @@ This plugin adds a custom fieldtype which enables support for linking to email a
 *   Completely rewritten for Craft 3
 *   Easily extendable, create your own custom link types
 
-### Requirements
+## Requirements
 
-This plugin requires Craft CMS 3.0.0-RC1 or later.
+This plugin requires Craft CMS 3.1.2 or later.
 
-### Installation
+## Installation
 
-To install the plugin, follow these steps:
+### Plugin Store
 
-1.  Install with Composer via:
+Log into your control panel, hit up the 'Plugin Store', search for this plugin and install.
 
-        composer require fruitstudios/linkit
+### Composer
 
-2.  In the Control Panel, go to Settings → Plugins and click the “Install” button for Linkit.
+Open terminal, go to your Craft project folder and use composer to load this plugin. Once loaded you can install via the Craft Control Panel, go to Settings → Plugins, locate the plugin and hit “Install”.
+
+```bash
+cd /path/to/project
+composer require fruitstudios/linkit
+```
 
 ## Updating from Craft 2
 

@@ -1,6 +1,14 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.8 - 2019-02-04
+
+### Changed
+
+*   Changed migration scripts as per Crafts new recommendations
+*   Changed requires Craft 3.1.2+
+*	Changed README.md installation instructions
+
 ## 1.1.7 - 2019-01-28
 
 ### Fixed

@@ -22,15 +22,14 @@ class m180423_175007_linkit_craft2 extends Migration
 
     public function safeUp()
     {
-        if ($this->_upgradeFromCraft2()) {
-            return;
-        }
+        $this->_upgradeFromCraft2();
     }
 
     private function _upgradeFromCraft2()
     {
         // Get Project Config
         $projectConfig = Craft::$app->getProjectConfig();
+        $projectConfig->muteEvents = true;
 
         // Don't make the same config changes twice
         $schemaVersion = $projectConfig->get('plugins.linkit.schemaVersion', true);
@@ -48,27 +47,34 @@ class m180423_175007_linkit_craft2 extends Migration
                 case 'fruitlinkit':
                 case 'fruit-link-it':
                 case 'fruit-linkit':
+                    $this->delete('{{%plugins}}', ['handle' => $pluginHandle]);
                     $projectConfig->remove(Plugins::CONFIG_PLUGINS_KEY . '.' . $pluginHandle);
                     break;
             }
         }
 
+
         // Get the field data from the project config
         $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
-        foreach ($fields as $fieldUid => $fieldData)
+        foreach ($fields as $fieldUid => $field)
         {
-            if ($fieldData['type'] === 'FruitLinkIt')
+            if ($field['type'] === 'FruitLinkIt')
             {
-                $oldSettings = $fieldData['settings'] ? Json::decode($fieldData['settings']) : null;
+                $type = LinkitField::class;
+                $settings = $this->_migrateFieldSettings($field['settings'] ? Json::decode($field['settings']) : null);
 
-                $fieldData['type'] = LinkitField::class;
-                $fieldData['settings'] = $this->_migrateFieldSettings($oldSettings);
+                $field['type'] = $type;
+                $field['settings'] = $settings;
 
-                $projectConfig->set(Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid, $fieldData);
+                $this->update('{{%fields}}', [
+                    'type' => $type,
+                    'settings' => Json::encode($settings),
+                ], ['uid' => $fieldUid]);
+                $projectConfig->set(Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid, $field);
             }
         }
 
-        return true;
+        $projectConfig->muteEvents = false;
     }
 
     private function _migrateFieldSettings($oldSettings)
