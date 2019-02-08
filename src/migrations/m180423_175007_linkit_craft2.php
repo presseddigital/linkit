@@ -23,6 +23,7 @@ class m180423_175007_linkit_craft2 extends Migration
     public function safeUp()
     {
         $this->_upgradeFromCraft2();
+        return true;
     }
 
     private function _upgradeFromCraft2()
@@ -47,12 +48,11 @@ class m180423_175007_linkit_craft2 extends Migration
                 case 'fruitlinkit':
                 case 'fruit-link-it':
                 case 'fruit-linkit':
-                    $this->delete('{{%plugins}}', ['handle' => $pluginHandle]);
                     $projectConfig->remove(Plugins::CONFIG_PLUGINS_KEY . '.' . $pluginHandle);
                     break;
             }
         }
-
+        $this->delete('{{%plugins}}', ['handle' => ['fruitlinkit', 'fruit-linkit', 'fruit-link-it']]);
 
         // Get the field data from the project config
         $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
@@ -61,7 +61,7 @@ class m180423_175007_linkit_craft2 extends Migration
             if ($field['type'] === 'FruitLinkIt')
             {
                 $type = LinkitField::class;
-                $settings = $this->_migrateFieldSettings($field['settings'] ? Json::decode($field['settings']) : null);
+                $settings = $this->_migrateFieldSettings($field['settings']);
 
                 $field['type'] = $type;
                 $field['settings'] = $settings;
@@ -70,6 +70,7 @@ class m180423_175007_linkit_craft2 extends Migration
                     'type' => $type,
                     'settings' => Json::encode($settings),
                 ], ['uid' => $fieldUid]);
+
                 $projectConfig->set(Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid, $field);
             }
         }

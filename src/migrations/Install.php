@@ -47,12 +47,11 @@ class Install extends Migration
                 case 'fruitlinkit':
                 case 'fruit-link-it':
                 case 'fruit-linkit':
-                    $this->delete('{{%plugins}}', ['handle' => $pluginHandle]);
                     $projectConfig->remove(Plugins::CONFIG_PLUGINS_KEY . '.' . $pluginHandle);
                     break;
             }
         }
-
+        $this->delete('{{%plugins}}', ['handle' => ['fruitlinkit', 'fruit-linkit', 'fruit-link-it']]);
 
         // Get the field data from the project config
         $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
@@ -61,7 +60,7 @@ class Install extends Migration
             if ($field['type'] === 'FruitLinkIt')
             {
                 $type = LinkitField::class;
-                $settings = $this->_migrateFieldSettings($field['settings'] ? Json::decode($field['settings']) : null);
+                $settings = $this->_migrateFieldSettings($field['settings']);
 
                 $field['type'] = $type;
                 $field['settings'] = $settings;
@@ -70,6 +69,7 @@ class Install extends Migration
                     'type' => $type,
                     'settings' => Json::encode($settings),
                 ], ['uid' => $fieldUid]);
+
                 $projectConfig->set(Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid, $field);
             }
         }
