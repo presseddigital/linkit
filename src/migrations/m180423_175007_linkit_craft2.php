@@ -18,7 +18,7 @@ use craft\helpers\Json;
 use craft\services\Fields;
 use craft\services\Plugins;
 
-class m180423_175007_linkit_craft2 extends Migration
+class m180423_175007_linkit_craft2 extends Install
 {
 
     public function safeUp()
