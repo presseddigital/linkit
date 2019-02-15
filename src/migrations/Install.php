@@ -25,56 +25,38 @@ class Install extends Migration
         return true;
     }
 
-    private function _upgradeFromCraft2()
+    protected function _upgradeFromCraft2()
     {
-        // Get Project Config
-        $projectConfig = Craft::$app->getProjectConfig();
-        $projectConfig->muteEvents = true;
-
-        // Don't make the same config changes twice
-        $schemaVersion = $projectConfig->get('plugins.linkit.schemaVersion', true);
-        if ($schemaVersion && version_compare($schemaVersion, '1.0.8', '>='))
-        {
-            return;
-        }
-
         // Locate and remove old linkit
-        $plugins = $projectConfig->get(Plugins::CONFIG_PLUGINS_KEY) ?? [];
-        foreach ($plugins as $pluginHandle => $pluginData)
+        $row = (new \craft\db\Query())
+            ->select(['id', 'settings'])
+            ->from(['{{%plugins}}'])
+            ->where(['in', 'handle', ['fruitlinkit', 'fruit-link-it', 'fruit-linkit']])
+            ->one();
+        if($row)
         {
-            switch ($pluginHandle)
-            {
-                case 'fruitlinkit':
-                case 'fruit-link-it':
-                case 'fruit-linkit':
-                    $projectConfig->remove(Plugins::CONFIG_PLUGINS_KEY . '.' . $pluginHandle);
-                    break;
-            }
+            $this->delete('{{%plugins}}', ['id' => $row['id']]);
         }
-        $this->delete('{{%plugins}}', ['handle' => ['fruitlinkit', 'fruit-linkit', 'fruit-link-it']]);
 
         // Get the field data from the project config
-        $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
-        foreach ($fields as $fieldUid => $field)
+        $fields = (new \craft\db\Query())
+            ->select(['uid', 'settings'])
+            ->from(['{{%fields}}'])
+            ->where(['in', 'type', ['FruitLinkIt']])
+            ->all();
+        foreach ($fields as $field)
         {
             if ($field['type'] === 'FruitLinkIt')
             {
-                $type = LinkitField::class;
-                $settings = $this->_migrateFieldSettings($field['settings']);
-
-                $field['type'] = $type;
-                $field['settings'] = $settings;
+                $oldSettings = $field['settings'] ? Json::decode($field['settings']) : null;
+                $newSettings = $this->_migrateFieldSettings($oldSettings);
 
                 $this->update('{{%fields}}', [
-                    'type' => $type,
-                    'settings' => Json::encode($settings),
-                ], ['uid' => $fieldUid]);
-
-                $projectConfig->set(Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid, $field);
+                    'type' => LinkitField::class,
+                    'settings' => Json::encode($newSettings)
+                ], ['uid' => $field['uid']]);
             }
         }
-
-        $projectConfig->muteEvents = false;
     }
 
     private function _migrateFieldSettings($oldSettings)
