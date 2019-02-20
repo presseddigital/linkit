@@ -46,16 +46,13 @@ class Install extends Migration
             ->all();
         foreach ($fields as $field)
         {
-            if ($field['type'] === 'FruitLinkIt')
-            {
-                $oldSettings = $field['settings'] ? Json::decode($field['settings']) : null;
-                $newSettings = $this->_migrateFieldSettings($oldSettings);
+            $oldSettings = $field['settings'] ? Json::decode($field['settings']) : null;
+            $newSettings = $this->_migrateFieldSettings($oldSettings);
 
-                $this->update('{{%fields}}', [
-                    'type' => LinkitField::class,
-                    'settings' => Json::encode($newSettings)
-                ], ['uid' => $field['uid']]);
-            }
+            $this->update('{{%fields}}', [
+                'type' => LinkitField::class,
+                'settings' => Json::encode($newSettings)
+            ], ['uid' => $field['uid']]);
         }
     }
 
