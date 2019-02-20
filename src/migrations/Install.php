@@ -29,7 +29,7 @@ class Install extends Migration
     {
         // Locate and remove old linkit
         $row = (new \craft\db\Query())
-            ->select(['id', 'settings'])
+            ->select(['id'])
             ->from(['{{%plugins}}'])
             ->where(['in', 'handle', ['fruitlinkit', 'fruit-link-it', 'fruit-linkit']])
             ->one();
