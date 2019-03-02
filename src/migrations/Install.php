@@ -21,11 +21,11 @@ class Install extends Migration
 {
     public function safeUp()
     {
-        $this->_upgradeFromCraft2();
+        $this->upgradeFromCraft2();
         return true;
     }
 
-    private function _upgradeFromCraft2()
+    protected function upgradeFromCraft2()
     {
         // Get Project Config
         $projectConfig = Craft::$app->getProjectConfig();
@@ -57,10 +57,10 @@ class Install extends Migration
         $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
         foreach ($fields as $fieldUid => $field)
         {
-            if ($field['type'] === 'FruitLinkIt')
+            if (isset($field['type']) && $field['type'] === 'FruitLinkIt')
             {
                 $type = LinkitField::class;
-                $settings = $this->_migrateFieldSettings($field['settings']);
+                $settings = $this->_migrateFieldSettings($field['settings'] ?? false);
 
                 $field['type'] = $type;
                 $field['settings'] = $settings;

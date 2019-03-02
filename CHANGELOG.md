@@ -1,6 +1,16 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.9 - 2019-03-02
+
+### Fixed
+
+*   Fixed migration issue where Super Table was not setting a type value on a field. Thanks @olibon.
+
+### Changed
+
+*   Improved migration scripts (Thanks to @roelvanhintum's input)
+
 ## 1.1.8 - 2019-02-08
 
 ### Changed
