@@ -184,7 +184,7 @@ Hook up the requirements and register custom link types in your plugin (or modul
     {
         parent::init();
 
-        Event::on(Linkit::class, LinkitService::EVENT_REGISTER_LINKIT_FIELD_TYPES, function (RegisterLinkTypesEvent $event) {
+        Event::on(LinkitService::class, LinkitService::EVENT_REGISTER_LINKIT_FIELD_TYPES, function (RegisterLinkTypesEvent $event) {
             $event->types[] = new CustomType();
         });
 

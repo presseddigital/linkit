@@ -8,6 +8,7 @@
 *   Fixed Craft 2 migration (findgers crossed for good) addressing issues with element sources and linkit fields nested in Matrix or Super Table. Thanks again @andris-sevcenko.
 *   Fixed SuperTable Craft 2 migration issue where Linkit is installed before SuperTable during upgrade.
 *   Fixed migration of Element sources converting IDs to UIDs.
+*   Fixed custom link docs (Thanks @domstubbs)
 
 ## 1.1.9 - 2019-03-02
 
