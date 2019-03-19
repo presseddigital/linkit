@@ -13,9 +13,13 @@ use fruitstudios\linkit\models\Product;
 
 use Craft;
 use craft\db\Migration;
+use craft\db\Query;
 use craft\helpers\Json;
+use craft\helpers\Db;
 use craft\services\Fields;
 use craft\services\Plugins;
+
+use craft\commerce\Plugin as CommercePlugin;
 
 class Install extends Migration
 {
@@ -54,23 +58,100 @@ class Install extends Migration
         $this->delete('{{%plugins}}', ['handle' => ['fruitlinkit', 'fruit-linkit', 'fruit-link-it']]);
 
         // Get the field data from the project config
-        $fields = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
-        foreach ($fields as $fieldUid => $field)
+        $fieldConfigs = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
+        $fieldConfigsToMigrate = [];
+        foreach ($fieldConfigs as $fieldUid => $fieldConfig)
         {
-            if (isset($field['type']) && $field['type'] === 'FruitLinkIt')
+            if(isset($fieldConfig['type']) && $fieldConfig['type'] === 'FruitLinkIt')
+            {
+                $fieldConfigsToMigrate[$fieldUid] = [
+                    'configPath' => Fields::CONFIG_FIELDS_KEY.'.'.$fieldUid,
+                    'config' => $fieldConfig
+                ];
+            }
+        }
+
+        // Migrate Matrix
+        $matrixBlockTypeConfigs = $projectConfig->get('matrixBlockTypes') ?? [];
+        foreach ($matrixBlockTypeConfigs as $matrixBlockTypeUid => $matrixBlockTypeConfig)
+        {
+            $fieldConfigs = $matrixBlockTypeConfig['fields'] ?? [];
+            foreach ($fieldConfigs as $fieldUid => $fieldConfig)
+            {
+                if(isset($fieldConfig['type']) && $fieldConfig['type'] === 'FruitLinkIt')
+                {
+                    $fieldConfigsToMigrate[$fieldUid] = [
+                        'configPath' => 'matrixBlockTypes.'.$matrixBlockTypeUid.'.fields.'.$fieldUid,
+                        'config' => $fieldConfig
+                    ];
+                }
+            }
+        }
+
+        // Migrate SuperTable
+        $superTableBlockTypeConfigs = $projectConfig->get('superTableBlockTypes') ?? [];
+        if($superTableBlockTypeConfigs)
+        {
+            foreach ($superTableBlockTypeConfigs as $superTableBlockTypeUid => $superTableBlockTypeConfig)
+            {
+                $fieldConfigs = $superTableBlockTypeConfig['fields'] ?? [];
+                foreach ($fieldConfigs as $fieldUid => $fieldConfig)
+                {
+                    if(isset($fieldConfig['type']) && $fieldConfig['type'] === 'FruitLinkIt')
+                    {
+                        $fieldConfigsToMigrate[$fieldUid] = [
+                            'configPath' => 'superTableBlockTypes.'.$superTableBlockTypeUid.'.fields.'.$fieldUid,
+                            'config' => $fieldConfig
+                        ];
+                    }
+                }
+            }
+        }
+        else
+        {
+            // If SuperTable is not yet installed but we can find linkit that need updating lets update them in the db.
+            $superTableLinkitFields = (new Query())
+                ->select(['uid', 'settings'])
+                ->from(['{{%fields}}'])
+                ->where([
+                    'and',
+                    ['like', 'context', 'superTableBlockType'],
+                    ['in', 'type', ['FruitLinkIt']]
+                ])
+                ->all();
+
+            foreach ($superTableLinkitFields as $superTableLinkitField)
+            {
+                $fieldConfigsToMigrate[$superTableLinkitField['uid']] = [
+                    'configPath' => false,
+                    'config' => [
+                        'settings' => Json::decode($superTableLinkitField['settings']),
+                    ]
+                ];
+            }
+
+        }
+
+        // Migrate Fields
+        if($fieldConfigsToMigrate)
+        {
+            foreach ($fieldConfigsToMigrate as $fieldUid => $fieldConfig)
             {
                 $type = LinkitField::class;
-                $settings = $this->_migrateFieldSettings($field['settings'] ?? false);
+                $settings = $this->_migrateFieldSettings($fieldConfig['config']['settings'] ?? false);
 
-                $field['type'] = $type;
-                $field['settings'] = $settings;
+                $fieldConfig['config']['type'] = $type;
+                $fieldConfig['config']['settings'] = $settings;
 
                 $this->update('{{%fields}}', [
                     'type' => $type,
                     'settings' => Json::encode($settings),
                 ], ['uid' => $fieldUid]);
 
-                $projectConfig->set(Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid, $field);
+                if($fieldConfig['configPath'])
+                {
+                    $projectConfig->set($fieldConfig['configPath'], $fieldConfig['config']);
+                }
             }
         }
 
@@ -122,16 +203,17 @@ class Install extends Migration
                         $newSettings['types'][Entry::class] = [
                             'enabled' => 1,
                             'customLabel' => null,
-                            'sources' => $oldSettings['entrySources'] ?? '*',
+                            'sources' => $this->_sourcesToUids(Entry::class, $oldSettings['entrySources'] ?? '*'),
                             'customSelectionLabel' => $oldSettings['entrySelectionLabel'] ?? '',
                         ];
                         break;
 
                     case 'category':
+                        $categorySources = $oldSettings['categorySources'] ?? '*';
                         $newSettings['types'][Category::class] = [
                             'enabled' => 1,
                             'customLabel' => null,
-                            'sources' => $oldSettings['categorySources'] ?? '*',
+                            'sources' => $this->_sourcesToUids(Category::class, $oldSettings['categorySources'] ?? '*'),
                             'customSelectionLabel' => $oldSettings['categorySelectionLabel'] ?? '',
                         ];
                         break;
@@ -140,7 +222,7 @@ class Install extends Migration
                         $newSettings['types'][Asset::class] = [
                             'enabled' => 1,
                             'customLabel' => null,
-                            'sources' => $oldSettings['assetSources'] ?? '*',
+                            'sources' => $this->_sourcesToUids(Asset::class, $oldSettings['assetSources'] ?? '*'),
                             'customSelectionLabel' => $oldSettings['assetSelectionLabel'] ?? '',
                         ];
                         break;
@@ -149,15 +231,13 @@ class Install extends Migration
                         $newSettings['types'][Product::class] = [
                             'enabled' => 1,
                             'customLabel' => null,
-                            'sources' => $oldSettings['entrySources'] ?? '*',
+                            'sources' => $this->_sourcesToUids(Product::class, $oldSettings['productSources'] ?? '*'),
                             'customSelectionLabel' => $oldSettings['entrySelectionLabel'] ?? '',
                         ];
                         break;
                 }
             }
         }
-
-
         return $newSettings;
     }
 
@@ -165,6 +245,57 @@ class Install extends Migration
     {
         return true;
     }
+
+
+    private function _sourcesToUids($elementType, $sources)
+    {
+        if($sources == '*' || !is_array($sources))
+        {
+            return $sources;
+        }
+
+        $newSources = [];
+        foreach($sources as $source)
+        {
+            $uid = false;
+            $sourceKeyParts = explode(':', $source);
+            $sourceId = $sourceKeyParts[1] ?? false;
+
+            if($sourceId && ctype_digit($sourceId))
+            {
+                switch ($elementType)
+                {
+                    case Category::class:
+                        $uid = Craft::$app->getCategories()->getGroupById($sourceId)->uid ?? false;
+                        break;
+
+                    case Entry::class:
+                        $uid = Craft::$app->getSections()->getSectionById($sourceId)->uid ?? false;
+                        break;
+
+                    case User::class:
+                        $uid = Craft::$app->getUserGroups()->getGroupById($sourceId)->uid ?? false;
+                        break;
+
+                    case Asset::class:
+                        $uid = Craft::$app->getAssets()->getFolderById($sourceId)->uid ?? false;
+                        break;
+
+                    case Product::class:
+                        if (Linkit::$commerceInstalled)
+                        {
+                            $uid = CommercePlugin::getInstance()->getProducts()->getProductById($sourceId)->uid ?? false;
+                        }
+
+                        break;
+                }
+
+                $newSources[] = $uid ? ($sourceKeyParts[0].':'.$uid) : $source;
+            }
+        }
+        return $newSources;
+    }
+
 }
 
 

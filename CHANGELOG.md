@@ -1,6 +1,14 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.10 - 2019-03-19
+
+### Fixed
+
+*   Fixed Craft 2 migration (findgers crossed for good) addressing issues with element sources and linkit fields nested in Matrix or Super Table. Thanks again @andris-sevcenko.
+*   Fixed SuperTable Craft 2 migration issue where Linkit is installed before SuperTable during upgrade.
+*   Fixed migration of Element sources converting IDs to UIDs.
+
 ## 1.1.9 - 2019-03-02
 
 ### Fixed
@@ -15,7 +23,7 @@
 
 ### Changed
 
-*   Changed migration scripts as per Crafts new recommendations (Thanks to @andris)
+*   Changed migration scripts as per Crafts new recommendations (Thanks to @andris-sevcenko)
 *   Changed requires Craft 3.1.2+
 *	Changed README.md installation instructions
 

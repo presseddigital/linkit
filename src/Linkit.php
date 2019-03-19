@@ -14,12 +14,16 @@ use craft\events\RegisterComponentTypesEvent;
 use craft\services\Plugins;
 use craft\services\Fields;
 
+use craft\commerce\Plugin as CommercePlugin;
+
 class Linkit extends Plugin
 {
     // Static Properties
     // =========================================================================
 
     public static $plugin;
+    public static $commerceInstalled;
+
 
     // Public Methods
     // =========================================================================
@@ -31,6 +35,8 @@ class Linkit extends Plugin
         parent::init();
 
         self::$plugin = $this;
+        self::$commerceInstalled = class_exists(CommercePlugin::class);
+
 
         $this->setComponents([
             'service' => LinkitService::class,
