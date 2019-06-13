@@ -57,14 +57,15 @@ Social
 5.  Facebook
 6.  Instagram
 7.  Linked In
+8.  YouTube
 
 Elements
 
-8.  Entry
-9.  Category
-10. User
-11. Asset
-12. Product
+9.  Entry
+10.  Category
+11. User
+12. Asset
+13. Product
 
 Each link type has additional option to allow further customisation. For example, the User link type allows you to set a default path...
 
