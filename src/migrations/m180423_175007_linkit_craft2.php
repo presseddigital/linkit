@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\linkit\migrations;
+namespace presseddigital\linkit\migrations;
 
-use fruitstudios\linkit\migrations\Install;
+use presseddigital\linkit\migrations\Install;
 
 class m180423_175007_linkit_craft2 extends Install
 {

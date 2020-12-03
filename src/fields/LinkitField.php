@@ -1,18 +1,18 @@
 <?php
-namespace fruitstudios\linkit\fields;
+namespace presseddigital\linkit\fields;
 
-use fruitstudios\linkit\Linkit;
-use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
-use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
-use fruitstudios\linkit\services\LinkitService;
-use fruitstudios\linkit\base\Link;
-use fruitstudios\linkit\models\Email;
-use fruitstudios\linkit\models\Phone;
-use fruitstudios\linkit\models\Url;
-use fruitstudios\linkit\models\Entry;
-use fruitstudios\linkit\models\Category;
-use fruitstudios\linkit\models\Asset;
-use fruitstudios\linkit\models\Product;
+use presseddigital\linkit\Linkit;
+use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
+use presseddigital\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
+use presseddigital\linkit\services\LinkitService;
+use presseddigital\linkit\base\Link;
+use presseddigital\linkit\models\Email;
+use presseddigital\linkit\models\Phone;
+use presseddigital\linkit\models\Url;
+use presseddigital\linkit\models\Entry;
+use presseddigital\linkit\models\Category;
+use presseddigital\linkit\models\Asset;
+use presseddigital\linkit\models\Product;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -374,3 +374,5 @@ class LinkitField extends Field implements PreviewableFieldInterface
         return $newContent;
     }
 }
+
+class_alias(LinkitField::class, \presseddigital\linkit\fields\LinkitField::class);

@@ -1,15 +1,15 @@
 <?php
-namespace fruitstudios\linkit\migrations;
+namespace presseddigital\linkit\migrations;
 
-use fruitstudios\linkit\Linkit;
-use fruitstudios\linkit\fields\LinkitField;
-use fruitstudios\linkit\models\Email;
-use fruitstudios\linkit\models\Phone;
-use fruitstudios\linkit\models\Url;
-use fruitstudios\linkit\models\Entry;
-use fruitstudios\linkit\models\Category;
-use fruitstudios\linkit\models\Asset;
-use fruitstudios\linkit\models\Product;
+use presseddigital\linkit\Linkit;
+use presseddigital\linkit\fields\LinkitField;
+use presseddigital\linkit\models\Email;
+use presseddigital\linkit\models\Phone;
+use presseddigital\linkit\models\Url;
+use presseddigital\linkit\models\Entry;
+use presseddigital\linkit\models\Category;
+use presseddigital\linkit\models\Asset;
+use presseddigital\linkit\models\Product;
 
 use Craft;
 use craft\db\Migration;

@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\linkit\assetbundles\fieldsettings;
+namespace presseddigital\linkit\assetbundles\fieldsettings;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -12,7 +12,7 @@ class FieldSettingsAssetBundle extends AssetBundle
 
     public function init()
     {
-        $this->sourcePath = "@fruitstudios/linkit/assetbundles/fieldsettings/build";
+        $this->sourcePath = "@presseddigital/linkit/assetbundles/fieldsettings/build";
 
         $this->depends = [
             CpAsset::class,

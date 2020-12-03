@@ -4,8 +4,8 @@
  *
  * One link field to rule them all...
  *
- * @link      https://fruitstudios.co.uk
- * @copyright Copyright (c) 2017 Fruit Studios
+ * @link      https://pressed.digital
+ * @copyright Copyright (c) 2017 Pressed Digital
  */
 
 /**
@@ -16,7 +16,7 @@
  *
  * http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html
  *
- * @author    Fruit Studios
+ * @author    Pressed Digital
  * @package   Linkit
  * @since     1.0.0
  */

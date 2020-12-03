@@ -1,10 +1,10 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace presseddigital\linkit\models;
 
 use Craft;
 
-use fruitstudios\linkit\Linkit;
-use fruitstudios\linkit\base\Link;
+use presseddigital\linkit\Linkit;
+use presseddigital\linkit\base\Link;
 
 class Phone extends Link
 {

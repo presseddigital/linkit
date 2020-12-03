@@ -1,6 +1,12 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.13 - 2020-11-15
+
+### Changed
+
+*   Transfer ownership to Pressed Digital
+
 ## 1.1.12.1 - 2020-10-29
 
 ## 1.1.12 - 2020-10-29

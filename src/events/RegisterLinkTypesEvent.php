@@ -1,5 +1,5 @@
 <?php
-namespace fruitstudios\linkit\events;
+namespace presseddigital\linkit\events;
 
 use yii\base\Event;
 

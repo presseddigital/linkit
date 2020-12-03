@@ -1,43 +1,32 @@
 {
-	"name": "fruitstudios/linkit",
+	"name": "presseddigital/linkit",
 	"description": "One link field to rule them all.",
 	"type": "craft-plugin",
-	"version": "1.1.12.1",
+	"version": "1.1.13",
 	"keywords": [
-		"craft",
-		"cms",
 		"craftcms",
-		"craft-plugin",
 		"link it",
 		"linkit",
-		"fruit studios"
+		"link"
 	],
 	"support": {
-		"email": "hi@fruitstudios.co.uk",
-		"issues":
-			"https://github.com/fruitstudios/craft-linkit/issues?state=open",
-		"source": "https://github.com/fruitstudios/craft-linkit",
-		"docs": "https://github.com/fruitstudios/craft-linkit"
+		"docs": "https://github.com/presseddigital/linkit/blob/master/README.md",
+		"issues": "https://github.com/presseddigital/linkit/issues?state=open"
 	},
 	"license": "proprietary",
 	"authors": [
 		{
-			"name": "Fruit Studios",
-			"homepage": "https://fruitstudios.co.uk"
+			"name": "Pressed Digital",
+			"homepage": "https://pressed.digital"
 		}
 	],
 	"require": {
 		"craftcms/cms": "^3.1.8"
 	},
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://asset-packagist.org"
-		}
-	],
 	"autoload": {
 		"psr-4": {
-			"fruitstudios\\linkit\\": "src/"
+			"presseddigital\\linkit\\": "src/",
+			"fruitstudios\\linkit\\": "src_legacy/"
 		}
 	},
 	"extra": {
@@ -45,10 +34,10 @@
 		"handle": "linkit",
 		"hasCpSettings": false,
         "hasCpSection": false,
-		"changelogUrl": "https://raw.githubusercontent.com/fruitstudios/craft-linkit/master/CHANGELOG.md",
-		"class": "fruitstudios\\linkit\\Linkit",
+		"changelogUrl": "https://raw.githubusercontent.com/presseddigital/linkit/master/CHANGELOG.md",
+		"class": "presseddigital\\linkit\\Linkit",
         "components": {
-            "services": "fruitstudios\\linkit\\services\\LinkitService"
+            "services": "presseddigital\\linkit\\services\\LinkitService"
         }
 	}
 }

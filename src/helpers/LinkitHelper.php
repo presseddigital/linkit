@@ -1,6 +1,6 @@
 <?php
 
-namespace fruitstudios\linkit\helpers;
+namespace presseddigital\linkit\helpers;
 
 use Craft;
 

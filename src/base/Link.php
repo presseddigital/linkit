@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\linkit\base;
+namespace presseddigital\linkit\base;
 
-use fruitstudios\linkit\helpers\LinkitHelper;
+use presseddigital\linkit\helpers\LinkitHelper;
 
 use Craft;
 use craft\base\ElementInterface;

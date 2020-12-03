@@ -1,21 +1,21 @@
 <?php
-namespace fruitstudios\linkit\services;
+namespace presseddigital\linkit\services;
 
-use fruitstudios\linkit\Linkit;
-use fruitstudios\linkit\events\RegisterLinkTypesEvent;
+use presseddigital\linkit\Linkit;
+use presseddigital\linkit\events\RegisterLinkTypesEvent;
 
-use fruitstudios\linkit\models\Phone;
-use fruitstudios\linkit\models\Url;
-use fruitstudios\linkit\models\Email;
-use fruitstudios\linkit\models\Asset;
-use fruitstudios\linkit\models\Entry;
-use fruitstudios\linkit\models\Category;
-use fruitstudios\linkit\models\User;
-use fruitstudios\linkit\models\Product;
-use fruitstudios\linkit\models\Twitter;
-use fruitstudios\linkit\models\Facebook;
-use fruitstudios\linkit\models\LinkedIn;
-use fruitstudios\linkit\models\Instagram;
+use presseddigital\linkit\models\Phone;
+use presseddigital\linkit\models\Url;
+use presseddigital\linkit\models\Email;
+use presseddigital\linkit\models\Asset;
+use presseddigital\linkit\models\Entry;
+use presseddigital\linkit\models\Category;
+use presseddigital\linkit\models\User;
+use presseddigital\linkit\models\Product;
+use presseddigital\linkit\models\Twitter;
+use presseddigital\linkit\models\Facebook;
+use presseddigital\linkit\models\LinkedIn;
+use presseddigital\linkit\models\Instagram;
 
 use Craft;
 use craft\base\Component;

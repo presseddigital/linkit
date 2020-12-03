@@ -1,8 +1,8 @@
 <?php
-namespace fruitstudios\linkit;
+namespace presseddigital\linkit;
 
-use fruitstudios\linkit\fields\LinkitField;
-use fruitstudios\linkit\services\LinkitService;
+use presseddigital\linkit\fields\LinkitField;
+use presseddigital\linkit\services\LinkitService;
 
 use Craft;
 use craft\base\Plugin;

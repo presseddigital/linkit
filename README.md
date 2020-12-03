@@ -1,9 +1,11 @@
-<p align="left"><a href="https://github.com/fruitstudios/craft-linkit" target="_blank"><img width="100" height="100" src="resources/img/linkit.svg" alt="Linkit"></a></p>
+<p align="left"><a href="https://github.com/presseddigital/linkit" target="_blank"><img width="100" height="100" src="resources/img/linkit.svg" alt="Linkit"></a></p>
 
 # Linkit plugin for Craft 3
 
 One link field to rule them all...
 This plugin adds a custom fieldtype which enables support for linking to email addresses, telephone numbers, URL's and Craft element types.
+
+> :mega: **A note from the new (well sort of new) owners Pressed Digital:** At the end of 2019 Pressed Digital Ltd was sold to allow it's founders to shift 100% of their focus to the, now not so side project, findarace.com. As a part of the deal we retained ownership of all Craft plugins and are committed to make them even more awesome. With findarace.com being all Craft, this aligns really nicely, and as a little silver lining we should now finally have some time to launch some of our unreleased plugins!
 
 ## New for Craft 3
 
@@ -28,7 +30,7 @@ Open terminal, go to your Craft project folder and use composer to load this plu
 
 ```bash
 cd /path/to/project
-composer require fruitstudios/linkit
+composer require presseddigital/linkit
 ```
 
 ## Updating from Craft 2
@@ -172,9 +174,9 @@ Hook up the requirements and register custom link types in your plugin (or modul
 
     ...
 
-    use fruitstudios\linkit\Linkit;
-    use fruitstudios\linkit\events\RegisterLinkTypesEvent;
-    use fruitstudios\linkit\services\LinkitService;
+    use presseddigital\linkit\Linkit;
+    use presseddigital\linkit\events\RegisterLinkTypesEvent;
+    use presseddigital\linkit\services\LinkitService;
 
     use developer\plugin\models\CustomType;
 
@@ -192,4 +194,4 @@ Hook up the requirements and register custom link types in your plugin (or modul
 
 If you think they are super useful and you agree we can look to add them to the core plugin for everyone to use.
 
-Brought to you by [FRUIT](https://fruitstudios.co.uk)
+Brought to you by [Pressed Digital](https://pressed.digital)

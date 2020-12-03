@@ -1,7 +1,7 @@
 <?php
-namespace fruitstudios\linkit\base;
+namespace presseddigital\linkit\base;
 
-use fruitstudios\linkit\base\Link;
+use presseddigital\linkit\base\Link;
 
 use Craft;
 use craft\base\SavableComponentInterface;

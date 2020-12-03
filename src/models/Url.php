@@ -1,11 +1,11 @@
 <?php
-namespace fruitstudios\linkit\models;
+namespace presseddigital\linkit\models;
 
 use Craft;
 
-use fruitstudios\linkit\Linkit;
-use fruitstudios\linkit\base\Link;
-use fruitstudios\linkit\validators\UrlValidator;
+use presseddigital\linkit\Linkit;
+use presseddigital\linkit\base\Link;
+use presseddigital\linkit\validators\UrlValidator;
 
 class Url extends Link
 {
