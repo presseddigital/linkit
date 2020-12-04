@@ -58,3 +58,5 @@ class Twitter extends Link
         return $rules;
     }
 }
+
+class_alias(Twitter::class, \fruitstudios\linkit\models\Twitter::class);

@@ -37,3 +37,5 @@ class Email extends Link
     }
 
 }
+
+class_alias(Email::class, \fruitstudios\linkit\models\Email::class);

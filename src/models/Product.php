@@ -36,3 +36,5 @@ class Product extends ElementLink
         return $this->_product;
     }
 }
+
+class_alias(Product::class, \fruitstudios\linkit\models\Product::class);

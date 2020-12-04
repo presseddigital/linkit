@@ -375,4 +375,4 @@ class LinkitField extends Field implements PreviewableFieldInterface
     }
 }
 
-class_alias(LinkitField::class, \presseddigital\linkit\fields\LinkitField::class);
+class_alias(LinkitField::class, \fruitstudios\linkit\fields\LinkitField::class);

@@ -46,3 +46,5 @@ class Phone extends Link
         return $rules;
     }
 }
+
+class_alias(Phone::class, \fruitstudios\linkit\models\Phone::class);

@@ -58,3 +58,5 @@ class Facebook extends Link
         return $rules;
     }
 }
+
+class_alias(Facebook::class, \fruitstudios\linkit\models\Facebook::class);

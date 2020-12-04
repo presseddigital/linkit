@@ -77,3 +77,5 @@ class User extends ElementLink
         return $rules;
     }
 }
+
+class_alias(User::class, \fruitstudios\linkit\models\User::class);

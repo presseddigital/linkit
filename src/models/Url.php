@@ -61,3 +61,6 @@ class Url extends Link
         return $rules;
     }
 }
+
+class_alias(Url::class, \fruitstudios\linkit\models\Url::class);
+

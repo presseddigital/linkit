@@ -40,3 +40,5 @@ class Asset extends ElementLink
         return $this->_asset;
     }
 }
+
+class_alias(Asset::class, \fruitstudios\linkit\models\Asset::class);

@@ -35,3 +35,5 @@ class Entry extends ElementLink
         return $this->_entry;
     }
 }
+
+class_alias(Entry::class, \fruitstudios\linkit\models\Entry::class);

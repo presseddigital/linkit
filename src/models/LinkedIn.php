@@ -58,3 +58,6 @@ class LinkedIn extends Link
         return $rules;
     }
 }
+
+class_alias(LinkedIn::class, \fruitstudios\linkit\models\LinkedIn::class);
+

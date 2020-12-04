@@ -35,3 +35,5 @@ class Category extends ElementLink
         return $this->_category;
     }
 }
+
+class_alias(Category::class, \fruitstudios\linkit\models\Category::class);

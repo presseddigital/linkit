@@ -58,3 +58,5 @@ class Instagram extends Link
         return $rules;
     }
 }
+
+class_alias(Instagram::class, \fruitstudios\linkit\models\Instagram::class);
