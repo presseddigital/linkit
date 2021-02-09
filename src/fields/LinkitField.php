@@ -138,6 +138,7 @@ class LinkitField extends Field implements PreviewableFieldInterface
                 'value' => $value->value,
                 'customText' => $value->customText,
                 'target' => $value->target,
+                'siteId' => $value->siteId,
             ];
         }
 

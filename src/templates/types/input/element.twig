@@ -15,3 +15,9 @@
     },
     storageKey: 'field.'~field.id,
 }) }}
+
+{{ forms.hidden({
+    id: name~'SiteId',
+    name: name~'[siteId]',
+    value: currentLink.siteId ?? '',
+}) }}
