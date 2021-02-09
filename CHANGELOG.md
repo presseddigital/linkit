@@ -1,6 +1,14 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
+## 1.1.12.1 - 2020-10-29
+
+## 1.1.12 - 2020-10-29
+
+### Fixed
+
+*   Fixed site menu dropdown option for entry selection. Credit to @renzo-s.
+
 ## 1.1.11 - 2019-04-03
 
 ### Fixed
