@@ -12,7 +12,12 @@
     elements: (currentLink.element ?? false) ? [currentLink.element] : [],
     criteria: {
         enabledForSite: null,
-    	siteId: element.siteId ?? null,
-	},
+    },
     storageKey: 'field.'~field.id,
+}) }}
+
+{{ forms.hidden({
+    id: name~'SiteId',
+    name: name~'[siteId]',
+    value: currentLink.siteId ?? '',
 }) }}

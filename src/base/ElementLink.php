@@ -80,10 +80,17 @@ abstract class ElementLink extends Link
 
     public function getElement()
     {
+        $siteId = $this->siteId ?? $this->ownerElement->siteId ?? null;
+
         if(is_null($this->_element))
         {
-            $this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
+            $this->_element = Craft::$app->getElements()->getElementById(
+                (int)$this->value,
+                static::elementType(),
+                $siteId
+            );
         }
+
         return $this->_element;
     }
 
