@@ -16,6 +16,7 @@ use fruitstudios\linkit\models\Twitter;
 use fruitstudios\linkit\models\Facebook;
 use fruitstudios\linkit\models\LinkedIn;
 use fruitstudios\linkit\models\Instagram;
+use fruitstudios\linkit\models\YouTube;
 
 use Craft;
 use craft\base\Component;
@@ -45,6 +46,7 @@ class LinkitService extends Component
         $linkTypes[] = new Facebook();
         $linkTypes[] = new Instagram();
         $linkTypes[] = new LinkedIn();
+        $linkTypes[] = new YouTube();
 
         // Element link types
         $linkTypes[] = new Entry();
