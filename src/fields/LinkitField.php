@@ -6,6 +6,7 @@ use fruitstudios\linkit\assetbundles\field\FieldAssetBundle;
 use fruitstudios\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use fruitstudios\linkit\services\LinkitService;
 use fruitstudios\linkit\base\Link;
+use fruitstudios\linkit\gql\types\generators\LinkitGenerator;
 use fruitstudios\linkit\models\Email;
 use fruitstudios\linkit\models\Phone;
 use fruitstudios\linkit\models\Url;
@@ -20,6 +21,7 @@ use craft\base\PreviewableFieldInterface;
 use craft\base\Field;
 use craft\helpers\Json as JsonHelper;
 use craft\helpers\Db as DbHelper;
+use GraphQL\Type\Definition\Type;
 use yii\db\Schema;
 use yii\base\ErrorException;
 use craft\validators\ArrayValidator;
@@ -80,6 +82,11 @@ class LinkitField extends Field implements PreviewableFieldInterface
     public function getContentColumnType(): string
     {
         return $this->_columnType;
+    }
+
+    public function getContentGqlType()
+    {
+        return LinkitGenerator::generateType($this);
     }
 
     public static function hasContentColumn(): bool
