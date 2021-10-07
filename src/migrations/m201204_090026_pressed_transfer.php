@@ -15,11 +15,13 @@ class m201204_090026_pressed_transfer extends Migration
      */
     public function safeUp()
     {
+        // Don’t make the same config changes twice
+        $schemaVersion = Craft::$app->projectConfig->get('plugins.linkit.schemaVersion', true);
 
+        if (version_compare($schemaVersion, '1.2.0', '<'))
+        {
 
-
-
-
+        }
     }
 
     /**
