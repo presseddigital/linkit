@@ -5,6 +5,7 @@ use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
 use presseddigital\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use presseddigital\linkit\services\LinkitService;
+use presseddigital\linkit\gql\types\generators\LinkitGenerator;
 use presseddigital\linkit\base\Link;
 use presseddigital\linkit\models\Email;
 use presseddigital\linkit\models\Phone;
@@ -20,9 +21,9 @@ use craft\base\PreviewableFieldInterface;
 use craft\base\Field;
 use craft\helpers\Json as JsonHelper;
 use craft\helpers\Db as DbHelper;
+use craft\validators\ArrayValidator;
 use yii\db\Schema;
 use yii\base\ErrorException;
-use craft\validators\ArrayValidator;
 
 class LinkitField extends Field implements PreviewableFieldInterface
 {
@@ -80,6 +81,11 @@ class LinkitField extends Field implements PreviewableFieldInterface
     public function getContentColumnType(): string
     {
         return $this->_columnType;
+    }
+
+    public function getContentGqlType()
+    {
+        return LinkitGenerator::generateType($this);
     }
 
     public static function hasContentColumn(): bool

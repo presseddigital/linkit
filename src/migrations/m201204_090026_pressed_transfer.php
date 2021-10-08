@@ -55,6 +55,8 @@ class m201204_090026_pressed_transfer extends Migration
                 }
             }
         }
+
+        return true;
     }
 
     /**
