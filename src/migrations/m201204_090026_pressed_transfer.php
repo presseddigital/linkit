@@ -23,7 +23,7 @@ class m201204_090026_pressed_transfer extends Migration
             $fieldsService = Craft::$app->getFields();
             foreach ($fieldsService->getAllFields() as $field)
             {
-                if ($field instanceof \fruitstudios\linkit\fields\LinkitField)
+                if ($field::displayName() === 'Linkit')
                 {
                     // Update the type settings
                     $fieldSettings = $field->getSettings();
@@ -36,7 +36,7 @@ class m201204_090026_pressed_transfer extends Migration
 
                     // Create field of new type
                     $field = $fieldsService->createField([
-                        'type' => \fruitstudios\linkit\fields\LinkitField::class,
+                        'type' => \presseddigital\linkit\fields\LinkitField::class,
                         'id' => $field->id,
                         'uid' => $field->uid,
                         'groupId' => $field->groupId,
