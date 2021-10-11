@@ -18,6 +18,7 @@ use presseddigital\linkit\models\Product;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\PreviewableFieldInterface;
+use craft\base\EagerLoadingFieldInterface;
 use craft\base\Field;
 use craft\helpers\Json as JsonHelper;
 use craft\helpers\Db as DbHelper;
@@ -25,7 +26,7 @@ use craft\validators\ArrayValidator;
 use yii\db\Schema;
 use yii\base\ErrorException;
 
-class LinkitField extends Field implements PreviewableFieldInterface
+class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadingFieldInterface
 {
     // Constants
     // =========================================================================
@@ -70,6 +71,42 @@ class LinkitField extends Field implements PreviewableFieldInterface
 
     // Public Methods
     // =========================================================================
+
+    public function __construct($config = [])
+    {
+        // Handle field settings for installations prior to 1.2.0
+        if (array_key_exists('types', $config))
+        {
+            $types = [];
+            foreach($config['types'] as $typeClass => $typeSettings)
+            {
+                $types[str_replace('fruitstudios', 'presseddigital', $typeClass)] = $typeSettings;
+            }
+            $config['types'] = $types;
+        }
+
+        parent::__construct($config);
+    }
+
+    /**
+     * Returns an array that maps source-to-target element IDs based on this custom field.
+     *
+     * This method aids in the eager-loading of elements when performing an element query. The returned array should
+     * contain the following keys:
+     * - `elementType` – the fully qualified class name of the element type that should be eager-loaded
+     * - `map` – an array of element ID mappings, where each element is a sub-array with `source` and `target` keys.
+     * - `criteria` *(optional)* – Any criteria parameters that should be applied to the element query when fetching the eager-loaded elements.
+     *
+     * @param ElementInterface[] $sourceElements An array of the source elements
+     * @return array|false|null The eager-loading element ID mappings, false if no mappings exist, or null if the result
+     * should be ignored.
+     */
+    public function getEagerLoadingMap(array $sourceElements)
+    {
+
+    }
+
+
 
     public function rules()
     {

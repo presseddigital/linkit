@@ -28,6 +28,29 @@ class Entry extends ElementLink
 
     public function getEntry()
     {
+
+
+        // if ($element)
+        // {
+        //     $eagerLoadingHandle = $this->getField()->handle.':element';
+        //     if($element->hasEagerLoadedElements($eagerLoadingHandle))
+        //     {
+        //         $elements = $element->getEagerLoadedElements($eagerLoadingHandle);
+        //         return $elements[0] ?? null;
+        //     }
+        // }
+
+        // if($value instanceof ElementInterface)
+        // {
+        //     return $value;
+        // }
+
+        // $element = Craft::$app->getElements()->getElementById((int)$value, $this->elementType);
+        // return $element ? $element : $value;
+
+
+
+
         if(is_null($this->_entry))
         {
             $this->_entry = Craft::$app->getEntries()->getEntryById((int) $this->value, $this->ownerElement->siteId ?? null);

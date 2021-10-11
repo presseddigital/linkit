@@ -80,6 +80,21 @@ abstract class ElementLink extends Link
 
     public function getElement()
     {
+
+        // Use this to get element everywhere, just use the static type and get elementby id
+        // also use do the eager loading stuff here
+        //
+        // if($this->_element !== null)
+        // {
+        //     return $this->_element;
+        // }
+
+        // Check eager loading
+
+        // IDEA. Could we make the plugin eager load by default just like the data element does, could be a plugin setting?
+
+        // Get the element by id / element type site etc
+
         if(is_null($this->_element))
         {
             $this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);

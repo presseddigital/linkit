@@ -7,13 +7,10 @@ use presseddigital\linkit\services\LinkitService;
 use Craft;
 use craft\base\Plugin;
 use yii\base\Event;
-
 use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
-
 use craft\services\Plugins;
 use craft\services\Fields;
-
 use craft\commerce\Plugin as CommercePlugin;
 
 class Linkit extends Plugin
@@ -23,7 +20,6 @@ class Linkit extends Plugin
 
     public static $plugin;
     public static $commerceInstalled;
-
 
     // Public Methods
     // =========================================================================
@@ -37,24 +33,14 @@ class Linkit extends Plugin
         self::$plugin = $this;
         self::$commerceInstalled = class_exists(CommercePlugin::class);
 
-
         $this->setComponents([
             'service' => LinkitService::class,
         ]);
 
-        Event::on(
-            Fields::className(),
-            Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
-                $event->types[] = LinkitField::class;
-            }
-        );
+        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
+            $event->types[] = LinkitField::class;
+        });
 
-        Craft::info(
-            Craft::t('linkit', '{name} plugin loaded', [
-                'name' => $this->name
-            ]),
-            __METHOD__
-        );
+        Craft::info(Craft::t('linkit', '{name} plugin loaded', [ 'name' => $this->name ]), __METHOD__);
     }
 }
