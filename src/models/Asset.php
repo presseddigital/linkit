@@ -1,20 +1,13 @@
 <?php
 namespace presseddigital\linkit\models;
 
-use Craft;
-
-use presseddigital\linkit\Linkit;
 use presseddigital\linkit\base\ElementLink;
 
+use Craft;
 use craft\elements\Asset as CraftAsset;
 
 class Asset extends ElementLink
 {
-    // Private
-    // =========================================================================
-
-    private $_asset;
-
     // Static
     // =========================================================================
 
@@ -33,11 +26,7 @@ class Asset extends ElementLink
 
     public function getAsset()
     {
-        if(is_null($this->_asset))
-        {
-            $this->_asset = Craft::$app->getAssets()->getAssetById((int) $this->value, $this->ownerElement->siteId ?? null);
-        }
-        return $this->_asset;
+        return $this->getElement();
     }
 }
 

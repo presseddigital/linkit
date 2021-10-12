@@ -1,20 +1,13 @@
 <?php
 namespace presseddigital\linkit\models;
 
-use Craft;
-
-use presseddigital\linkit\Linkit;
 use presseddigital\linkit\base\ElementLink;
 
+use Craft;
 use craft\elements\Category as CraftCategory;
 
 class Category extends ElementLink
 {
-    // Private
-    // =========================================================================
-
-    private $_category;
-
     // Static
     // =========================================================================
 
@@ -28,11 +21,7 @@ class Category extends ElementLink
 
     public function getCategory()
     {
-        if(is_null($this->_category))
-        {
-            $this->_category = Craft::$app->getCategories()->getCategoryById((int) $this->value, $this->ownerElement->siteId ?? null);
-        }
-        return $this->_category;
+        return $this->getElement();
     }
 }
 

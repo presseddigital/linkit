@@ -163,8 +163,10 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
             }
 
             $link = $this->_getLinkTypeModelByType($value['type']);
+            unset($value['type']);
             $link->setAttributes($value, false); // TODO: Get Rules added for these and remove false
-            $link->ownerElement = $element;
+            // Craft::configure($link, $value); // Want to use but only if we can confirm that we can't get passed invalid attributes here
+            $link->setOwnerElement($element);
             return $link;
         }
 
@@ -192,12 +194,9 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         $view = Craft::$app->getView();
         $view->registerAssetBundle(FieldSettingsAssetBundle::class);
 
-        return $view->renderTemplate(
-            'linkit/fields/_settings',
-            [
-                'field' => $this,
-            ]
-        );
+        return $view->renderTemplate('linkit/fields/_settings', [
+            'field' => $this,
+        ]);
     }
 
     public function getInputHtml($value, ElementInterface $element = null): string
@@ -351,9 +350,10 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     private function _populateLinkTypeModel(Link $linkType)
     {
         // Get Type Settings
-        $attributes = $this->types[$linkType->type] ?? [];
-        $linkType->setAttributes($attributes, false);
-        $linkType->fieldSettings = $this->getSettings();
+        $linkType->setAttributes($this->types[$linkType->type] ?? [], false); // TODO: Get Rules added for these and remove false
+        // Craft::configure($linkType, $attributes); // Want to use but only if we can confirm that we can't get passed invalid attributes here
+        $linkType->fieldSettings = $this->getSettings(); // TODO: remove and ust use the field now set below
+        $linkType->setField($this);
         return $linkType;
     }
 

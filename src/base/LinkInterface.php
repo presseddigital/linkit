@@ -5,6 +5,8 @@ use presseddigital\linkit\base\Link;
 
 use Craft;
 use craft\base\SavableComponentInterface;
+use craft\base\ElementInterface;
+use craft\base\FieldInterface;
 
 interface LinkInterface extends SavableComponentInterface
 {
@@ -25,6 +27,12 @@ interface LinkInterface extends SavableComponentInterface
     // =========================================================================
 
     public function __toString(): string;
+
+    public function setOwnerElement(ElementInterface $element = null);
+    public function getOwnerElement(): ElementInterface;
+
+    public function setField(FieldInterface $field = null);
+    public function getField(): FieldInterface;
 
     public function defaultSelectionLabel(): string;
 

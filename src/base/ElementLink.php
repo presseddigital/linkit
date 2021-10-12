@@ -5,6 +5,7 @@ use presseddigital\linkit\Linkit;
 
 use Craft;
 use craft\base\Element;
+use craft\helpers\ArrayHelper;
 
 abstract class ElementLink extends Link
 {
@@ -80,26 +81,26 @@ abstract class ElementLink extends Link
 
     public function getElement()
     {
-
-        // Use this to get element everywhere, just use the static type and get elementby id
-        // also use do the eager loading stuff here
-        //
-        // if($this->_element !== null)
-        // {
-        //     return $this->_element;
-        // }
+        if($this->_element !== null)
+        {
+            return $this->_element;
+        }
 
         // Check eager loading
-
         // IDEA. Could we make the plugin eager load by default just like the data element does, could be a plugin setting?
-
         // Get the element by id / element type site etc
 
-        if(is_null($this->_element))
+        if ($this->ownerElement)
         {
-            $this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
+            $eagerLoadingHandle = $this->getField()->handle.':element';
+            if($this->ownerElement->hasEagerLoadedElements($eagerLoadingHandle))
+            {
+                $elements = $this->ownerElement->getEagerLoadedElements($eagerLoadingHandle);
+                return $this->_element = ArrayHelper::firstValue($elements);
+            }
         }
-        return $this->_element;
+
+        return $this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), $this->ownerElement->siteId ?? null);
     }
 
     public function isAvailable(): bool

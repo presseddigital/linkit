@@ -5,6 +5,7 @@ use presseddigital\linkit\helpers\LinkitHelper;
 
 use Craft;
 use craft\base\ElementInterface;
+use craft\base\FieldInterface;
 use craft\base\SavableComponent;
 use craft\helpers\Template as TemplateHelper;
 
@@ -79,8 +80,8 @@ abstract class Link extends SavableComponent implements LinkInterface
     // =========================================================================
 
     // Need to pass the element that owns this field to ensure multisite stuff works ok!
-    /* @var ElementInterface|null */
     private $_ownerElement;
+    private $_field;
 
     // Public Methods
     // =========================================================================
@@ -95,9 +96,19 @@ abstract class Link extends SavableComponent implements LinkInterface
         $this->_ownerElement = $ownerElement;
     }
 
-    public function getOwnerElement()
+    public function getOwnerElement(): ElementInterface
     {
         return $this->_ownerElement;
+    }
+
+    public function setField(FieldInterface $field = null)
+    {
+        $this->_field = $field;
+    }
+
+    public function getField(): FieldInterface
+    {
+        return $this->_field;
     }
 
     public function extraFields()
@@ -158,16 +169,13 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getInputHtml(string $name, $field, Link $currentLink = null, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate(
-            static::inputTemplatePath(),
-            [
-                'name' => $name,
-                'link' => $this,
-                'currentLink' => $currentLink,
-                'element' => $element,
-                'field' => $field,
-            ]
-        );
+        return Craft::$app->getView()->renderTemplate(static::inputTemplatePath(), [
+            'name' => $name,
+            'link' => $this,
+            'currentLink' => $currentLink,
+            'element' => $element,
+            'field' => $field,
+        ]);
     }
 
     public function getLink($customAttributes = [], $raw = true, $preview = false)
