@@ -12,7 +12,7 @@ use craft\helpers\Template as TemplateHelper;
 /**
  * Class Link
  *
- * @property ElementInterface $ownerElement
+ * @property ElementInterface $owner
  */
 abstract class Link extends SavableComponent implements LinkInterface
 {
@@ -80,7 +80,7 @@ abstract class Link extends SavableComponent implements LinkInterface
     // =========================================================================
 
     // Need to pass the element that owns this field to ensure multisite stuff works ok!
-    private $_ownerElement;
+    private $_owner;
     private $_field;
 
     // Public Methods
@@ -91,14 +91,14 @@ abstract class Link extends SavableComponent implements LinkInterface
         return $this->getLink([], false);
     }
 
-    public function setOwnerElement(ElementInterface $ownerElement = null)
+    public function setOwner(ElementInterface $owner = null)
     {
-        $this->_ownerElement = $ownerElement;
+        $this->_owner = $owner;
     }
 
-    public function getOwnerElement(): ElementInterface
+    public function getOwner(): ElementInterface
     {
-        return $this->_ownerElement;
+        return $this->_owner;
     }
 
     public function setField(FieldInterface $field = null)
@@ -115,6 +115,7 @@ abstract class Link extends SavableComponent implements LinkInterface
     {
         $names = parent::extraFields();
         $names[] = 'owner';
+        $names[] = 'field';
         return $names;
     }
 

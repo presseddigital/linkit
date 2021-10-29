@@ -28,8 +28,8 @@ interface LinkInterface extends SavableComponentInterface
 
     public function __toString(): string;
 
-    public function setOwnerElement(ElementInterface $element = null);
-    public function getOwnerElement(): ElementInterface;
+    public function setOwner(ElementInterface $element = null);
+    public function getOwner(): ElementInterface;
 
     public function setField(FieldInterface $field = null);
     public function getField(): FieldInterface;

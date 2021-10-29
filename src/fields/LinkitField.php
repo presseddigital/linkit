@@ -20,6 +20,7 @@ use craft\base\ElementInterface;
 use craft\base\PreviewableFieldInterface;
 use craft\base\EagerLoadingFieldInterface;
 use craft\base\Field;
+use craft\elements\db\ElementQueryInterface;
 use craft\helpers\Json as JsonHelper;
 use craft\helpers\Db as DbHelper;
 use craft\validators\ArrayValidator;
@@ -103,9 +104,10 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
      */
     public function getEagerLoadingMap(array $sourceElements)
     {
-
+        ray([
+            'getEagerLoadingMap' => $sourceElements
+        ]);
     }
-
 
 
     public function rules()
@@ -166,7 +168,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
             unset($value['type']);
             $link->setAttributes($value, false); // TODO: Get Rules added for these and remove false
             // Craft::configure($link, $value); // Want to use but only if we can confirm that we can't get passed invalid attributes here
-            $link->setOwnerElement($element);
+            $link->setOwner($element);
             return $link;
         }
 

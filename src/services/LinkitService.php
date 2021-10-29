@@ -3,6 +3,7 @@ namespace presseddigital\linkit\services;
 
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\events\RegisterLinkTypesEvent;
+use presseddigital\linkit\base\ElementLink;
 
 use presseddigital\linkit\models\Phone;
 use presseddigital\linkit\models\Url;
@@ -19,6 +20,7 @@ use presseddigital\linkit\models\Instagram;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\ArrayHelper;
 use craft\helpers\Component as ComponentHelper;
 
 class LinkitService extends Component
@@ -65,6 +67,18 @@ class LinkitService extends Component
         $this->trigger(self::EVENT_REGISTER_LINKIT_FIELD_TYPES, $event);
         return $event->types;
     }
+
+    public function getAvailableElementLinkTypes()
+    {
+        return array_filter($this->getAvailableLinkTypes(), function($type) { return $type instanceof ElementLink; });
+    }
+
+    public function getLinkTypeByHandle(string $handle)
+    {
+        return ArrayHelper::firstWhere($this->getAvailableLinkTypes(), 'typeHandle', $handle);
+    }
+
+
 
     // Thrid Party Field Types
     //

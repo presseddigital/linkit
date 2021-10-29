@@ -65,7 +65,7 @@ class User extends ElementLink
     {
         if(is_null($this->_user))
         {
-            $this->_user = Craft::$app->getUsers()->getUserById((int) $this->value, $this->ownerElement->siteId ?? null);
+            $this->_user = Craft::$app->getUsers()->getUserById((int) $this->value, $this->owner->siteId ?? null);
         }
         return $this->_user;
     }
