@@ -87,12 +87,9 @@ abstract class ElementLink extends Link
         }
 
         // Check eager loading
-        // IDEA. Could we make the plugin eager load by default just like the data element does, could be a plugin setting?
-        // Get the element by id / element type site etc
-
         if ($this->owner)
         {
-            $eagerLoadingHandle = $this->getField()->handle.':'.$this->getTypeHandle();
+            $eagerLoadingHandle = $this->getField()->handle.'.'.$this->getTypeHandle();
             if($this->owner->hasEagerLoadedElements($eagerLoadingHandle))
             {
                 $elements = $this->owner->getEagerLoadedElements($eagerLoadingHandle);

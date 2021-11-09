@@ -271,40 +271,43 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getAvailableLinkTypes()
     {
-        if(is_null($this->_availableLinkTypes))
+        if(null !== $this->_availableLinkTypes)
         {
-            $linkTypes = Linkit::$plugin->service->getAvailableLinkTypes();
-            if($linkTypes)
-            {
-                foreach ($linkTypes as $linkType)
-                {
-                   $this->_availableLinkTypes[] = $this->_populateLinkTypeModel($linkType);
-                }
-            }
+            return $this->_availableLinkTypes;
         }
-        return $this->_availableLinkTypes;
+
+        $linkTypes = [];
+        foreach (Linkit::$plugin->service->getAvailableLinkTypes() as $linkType)
+        {
+           $linkTypes[] = $this->_populateLinkTypeModel($linkType);
+        }
+
+        return $this->_availableLinkTypes = $linkTypes;
     }
 
     public function getEnabledLinkTypes()
     {
-        if(is_null($this->_enabledLinkTypes))
+        if(null !== $this->_enabledLinkTypes)
         {
-            $this->_enabledLinkTypes = [];
-            if(is_array($this->types))
+            return $this->_enabledLinkTypes;
+        }
+
+        $enabledLinkTypes = [];
+        if(is_array($this->types))
+        {
+            foreach ($this->types as $type => $settings)
             {
-                foreach ($this->types as $type => $settings)
+                if($settings['enabled'] ?? false)
                 {
-                    if($settings['enabled'] ?? false) {
-                        $linkType = $this->_getLinkTypeModelByType($type);
-                        if($linkType)
-                        {
-                            $this->_enabledLinkTypes[] = $linkType;
-                        }
+                    $linkType = $this->_getLinkTypeModelByType($type);
+                    if($linkType)
+                    {
+                        $enabledLinkTypes[] = $linkType;
                     }
                 }
             }
         }
-        return $this->_enabledLinkTypes;
+        return $this->_enabledLinkTypes = $enabledLinkTypes;
     }
 
     public function getEnabledLinkTypesAsOptions()
