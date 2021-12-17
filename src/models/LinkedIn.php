@@ -24,7 +24,7 @@ class LinkedIn extends Link
 
     public static function defaultLabel(): string
     {
-        return Craft::t('linkit', 'Linked In');
+        return Craft::t('linkit', 'LinkedIn');
     }
 
     public static function defaultPlaceholder(): string
