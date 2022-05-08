@@ -12,7 +12,7 @@ use GraphQL\Type\Definition\Type;
  */
 class LinkitType extends ObjectType
 {
-    const GRAPH_QL_FIELDS = [
+    public const GRAPH_QL_FIELDS = [
         'label',
         'selectionLabel',
         'type',
@@ -26,8 +26,9 @@ class LinkitType extends ObjectType
 
     /**
      * @inheritdoc
+     * @param mixed[] $arguments
      */
-    protected function resolve($source, $arguments, $context, ResolveInfo $resolveInfo)
+    protected function resolve(mixed $source, array $arguments, mixed $context, ResolveInfo $resolveInfo): mixed
     {
         $fieldName = $resolveInfo->fieldName;
 
@@ -42,13 +43,10 @@ class LinkitType extends ObjectType
         $contentFields = [];
 
         foreach (self::GRAPH_QL_FIELDS as $key) {
-            switch ($key) {
-                case 'linkAttributes':
-                    $type = Type::listOf(Type::string());
-                    break;
-                default:
-                    $type = Type::string();
-            }
+            $type = match ($key) {
+                'linkAttributes' => Type::listOf(Type::string()),
+                default => Type::string(),
+            };
 
             $contentFields[$key] = $type;
         }

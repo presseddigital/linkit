@@ -10,7 +10,7 @@ class FieldSettingsAssetBundle extends AssetBundle
     // Public Methods
     // =========================================================================
 
-    public function init()
+    public function init(): void
     {
         $this->sourcePath = "@presseddigital/linkit/assetbundles/fieldsettings/build";
 

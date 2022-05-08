@@ -26,7 +26,7 @@ class LinkitService extends Component
     // Constants
     // =========================================================================
 
-    const EVENT_REGISTER_LINKIT_FIELD_TYPES = 'registerLinkitFieldTypes';
+    public const EVENT_REGISTER_LINKIT_FIELD_TYPES = 'registerLinkitFieldTypes';
 
     // Public Methods
     // =========================================================================
@@ -65,11 +65,9 @@ class LinkitService extends Component
         return $event->types;
     }
 
-    public function getAvailableElementLinkTypes()
+    public function getAvailableElementLinkTypes(): ?array
     {
-        return array_filter($this->getAvailableLinkTypes(), function($type) {
-            return $type instanceof ElementLink;
-        });
+        return array_filter($this->getAvailableLinkTypes(), fn($type) => $type instanceof ElementLink);
     }
 
     public function getLinkTypeByHandle(string $handle)
@@ -103,17 +101,15 @@ class LinkitService extends Component
     //         UrlField::class,
     //         UsersField::class,
     //     ];
-
     //     $event = new RegisterComponentTypesEvent([
     //         'types' => $fieldTypes
     //     ]);
     //     $this->trigger(self::EVENT_REGISTER_FIELD_TYPES, $event);
-
     //     return $event->types;
     // }
-
-
-
+    /**
+     * @return array<int, array{label: mixed, value: mixed}>
+     */
     public function getSourceOptions($elementType): array
     {
         $sources = Craft::$app->getElementIndexes()->getSources($elementType, 'modal');

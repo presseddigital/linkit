@@ -38,7 +38,7 @@ interface LinkInterface extends SavableComponentInterface
     public function getSelectionLabel(): string;
 
     public function getInputHtml(string $name, $field, Link $currentLink = null): string;
-    public function getSettingsHtml(): string;
+    public function getSettingsHtml(): ?string;
 
     public function getType(): string;
     public function getTypeHandle(): string;

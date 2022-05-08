@@ -11,7 +11,7 @@ class Phone extends Link
     // Private
     // =========================================================================
 
-    private $_match = '/^(?:\+\d{1,3}|0\d{1,3}|00\d{1,2})?(?:\s?\(\d+\))?(?:[-\/\s.]|\d)+$/';
+    private string $_match = '/^(?:\+\d{1,3}|0\d{1,3}|00\d{1,2})?(?:\s?\(\d+\))?(?:[-\/\s.]|\d)+$/';
 
     // Static
     // =========================================================================
@@ -34,7 +34,10 @@ class Phone extends Link
         return (string) 'tel:' . $this->value;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [

@@ -12,7 +12,7 @@ class LinkedIn extends Link
     // Private
     // =========================================================================
 
-    private $_match = '/^http(?:s)?:\/\/([a-z]{2,3}\\.)?linkedin\\.com\\/.*$/';
+    private string $_match = '/^http(?:s)?:\/\/([a-z]{2,3}\\.)?linkedin\\.com\\/.*$/';
 
     // Static
     // =========================================================================
@@ -40,7 +40,10 @@ class LinkedIn extends Link
         return (string) $this->value;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [

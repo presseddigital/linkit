@@ -8,12 +8,14 @@ use craft\helpers\ArrayHelper;
 
 use presseddigital\linkit\Linkit;
 
-abstract class ElementLink extends Link
+abstract class ElementLink extends Link implements \Stringable
 {
     // Private
     // =========================================================================
-
-    private $_element;
+    /**
+     * @var mixed|null
+     */
+    private ?mixed $_element = null;
 
     // Static
     // =========================================================================
@@ -23,7 +25,7 @@ abstract class ElementLink extends Link
         return Craft::t('linkit', 'Element');
     }
 
-    public static function elementType()
+    public static function elementType(): string
     {
         return Element::class;
     }
@@ -41,7 +43,7 @@ abstract class ElementLink extends Link
     // Public
     // =========================================================================
 
-    public $sources = '*';
+    public string $sources = '*';
     public $customSelectionLabel;
 
     // Public Methods
@@ -54,7 +56,7 @@ abstract class ElementLink extends Link
 
     public function defaultSelectionLabel(): string
     {
-        return Craft::t('linkit', 'Select') . ' ' . $this->defaultLabel();
+        return Craft::t('linkit', 'Select') . ' ' . static::defaultLabel();
     }
 
     public function getSelectionLabel(): string
@@ -102,15 +104,21 @@ abstract class ElementLink extends Link
         return $element && $element->enabled && $element->enabledForSite;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = ['customSelectionLabel', 'string'];
         return $rules;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getSourceOptions(): array
     {
-        return Linkit::$plugin->service->getSourceOptions($this->elementType());
+        return Linkit::$plugin->service->getSourceOptions(static::elementType());
     }
 }

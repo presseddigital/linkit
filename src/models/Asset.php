@@ -11,7 +11,7 @@ class Asset extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType()
+    public static function elementType(): string
     {
         return CraftAsset::class;
     }

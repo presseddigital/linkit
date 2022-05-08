@@ -29,9 +29,9 @@ class Linkit extends Plugin
     // Public Methods
     // =========================================================================
 
-    public $schemaVersion = '1.2.0';
+    public string $schemaVersion = '1.2.0';
 
-    public function init()
+    public function init(): void
     {
         parent::init();
 
@@ -42,13 +42,13 @@ class Linkit extends Plugin
             'service' => LinkitService::class,
         ]);
 
-        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $e) {
+        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $e): void {
             $e->types[] = LinkitField::class;
         });
 
         // Before any eager loading happens we need to update the handles to allow us to grab the data from our links
         // - Ensuring that there is a plan for each element link type
-        Event::on(Elements::class, Elements::EVENT_BEFORE_EAGER_LOAD_ELEMENTS, function(EagerLoadElementsEvent $e) {
+        Event::on(Elements::class, Elements::EVENT_BEFORE_EAGER_LOAD_ELEMENTS, function(EagerLoadElementsEvent $e): void {
 
             // Match fields, determine if in the with param, update plan handles
             // - Get from any context
@@ -74,9 +74,7 @@ class Linkit extends Plugin
             // );
 
             $linkitFieldHandles = ArrayHelper::getColumn(
-                ArrayHelper::where($allFields, function(FieldInterface $field) {
-                    return $field instanceof LinkitField;
-                }),
+                ArrayHelper::where($allFields, fn(FieldInterface $field) => $field instanceof LinkitField),
                 'handle'
             );
 
@@ -110,8 +108,8 @@ class Linkit extends Plugin
             $e->with = $with;
         });
 
-        Event::on(Element::class, Element::EVENT_DEFINE_EAGER_LOADING_MAP, function(DefineEagerLoadingMapEvent $e) {
-            list($handle, $elementLinkTypeHandle) = array_pad(explode('.', $e->handle), 2, false);
+        Event::on(Element::class, Element::EVENT_DEFINE_EAGER_LOADING_MAP, function(DefineEagerLoadingMapEvent $e): void {
+            [$handle, $elementLinkTypeHandle] = array_pad(explode('.', $e->handle), 2, false);
             if ($elementLinkTypeHandle) {
                 $field = Craft::$app->getFields()->getFieldByHandle($handle);
                 if ($field && $field instanceof LinkitField) {
@@ -137,7 +135,10 @@ class Linkit extends Plugin
         Craft::info(Craft::t('linkit', '{name} plugin loaded', [ 'name' => $this->name ]), __METHOD__);
     }
 
-    private function _getCustomPlans($plan, $linkitFieldHandles, $elementLinkTypes)
+    /**
+     * @return mixed[]
+     */
+    private function _getCustomPlans($plan, $linkitFieldHandles, $elementLinkTypes): array
     {
         $newPlans = [];
 

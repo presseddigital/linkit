@@ -11,10 +11,10 @@ class UrlValidator extends YiiUrlValidator
     // Properties
     // =========================================================================
 
-    public $allowAlias = true;
-    public $allowHash = true;
-    public $allowPaths = true;
-    public $allowMailto = true;
+    public bool $allowAlias = true;
+    public bool $allowHash = true;
+    public bool $allowPaths = true;
+    public bool $allowMailto = true;
 
     // Public Methods
     // =========================================================================
@@ -34,28 +34,28 @@ class UrlValidator extends YiiUrlValidator
         parent::__construct($config);
     }
 
-    public function validateValue($value)
+    public function validateValue($value): ?array
     {
-        if ($this->allowAlias && strncmp($value, '@', 1) === 0) {
+        if ($this->allowAlias && str_starts_with($value, '@')) {
             try {
                 $value = Craft::getAlias($value);
                 $this->defaultScheme = null;
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return [Craft::t('linkit', 'Please enter a valid alias'), []];
             }
         }
 
-        if ($this->allowHash && substr($value, 0, 1) === '#') {
+        if ($this->allowHash && str_starts_with($value, '#')) {
             $this->defaultScheme = null;
             return null;
         }
 
-        if ($this->allowHash && substr($value, 0, 1) === '/') {
+        if ($this->allowHash && str_starts_with($value, '/')) {
             $this->defaultScheme = null;
             return null;
         }
 
-        if ($this->allowMailto && substr($value, 0, 7) === 'mailto:') {
+        if ($this->allowMailto && str_starts_with($value, 'mailto:')) {
             $emailValidator = new EmailValidator();
             if ($emailValidator->validateValue(str_replace('mailto:', '', $value))) {
                 return [Craft::t('linkit', 'Please enter a valid email address'), []];
@@ -65,7 +65,7 @@ class UrlValidator extends YiiUrlValidator
         }
 
         // Add support for protocol-relative URLs, # or /
-        if ($this->defaultScheme !== null && strpos($value, '/') === 0) {
+        if ($this->defaultScheme !== null && str_starts_with($value, '/')) {
             $this->defaultScheme = null;
         } else {
             $this->pattern = '/^{schemes}:\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])/i';

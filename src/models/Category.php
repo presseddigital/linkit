@@ -11,7 +11,7 @@ class Category extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType()
+    public static function elementType(): string
     {
         return CraftCategory::class;
     }

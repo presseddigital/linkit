@@ -12,7 +12,7 @@ class Facebook extends Link
     // Private
     // =========================================================================
 
-    private $_match = '/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/';
+    private string $_match = '/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/';
 
     // Static
     // =========================================================================
@@ -40,7 +40,10 @@ class Facebook extends Link
         return (string) $this->value;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [

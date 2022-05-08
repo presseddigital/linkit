@@ -10,6 +10,7 @@ use craft\helpers\Db;
 use craft\helpers\Json;
 use craft\services\Fields;
 use craft\services\Plugins;
+use craft\services\ProjectConfig;
 
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\fields\LinkitField;
@@ -24,13 +25,13 @@ use presseddigital\linkit\models\User as UserLink;
 
 class Install extends Migration
 {
-    public function safeUp()
+    public function safeUp(): bool
     {
         $this->upgradeFromCraft2();
         return true;
     }
 
-    protected function upgradeFromCraft2()
+    protected function upgradeFromCraft2(): void
     {
         // Get Project Config
         $projectConfig = Craft::$app->getProjectConfig();
@@ -44,25 +45,25 @@ class Install extends Migration
         $projectConfig->muteEvents = true;
 
         // Locate and remove old linkit
-        $plugins = $projectConfig->get(Plugins::CONFIG_PLUGINS_KEY) ?? [];
+        $plugins = $projectConfig->get(ProjectConfig::PATH_PLUGINS) ?? [];
         foreach ($plugins as $pluginHandle => $pluginData) {
             switch ($pluginHandle) {
                 case 'fruitlinkit':
                 case 'fruit-link-it':
                 case 'fruit-linkit':
-                    $projectConfig->remove(Plugins::CONFIG_PLUGINS_KEY . '.' . $pluginHandle);
+                    $projectConfig->remove(ProjectConfig::PATH_PLUGINS . '.' . $pluginHandle);
                     break;
             }
         }
         $this->delete('{{%plugins}}', ['handle' => ['fruitlinkit', 'fruit-linkit', 'fruit-link-it']]);
 
         // Get the field data from the project config
-        $fieldConfigs = $projectConfig->get(Fields::CONFIG_FIELDS_KEY) ?? [];
+        $fieldConfigs = $projectConfig->get(ProjectConfig::PATH_FIELDS) ?? [];
         $fieldConfigsToMigrate = [];
         foreach ($fieldConfigs as $fieldUid => $fieldConfig) {
             if (isset($fieldConfig['type']) && $fieldConfig['type'] === 'FruitLinkIt') {
                 $fieldConfigsToMigrate[$fieldUid] = [
-                    'configPath' => Fields::CONFIG_FIELDS_KEY . '.' . $fieldUid,
+                    'configPath' => ProjectConfig::PATH_FIELDS . '.' . $fieldUid,
                     'config' => $fieldConfig,
                 ];
             }
@@ -141,7 +142,7 @@ class Install extends Migration
         $projectConfig->muteEvents = false;
     }
 
-    private function _migrateFieldSettings($oldSettings)
+    private function _migrateFieldSettings($oldSettings): ?array
     {
         if (!$oldSettings) {
             return null;
@@ -229,7 +230,7 @@ class Install extends Migration
         return $newSettings;
     }
 
-    public function safeDown()
+    public function safeDown(): bool
     {
         return true;
     }

@@ -12,8 +12,10 @@ class User extends ElementLink
 {
     // Private
     // =========================================================================
-
-    private $_user;
+    /**
+     * @var mixed|null
+     */
+    private ?mixed $_user = null;
 
     // Public
     // =========================================================================
@@ -23,7 +25,7 @@ class User extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType()
+    public static function elementType(): string
     {
         return CraftUser::class;
     }
@@ -67,7 +69,10 @@ class User extends ElementLink
         return $this->_user;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = ['userPath', 'string'];

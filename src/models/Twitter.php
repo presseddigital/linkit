@@ -12,7 +12,7 @@ class Twitter extends Link
     // Private
     // =========================================================================
 
-    private $_match = '/^http(?:s)?:\/\/(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/';
+    private string $_match = '/^http(?:s)?:\/\/(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/';
 
     // Static
     // =========================================================================
@@ -40,7 +40,10 @@ class Twitter extends Link
         return (string) $this->value;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [

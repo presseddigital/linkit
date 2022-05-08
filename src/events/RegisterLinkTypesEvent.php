@@ -9,5 +9,5 @@ class RegisterLinkTypesEvent extends Event
     // Properties
     // =========================================================================
 
-    public $types = [];
+    public array $types = [];
 }

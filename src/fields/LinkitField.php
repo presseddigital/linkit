@@ -34,20 +34,25 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     /**
      * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
      */
-    const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkitLinkTypes';
+    public const EVENT_REGISTER_LINKIT_LINK_TYPES = 'registerLinkitLinkTypes';
 
     // Private Properties
     // =========================================================================
-
-    private $_availableLinkTypes;
-    private $_enabledLinkTypes;
-    private $_columnType = Schema::TYPE_TEXT;
+    /**
+     * @var mixed[]|null
+     */
+    private ?array $_availableLinkTypes = null;
+    /**
+     * @var mixed[]|null
+     */
+    private ?array $_enabledLinkTypes = null;
+    private string $_columnType = Schema::TYPE_TEXT;
 
 
     //  Properties
     // =========================================================================
 
-    public $selectLinkText = '';
+    public string $selectLinkText = '';
     public $types;
     public $allowCustomText;
     public $defaultText;
@@ -99,24 +104,27 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
      * @return array|false|null The eager-loading element ID mappings, false if no mappings exist, or null if the result
      * should be ignored.
      */
-    public function getEagerLoadingMap(array $sourceElements)
+    public function getEagerLoadingMap(array $sourceElements): void
     {
     }
 
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [['types'], ArrayValidator::class, 'min' => 1, 'tooFew' => Craft::t('linkit', 'You must select at least one link type.'), 'skipOnEmpty' => false];
         return $rules;
     }
 
-    public function getContentColumnType(): string
+    public function getContentColumnType(): array|string
     {
         return $this->_columnType;
     }
 
-    public function getContentGqlType()
+    public function getContentGqlType(): \craft\gql\base\ObjectType
     {
         return LinkitGenerator::generateType($this);
     }
@@ -126,7 +134,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return true;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         if ($value instanceof Link) {
             return $value;
@@ -163,7 +171,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return null;
     }
 
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         $serialized = [];
         if ($value instanceof Link) {
@@ -178,7 +186,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return parent::serializeValue($serialized, $element);
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         $view = Craft::$app->getView();
         $view->registerAssetBundle(FieldSettingsAssetBundle::class);
@@ -188,7 +196,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         ]);
     }
 
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         $view = Craft::$app->getView();
 
@@ -219,17 +227,20 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         );
     }
 
+    /**
+     * @return string[]
+     */
     public function getElementValidationRules(): array
     {
         return ['validateLinkValue'];
     }
 
-    public function isValueEmpty($value, ElementInterface $element): bool
+    public function isValueEmpty(mixed $value, ElementInterface $element): bool
     {
         return empty($value->value ?? '');
     }
 
-    public function validateLinkValue(ElementInterface $element)
+    public function validateLinkValue(ElementInterface $element): void
     {
         $fieldValue = $element->getFieldValue($this->handle);
         if ($fieldValue && !$fieldValue->validate()) {
@@ -237,7 +248,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         }
     }
 
-    public function getSearchKeywords($value, ElementInterface $element): string
+    public function getSearchKeywords(mixed $value, ElementInterface $element): string
     {
         if ($value instanceof Link) {
             return $value->getText();
@@ -245,7 +256,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return '';
     }
 
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
         if ($value instanceof Link) {
             return '<span title="Link ' . ($value->isAvailable() ? 'Enabled' : 'Disabled') . '" class="status ' . ($value->isAvailable() ? 'enabled' : 'disabled') . '"></span>' . $value->getLinkPreview();
@@ -287,7 +298,10 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return $this->_enabledLinkTypes = $enabledLinkTypes;
     }
 
-    public function getEnabledLinkTypesAsOptions()
+    /**
+     * @return array<int, array{label: mixed, value: mixed}>
+     */
+    public function getEnabledLinkTypesAsOptions(): array
     {
         $options = [];
         $enabledLinkTypes = $this->getEnabledLinkTypes();
@@ -327,7 +341,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         }
     }
 
-    private function _populateLinkTypeModel(Link $linkType)
+    private function _populateLinkTypeModel(Link $linkType): \presseddigital\linkit\base\Link
     {
         // Get Type Settings
         $linkType->setAttributes($this->types[$linkType->type] ?? [], false); // TODO: Get Rules added for these and remove false

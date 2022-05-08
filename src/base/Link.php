@@ -15,7 +15,7 @@ use presseddigital\linkit\helpers\LinkitHelper;
  *
  * @property ElementInterface $owner
  */
-abstract class Link extends SavableComponent implements LinkInterface
+abstract class Link extends SavableComponent implements LinkInterface, \Stringable
 {
     // Static
     // =========================================================================
@@ -81,8 +81,8 @@ abstract class Link extends SavableComponent implements LinkInterface
     // =========================================================================
 
     // Need to pass the element that owns this field to ensure multisite stuff works ok!
-    private $_owner;
-    private $_field;
+    private ?ElementInterface $_owner = null;
+    private ?FieldInterface $_field = null;
 
     // Public Methods
     // =========================================================================
@@ -112,7 +112,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         return $this->_field;
     }
 
-    public function extraFields()
+    public function extraFields(): array
     {
         $names = parent::extraFields();
         $names[] = 'owner';
@@ -122,12 +122,12 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function defaultSelectionLabel(): string
     {
-        return Craft::t('linkit', 'Select') . ' ' . $this->defaultLabel();
+        return Craft::t('linkit', 'Select') . ' ' . static::defaultLabel();
     }
 
     public function getType(): string
     {
-        return get_class($this);
+        return $this::class;
     }
 
     public function getTypeHandle(): string
@@ -157,7 +157,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         return static::defaultPlaceholder();
     }
 
-    public function getSettingsHtml(): string
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate(
             static::settingsTemplatePath(),
@@ -228,7 +228,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         return $this->value && $this->value != '';
     }
 
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = ['customLabel', 'string'];

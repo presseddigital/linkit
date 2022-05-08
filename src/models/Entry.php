@@ -11,7 +11,7 @@ class Entry extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType()
+    public static function elementType(): string
     {
         return CraftEntry::class;
     }

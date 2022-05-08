@@ -25,7 +25,7 @@ class LinkitGenerator implements GeneratorInterface, SingleGeneratorInterface
     /**
      * @inheritdoc
      */
-    public static function generateTypes($context = null): array
+    public static function generateTypes(mixed $context = null): array
     {
         return [static::generateType($context)];
     }
@@ -33,7 +33,7 @@ class LinkitGenerator implements GeneratorInterface, SingleGeneratorInterface
     /**
      * @inheritdoc
      */
-    public static function generateType($context = null): ObjectType
+    public static function generateType(mixed $context = null): mixed
     {
         /** @var LinkitField $context */
         $typeName = self::getName($context);
@@ -41,9 +41,7 @@ class LinkitGenerator implements GeneratorInterface, SingleGeneratorInterface
 
         return GqlEntityRegistry::getEntity($typeName) ?: GqlEntityRegistry::createEntity($typeName, new LinkitType([
             'name' => $typeName,
-            'fields' => function() use ($contentFields) {
-                return $contentFields;
-            },
+            'fields' => fn() => $contentFields,
         ]));
     }
 }

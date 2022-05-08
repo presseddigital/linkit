@@ -12,10 +12,10 @@ class Url extends Link
     // Public
     // =========================================================================
 
-    public $allowAlias = true;
-    public $allowHash = true;
-    public $allowPaths = true;
-    public $allowMailto = true;
+    public bool $allowAlias = true;
+    public bool $allowHash = true;
+    public bool $allowPaths = true;
+    public bool $allowMailto = true;
 
     // Static
     // =========================================================================
@@ -43,7 +43,10 @@ class Url extends Link
         return (string) Craft::getAlias($this->value);
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [['allowAlias', 'allowHash', 'allowPaths', 'allowMailto'], 'boolean'];

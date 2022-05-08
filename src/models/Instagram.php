@@ -12,7 +12,7 @@ class Instagram extends Link
     // Private
     // =========================================================================
 
-    private $_match = '/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/i';
+    private string $_match = '/(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_]+)/i';
 
     // Static
     // =========================================================================
@@ -40,7 +40,10 @@ class Instagram extends Link
         return (string) $this->value;
     }
 
-    public function rules()
+    /**
+     * @return mixed[]
+     */
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules[] = [
