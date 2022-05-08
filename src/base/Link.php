@@ -69,12 +69,12 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     // Public
     // =========================================================================
 
-    public $customLabel;
-    public $customPlaceholder;
+    public ?string $customLabel;
+    public ?string $customPlaceholder;
 
     public $fieldSettings;
     public $value;
-    public $customText;
+    public ?string $customText;
     public $target;
 
     // Private
@@ -246,7 +246,6 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     protected function prepLinkAttributes($customAttributes = []): array
     {
         return array_merge($this->getLinkAttributes(), $customAttributes);
-        ;
     }
 
     protected function getCustomOrDefaultText()
