@@ -1,31 +1,30 @@
 <?php
+
 namespace presseddigital\linkit\fields;
+
+use Craft;
+use craft\base\EagerLoadingFieldInterface;
+use craft\base\ElementInterface;
+use craft\base\Field;
+use craft\base\PreviewableFieldInterface;
+use craft\helpers\Json as JsonHelper;
+use craft\validators\ArrayValidator;
 
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
 use presseddigital\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
-use presseddigital\linkit\services\LinkitService;
-use presseddigital\linkit\gql\types\generators\LinkitGenerator;
 use presseddigital\linkit\base\Link;
-use presseddigital\linkit\models\Email;
-use presseddigital\linkit\models\Phone;
-use presseddigital\linkit\models\Url;
-use presseddigital\linkit\models\Entry;
-use presseddigital\linkit\models\Category;
+use presseddigital\linkit\gql\types\generators\LinkitGenerator;
 use presseddigital\linkit\models\Asset;
+use presseddigital\linkit\models\Category;
+use presseddigital\linkit\models\Email;
+use presseddigital\linkit\models\Entry;
+use presseddigital\linkit\models\Phone;
 use presseddigital\linkit\models\Product;
+use presseddigital\linkit\models\Url;
 
-use Craft;
-use craft\base\ElementInterface;
-use craft\base\PreviewableFieldInterface;
-use craft\base\EagerLoadingFieldInterface;
-use craft\base\Field;
-use craft\elements\db\ElementQueryInterface;
-use craft\helpers\Json as JsonHelper;
-use craft\helpers\Db as DbHelper;
-use craft\validators\ArrayValidator;
-use yii\db\Schema;
 use yii\base\ErrorException;
+use yii\db\Schema;
 
 class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadingFieldInterface
 {
@@ -76,11 +75,9 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     public function __construct($config = [])
     {
         // Handle field settings for installations prior to 1.2.0
-        if (array_key_exists('types', $config))
-        {
+        if (array_key_exists('types', $config)) {
             $types = [];
-            foreach($config['types'] as $typeClass => $typeSettings)
-            {
+            foreach ($config['types'] as $typeClass => $typeSettings) {
                 $types[str_replace('fruitstudios', 'presseddigital', $typeClass)] = $typeSettings;
             }
             $config['types'] = $types;
@@ -104,9 +101,6 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
      */
     public function getEagerLoadingMap(array $sourceElements)
     {
-        ray([
-            'getEagerLoadingMap' => $sourceElements
-        ]);
     }
 
 
@@ -134,31 +128,25 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        if($value instanceof Link)
-        {
+        if ($value instanceof Link) {
             return $value;
         }
 
-        if(is_string($value))
-        {
+        if (is_string($value)) {
             $value = JsonHelper::decodeIfJson($value);
         }
 
         // Handle any Craft2 content
-        if(!isset($value['value']))
-        {
+        if (!isset($value['value'])) {
             $value = $this->_normalizeValueCraft2($value);
         }
 
-        if(isset($value['type']) && $value['type'] != '' )
-        {
-            if(isset($value['value']) && $value['value'] == '')
-            {
+        if (isset($value['type']) && $value['type'] != '') {
+            if (isset($value['value']) && $value['value'] == '') {
                 return null;
             }
 
-            if(isset($value['values']))
-            {
+            if (isset($value['values'])) {
                 $postedValue = $value['values'][$value['type']] ?? '';
                 $value['value'] = is_array($postedValue) ? $postedValue[0] : $postedValue;
                 unset($value['values']);
@@ -178,8 +166,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     public function serializeValue($value, ElementInterface $element = null)
     {
         $serialized = [];
-        if($value instanceof Link)
-        {
+        if ($value instanceof Link) {
             $serialized = [
                 'type' => $value->type,
                 'value' => $value->value,
@@ -217,7 +204,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
             'id' => $namespacedId,
             'name' => $this->handle,
         ]);
-        $view->registerJs('new Garnish.LinkitField('.$jsVariables.');');
+        $view->registerJs('new Garnish.LinkitField(' . $jsVariables . ');');
 
         // Render the input template
         return $view->renderTemplate(
@@ -245,16 +232,14 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     public function validateLinkValue(ElementInterface $element)
     {
         $fieldValue = $element->getFieldValue($this->handle);
-        if($fieldValue && !$fieldValue->validate())
-        {
+        if ($fieldValue && !$fieldValue->validate()) {
             $element->addModelErrors($fieldValue, $this->handle);
         }
     }
 
     public function getSearchKeywords($value, ElementInterface $element): string
     {
-        if($value instanceof Link)
-        {
+        if ($value instanceof Link) {
             return $value->getText();
         }
         return '';
@@ -262,24 +247,21 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
-        if($value instanceof Link)
-        {
-           return '<span title="Link '.($value->isAvailable() ? 'Enabled' : 'Disabled').'" class="status '.($value->isAvailable() ? 'enabled' : 'disabled').'"></span>'.$value->getLinkPreview();
+        if ($value instanceof Link) {
+            return '<span title="Link ' . ($value->isAvailable() ? 'Enabled' : 'Disabled') . '" class="status ' . ($value->isAvailable() ? 'enabled' : 'disabled') . '"></span>' . $value->getLinkPreview();
         }
         return '';
     }
 
     public function getAvailableLinkTypes()
     {
-        if(null !== $this->_availableLinkTypes)
-        {
+        if (null !== $this->_availableLinkTypes) {
             return $this->_availableLinkTypes;
         }
 
         $linkTypes = [];
-        foreach (Linkit::$plugin->service->getAvailableLinkTypes() as $linkType)
-        {
-           $linkTypes[] = $this->_populateLinkTypeModel($linkType);
+        foreach (Linkit::$plugin->service->getAvailableLinkTypes() as $linkType) {
+            $linkTypes[] = $this->_populateLinkTypeModel($linkType);
         }
 
         return $this->_availableLinkTypes = $linkTypes;
@@ -287,21 +269,16 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getEnabledLinkTypes()
     {
-        if(null !== $this->_enabledLinkTypes)
-        {
+        if (null !== $this->_enabledLinkTypes) {
             return $this->_enabledLinkTypes;
         }
 
         $enabledLinkTypes = [];
-        if(is_array($this->types))
-        {
-            foreach ($this->types as $type => $settings)
-            {
-                if($settings['enabled'] ?? false)
-                {
+        if (is_array($this->types)) {
+            foreach ($this->types as $type => $settings) {
+                if ($settings['enabled'] ?? false) {
                     $linkType = $this->_getLinkTypeModelByType($type);
-                    if($linkType)
-                    {
+                    if ($linkType) {
                         $enabledLinkTypes[] = $linkType;
                     }
                 }
@@ -314,8 +291,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     {
         $options = [];
         $enabledLinkTypes = $this->getEnabledLinkTypes();
-        if($enabledLinkTypes)
-        {
+        if ($enabledLinkTypes) {
             $options = [
                 [
                     'label' => $this->selectLinkText != '' ? $this->selectLinkText : static::defaultSelectLinkText(),
@@ -341,12 +317,11 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     {
         try {
             $linkType = Craft::createObject($type);
-            if($populate)
-            {
+            if ($populate) {
                 $linkType = $this->_populateLinkTypeModel($linkType);
             }
             return $linkType;
-        } catch(ErrorException $exception) {
+        } catch (ErrorException $exception) {
             $error = $exception->getMessage();
             return false;
         }
@@ -364,8 +339,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     private function _normalizeValueCraft2($content)
     {
-        if(!$content)
-        {
+        if (!$content) {
             return null;
         }
 
@@ -374,10 +348,8 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
             'target' => ($content['target'] ?? false) ? true : false,
         ];
 
-        if($content['type'] ?? false)
-        {
-            switch ($content['type'])
-            {
+        if ($content['type'] ?? false) {
+            switch ($content['type']) {
                 case 'email':
                     $newContent['type'] = Email::class;
                     $newContent['value'] = $content['email'] ?? '';

@@ -1,9 +1,9 @@
 <?php
+
 namespace presseddigital\linkit\models;
 
 use Craft;
 
-use presseddigital\linkit\Linkit;
 use presseddigital\linkit\base\Link;
 
 class Phone extends Link
@@ -31,7 +31,7 @@ class Phone extends Link
 
     public function getUrl(): string
     {
-        return (string) 'tel:'.$this->value;
+        return (string) 'tel:' . $this->value;
     }
 
     public function rules()
@@ -41,7 +41,7 @@ class Phone extends Link
             ['value'],
             'match',
             'pattern' => $this->_match,
-            'message' => Craft::t('linkit', 'Please enter a valid phone number.')
+            'message' => Craft::t('linkit', 'Please enter a valid phone number.'),
         ];
         return $rules;
     }

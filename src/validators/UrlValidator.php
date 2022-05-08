@@ -1,13 +1,13 @@
 <?php
+
 namespace presseddigital\linkit\validators;
 
 use Craft;
-use yii\validators\UrlValidator as YiiUrlValidator;
 use yii\validators\EmailValidator;
+use yii\validators\UrlValidator as YiiUrlValidator;
 
 class UrlValidator extends YiiUrlValidator
 {
-
     // Properties
     // =========================================================================
 
@@ -37,10 +37,10 @@ class UrlValidator extends YiiUrlValidator
     public function validateValue($value)
     {
         if ($this->allowAlias && strncmp($value, '@', 1) === 0) {
-            try{
+            try {
                 $value = Craft::getAlias($value);
                 $this->defaultScheme = null;
-            } catch (\Exception $e){
+            } catch (\Exception $e) {
                 return [Craft::t('linkit', 'Please enter a valid alias'), []];
             }
         }
@@ -56,9 +56,8 @@ class UrlValidator extends YiiUrlValidator
         }
 
         if ($this->allowMailto && substr($value, 0, 7) === 'mailto:') {
-            $emailValidator = new EmailValidator;
-            if($emailValidator->validateValue(str_replace('mailto:', '', $value)))
-            {
+            $emailValidator = new EmailValidator();
+            if ($emailValidator->validateValue(str_replace('mailto:', '', $value))) {
                 return [Craft::t('linkit', 'Please enter a valid email address'), []];
             }
             $this->defaultScheme = null;
@@ -74,5 +73,4 @@ class UrlValidator extends YiiUrlValidator
 
         return parent::validateValue($value);
     }
-
 }

@@ -1,14 +1,13 @@
 <?php
+
 namespace presseddigital\linkit\gql\types\generators;
 
-use presseddigital\linkit\gql\types\LinkitType;
-
-use craft\gql\base\Generator;
 use craft\gql\base\GeneratorInterface;
+
 use craft\gql\base\ObjectType;
 use craft\gql\base\SingleGeneratorInterface;
 use craft\gql\GqlEntityRegistry;
-use craft\gql\TypeLoader;
+use presseddigital\linkit\gql\types\LinkitType;
 
 /**
  * Class LinkitGenerator

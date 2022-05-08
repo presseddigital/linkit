@@ -1,9 +1,9 @@
 <?php
+
 namespace presseddigital\linkit\models;
 
 use Craft;
 
-use presseddigital\linkit\Linkit;
 use presseddigital\linkit\base\Link;
 use presseddigital\linkit\validators\UrlValidator;
 
@@ -46,8 +46,8 @@ class Url extends Link
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = [['allowAlias','allowHash','allowPaths','allowMailto'], 'boolean'];
-        $rules[] = [['allowAlias','allowHash','allowPaths','allowMailto'], 'default', 'value' => true];
+        $rules[] = [['allowAlias', 'allowHash', 'allowPaths', 'allowMailto'], 'boolean'];
+        $rules[] = [['allowAlias', 'allowHash', 'allowPaths', 'allowMailto'], 'default', 'value' => true];
         $rules[] = [
             ['value'],
             UrlValidator::class,
@@ -56,11 +56,10 @@ class Url extends Link
             'allowHash' => $this->allowHash,
             'allowPaths' => $this->allowPaths,
             'allowMailto' => $this->allowMailto,
-            'message' => Craft::t('linkit', 'Please enter a valid url.')
+            'message' => Craft::t('linkit', 'Please enter a valid url.'),
         ];
         return $rules;
     }
 }
 
 class_alias(Url::class, \fruitstudios\linkit\models\Url::class);
-

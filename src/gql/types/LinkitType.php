@@ -1,4 +1,5 @@
 <?php
+
 namespace presseddigital\linkit\gql\types;
 
 use craft\gql\base\ObjectType;
@@ -9,8 +10,8 @@ use GraphQL\Type\Definition\Type;
 /**
  * Class LinkitType
  */
-class LinkitType extends ObjectType {
-
+class LinkitType extends ObjectType
+{
     const GRAPH_QL_FIELDS = [
         'label',
         'selectionLabel',
@@ -26,7 +27,8 @@ class LinkitType extends ObjectType {
     /**
      * @inheritdoc
      */
-    protected function resolve($source, $arguments, $context, ResolveInfo $resolveInfo) {
+    protected function resolve($source, $arguments, $context, ResolveInfo $resolveInfo)
+    {
         $fieldName = $resolveInfo->fieldName;
 
         return $source[$fieldName];
@@ -35,7 +37,8 @@ class LinkitType extends ObjectType {
     /**
      * @inheritdoc
      */
-    public static function prepareLinkFieldDefinition(string $typeName): array {
+    public static function prepareLinkFieldDefinition(string $typeName): array
+    {
         $contentFields = [];
 
         foreach (self::GRAPH_QL_FIELDS as $key) {

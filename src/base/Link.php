@@ -1,13 +1,14 @@
 <?php
-namespace presseddigital\linkit\base;
 
-use presseddigital\linkit\helpers\LinkitHelper;
+namespace presseddigital\linkit\base;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\FieldInterface;
 use craft\base\SavableComponent;
 use craft\helpers\Template as TemplateHelper;
+
+use presseddigital\linkit\helpers\LinkitHelper;
 
 /**
  * Class Link
@@ -26,7 +27,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public static function groupTitle(): string
     {
-        return static::group().' '.Craft::t('linkit', 'Links');
+        return static::group() . ' ' . Craft::t('linkit', 'Links');
     }
 
     public static function defaultLabel(): string
@@ -137,8 +138,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getLabel(): string
     {
-        if(!is_null($this->customLabel) && $this->customLabel != '')
-        {
+        if (!is_null($this->customLabel) && $this->customLabel != '') {
             return $this->customLabel;
         }
         return static::defaultLabel();
@@ -151,8 +151,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getPlaceholder(): string
     {
-        if(!is_null($this->customPlaceholder) && $this->customPlaceholder != '')
-        {
+        if (!is_null($this->customPlaceholder) && $this->customPlaceholder != '') {
             return $this->customPlaceholder;
         }
         return static::defaultPlaceholder();
@@ -160,7 +159,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getSettingsHtml(): string
     {
-       return Craft::$app->getView()->renderTemplate(
+        return Craft::$app->getView()->renderTemplate(
             static::settingsTemplatePath(),
             [
                 'type' => $this,
@@ -181,8 +180,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getLink($customAttributes = [], $raw = true, $preview = false)
     {
-        if(!$preview && !$this->isAvailable())
-        {
+        if (!$preview && !$this->isAvailable()) {
             return '';
         }
 
@@ -202,8 +200,7 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public function getText(): string
     {
-        if($this->fieldSettings['allowCustomText'] && $this->customText != '')
-        {
+        if ($this->fieldSettings['allowCustomText'] && $this->customText != '') {
             return $this->customText;
         }
         return $this->fieldSettings['defaultText'] != '' ? $this->fieldSettings['defaultText'] : $this->value ?? '';
@@ -212,8 +209,7 @@ abstract class Link extends SavableComponent implements LinkInterface
     public function getLinkAttributes(): array
     {
         $attributes = [];
-        if($this->fieldSettings['allowTarget'] && $this->target)
-        {
+        if ($this->fieldSettings['allowTarget'] && $this->target) {
             // Target="_blank" - the most underestimated vulnerability ever
             // https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
             $attributes['target'] = '_blank';
@@ -249,18 +245,17 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     protected function prepLinkAttributes($customAttributes = []): array
     {
-        return array_merge($this->getLinkAttributes(), $customAttributes);;
+        return array_merge($this->getLinkAttributes(), $customAttributes);
+        ;
     }
 
     protected function getCustomOrDefaultText()
     {
-        if($this->fieldSettings['allowCustomText'] && $this->customText != '')
-        {
+        if ($this->fieldSettings['allowCustomText'] && $this->customText != '') {
             return $this->customText;
         }
 
-        if($this->fieldSettings['defaultText'] && $this->fieldSettings['defaultText'] != '')
-        {
+        if ($this->fieldSettings['defaultText'] && $this->fieldSettings['defaultText'] != '') {
             return $this->fieldSettings['defaultText'];
         }
 

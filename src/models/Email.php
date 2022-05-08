@@ -1,9 +1,9 @@
 <?php
+
 namespace presseddigital\linkit\models;
 
 use Craft;
 
-use presseddigital\linkit\Linkit;
 use presseddigital\linkit\base\Link;
 
 class Email extends Link
@@ -26,7 +26,7 @@ class Email extends Link
 
     public function getUrl(): string
     {
-        return (string) 'mailto:'.$this->value;
+        return (string) 'mailto:' . $this->value;
     }
 
     public function rules()
@@ -35,7 +35,6 @@ class Email extends Link
         $rules[] = ['value', 'email', 'message' => Craft::t('linkit', 'Please enter a valid email address.')];
         return $rules;
     }
-
 }
 
 class_alias(Email::class, \fruitstudios\linkit\models\Email::class);

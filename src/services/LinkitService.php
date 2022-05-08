@@ -1,27 +1,25 @@
 <?php
+
 namespace presseddigital\linkit\services;
-
-use presseddigital\linkit\Linkit;
-use presseddigital\linkit\events\RegisterLinkTypesEvent;
-use presseddigital\linkit\base\ElementLink;
-
-use presseddigital\linkit\models\Phone;
-use presseddigital\linkit\models\Url;
-use presseddigital\linkit\models\Email;
-use presseddigital\linkit\models\Asset;
-use presseddigital\linkit\models\Entry;
-use presseddigital\linkit\models\Category;
-use presseddigital\linkit\models\User;
-use presseddigital\linkit\models\Product;
-use presseddigital\linkit\models\Twitter;
-use presseddigital\linkit\models\Facebook;
-use presseddigital\linkit\models\LinkedIn;
-use presseddigital\linkit\models\Instagram;
 
 use Craft;
 use craft\base\Component;
 use craft\helpers\ArrayHelper;
-use craft\helpers\Component as ComponentHelper;
+
+use presseddigital\linkit\base\ElementLink;
+use presseddigital\linkit\events\RegisterLinkTypesEvent;
+use presseddigital\linkit\models\Asset;
+use presseddigital\linkit\models\Category;
+use presseddigital\linkit\models\Email;
+use presseddigital\linkit\models\Entry;
+use presseddigital\linkit\models\Facebook;
+use presseddigital\linkit\models\Instagram;
+use presseddigital\linkit\models\LinkedIn;
+use presseddigital\linkit\models\Phone;
+use presseddigital\linkit\models\Product;
+use presseddigital\linkit\models\Twitter;
+use presseddigital\linkit\models\Url;
+use presseddigital\linkit\models\User;
 
 class LinkitService extends Component
 {
@@ -55,14 +53,13 @@ class LinkitService extends Component
         $linkTypes[] = new User();
 
         // Product link
-        if(Craft::$app->getPlugins()->getPlugin('commerce'))
-        {
+        if (Craft::$app->getPlugins()->getPlugin('commerce')) {
             $linkTypes[] = new Product();
         }
 
         // Third Party
         $event = new RegisterLinkTypesEvent([
-            'types' => $linkTypes
+            'types' => $linkTypes,
         ]);
         $this->trigger(self::EVENT_REGISTER_LINKIT_FIELD_TYPES, $event);
         return $event->types;
@@ -70,7 +67,9 @@ class LinkitService extends Component
 
     public function getAvailableElementLinkTypes()
     {
-        return array_filter($this->getAvailableLinkTypes(), function($type) { return $type instanceof ElementLink; });
+        return array_filter($this->getAvailableLinkTypes(), function($type) {
+            return $type instanceof ElementLink;
+        });
     }
 
     public function getLinkTypeByHandle(string $handle)
@@ -126,7 +125,7 @@ class LinkitService extends Component
             if (!isset($source['heading'])) {
                 $options[] = [
                     'label' => $source['label'],
-                    'value' => $source['key']
+                    'value' => $source['key'],
                 ];
                 $optionNames[] = $source['label'];
             }
@@ -137,7 +136,4 @@ class LinkitService extends Component
 
         return $options;
     }
-
-
-
 }

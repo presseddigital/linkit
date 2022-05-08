@@ -1,4 +1,5 @@
 <?php
+
 namespace presseddigital\linkit\events;
 
 use yii\base\Event;

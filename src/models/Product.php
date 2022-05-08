@@ -1,10 +1,10 @@
 <?php
+
 namespace presseddigital\linkit\models;
 
-use presseddigital\linkit\base\ElementLink;
-
-use Craft;
 use craft\commerce\elements\Product as CraftCommerceProduct;
+
+use presseddigital\linkit\base\ElementLink;
 
 class Product extends ElementLink
 {

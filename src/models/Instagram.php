@@ -1,9 +1,9 @@
 <?php
+
 namespace presseddigital\linkit\models;
 
 use Craft;
 
-use presseddigital\linkit\Linkit;
 use presseddigital\linkit\base\Link;
 use presseddigital\linkit\validators\UrlValidator;
 
@@ -47,13 +47,13 @@ class Instagram extends Link
             ['value'],
             UrlValidator::class,
             'defaultScheme' => 'https',
-            'message' => Craft::t('linkit', 'Please enter a valid url.')
+            'message' => Craft::t('linkit', 'Please enter a valid url.'),
         ];
         $rules[] = [
             ['value'],
             'match',
             'pattern' => $this->_match,
-            'message' => Craft::t('linkit', 'Please enter a valid Instagram link.')
+            'message' => Craft::t('linkit', 'Please enter a valid Instagram link.'),
         ];
         return $rules;
     }

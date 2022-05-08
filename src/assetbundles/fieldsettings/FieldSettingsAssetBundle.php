@@ -1,7 +1,7 @@
 <?php
+
 namespace presseddigital\linkit\assetbundles\fieldsettings;
 
-use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 

@@ -1,11 +1,12 @@
 <?php
-namespace presseddigital\linkit\base;
 
-use presseddigital\linkit\Linkit;
+namespace presseddigital\linkit\base;
 
 use Craft;
 use craft\base\Element;
 use craft\helpers\ArrayHelper;
+
+use presseddigital\linkit\Linkit;
 
 abstract class ElementLink extends Link
 {
@@ -58,8 +59,7 @@ abstract class ElementLink extends Link
 
     public function getSelectionLabel(): string
     {
-        if(!is_null($this->customSelectionLabel) && $this->customSelectionLabel != '')
-        {
+        if (!is_null($this->customSelectionLabel) && $this->customSelectionLabel != '') {
             return $this->customSelectionLabel;
         }
         return $this->defaultSelectionLabel();
@@ -67,8 +67,7 @@ abstract class ElementLink extends Link
 
     public function getUrl(): string
     {
-        if(!$this->getElement())
-        {
+        if (!$this->getElement()) {
             return '';
         }
         return $this->getElement()->getUrl() ?? '';
@@ -81,17 +80,14 @@ abstract class ElementLink extends Link
 
     public function getElement()
     {
-        if($this->_element !== null)
-        {
+        if ($this->_element !== null) {
             return $this->_element;
         }
 
         // Check eager loading
-        if ($this->owner)
-        {
-            $eagerLoadingHandle = $this->getField()->handle.'.'.$this->getTypeHandle();
-            if($this->owner->hasEagerLoadedElements($eagerLoadingHandle))
-            {
+        if ($this->owner) {
+            $eagerLoadingHandle = $this->getField()->handle . '.' . $this->getTypeHandle();
+            if ($this->owner->hasEagerLoadedElements($eagerLoadingHandle)) {
                 $elements = $this->owner->getEagerLoadedElements($eagerLoadingHandle);
                 return $this->_element = ArrayHelper::firstValue($elements);
             }

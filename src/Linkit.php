@@ -1,22 +1,21 @@
 <?php
+
 namespace presseddigital\linkit;
 
-use presseddigital\linkit\fields\LinkitField;
-use presseddigital\linkit\services\LinkitService;
-
 use Craft;
-use craft\base\Plugin;
 use craft\base\Element;
+
 use craft\base\FieldInterface;
-use craft\events\PluginEvent;
-use craft\events\RegisterComponentTypesEvent;
+use craft\base\Plugin;
+use craft\commerce\Plugin as CommercePlugin;
 use craft\events\DefineEagerLoadingMapEvent;
 use craft\events\EagerLoadElementsEvent;
-use craft\services\Plugins;
+use craft\events\RegisterComponentTypesEvent;
+use craft\helpers\ArrayHelper;
 use craft\services\Elements;
 use craft\services\Fields;
-use craft\helpers\ArrayHelper;
-use craft\commerce\Plugin as CommercePlugin;
+use presseddigital\linkit\fields\LinkitField;
+use presseddigital\linkit\services\LinkitService;
 use yii\base\Event;
 
 class Linkit extends Plugin
@@ -43,13 +42,13 @@ class Linkit extends Plugin
             'service' => LinkitService::class,
         ]);
 
-        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $e) {
+        Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $e) {
             $e->types[] = LinkitField::class;
         });
 
         // Before any eager loading happens we need to update the handles to allow us to grab the data from our links
         // - Ensuring that there is a plan for each element link type
-        Event::on(Elements::class, Elements::EVENT_BEFORE_EAGER_LOAD_ELEMENTS, function (EagerLoadElementsEvent $e) {
+        Event::on(Elements::class, Elements::EVENT_BEFORE_EAGER_LOAD_ELEMENTS, function(EagerLoadElementsEvent $e) {
 
             // Match fields, determine if in the with param, update plan handles
             // - Get from any context
@@ -86,8 +85,7 @@ class Linkit extends Plugin
 
             // Loop current plans (included any nested plans) and replace with our own custom plans
             $with = [];
-            foreach ($e->with as $i => $plan)
-            {
+            foreach ($e->with as $i => $plan) {
                 array_push($with, ...$this->_getCustomPlans($plan, $linkitFieldHandles, $elementLinkTypes));
 
                 // $isLinkitField = ArrayHelper::isIn($plan->handle, $linkitFieldHandles);
@@ -112,26 +110,20 @@ class Linkit extends Plugin
             $e->with = $with;
         });
 
-        Event::on(Element::class, Element::EVENT_DEFINE_EAGER_LOADING_MAP, function (DefineEagerLoadingMapEvent $e) {
-
+        Event::on(Element::class, Element::EVENT_DEFINE_EAGER_LOADING_MAP, function(DefineEagerLoadingMapEvent $e) {
             list($handle, $elementLinkTypeHandle) = array_pad(explode('.', $e->handle), 2, false);
-            if($elementLinkTypeHandle)
-            {
+            if ($elementLinkTypeHandle) {
                 $field = Craft::$app->getFields()->getFieldByHandle($handle);
-                if ($field && $field instanceof LinkitField)
-                {
+                if ($field && $field instanceof LinkitField) {
                     $map = [];
-                    foreach ($e->sourceElements as $element)
-                    {
+                    foreach ($e->sourceElements as $element) {
                         $link = $element->$handle;
-                        if($link && $link->getTypeHandle() === $elementLinkTypeHandle)
-                        {
+                        if ($link && $link->getTypeHandle() === $elementLinkTypeHandle) {
                             $map[] = [ 'source' => (int)$element->id, 'target' => (int)$link->value ];
                         }
                     }
 
-                    if($map)
-                    {
+                    if ($map) {
                         $linkType = self::$plugin->service->getLinkTypeByHandle($elementLinkTypeHandle);
 
                         $e->elementType = $linkType::elementType();
@@ -140,7 +132,6 @@ class Linkit extends Plugin
                     }
                 }
             }
-
         });
 
         Craft::info(Craft::t('linkit', '{name} plugin loaded', [ 'name' => $this->name ]), __METHOD__);
@@ -152,34 +143,27 @@ class Linkit extends Plugin
 
         $handleParts = explode(':', $plan->handle);
         $isLinkitField = ArrayHelper::isIn(end($handleParts), $linkitFieldHandles);
-        if ($isLinkitField)
-        {
+        if ($isLinkitField) {
             // Set a plan for all possible element link types
-            foreach($elementLinkTypes as $elementLinkType)
-            {
+            foreach ($elementLinkTypes as $elementLinkType) {
                 $elementLinkTypeHandle = $elementLinkType->getTypeHandle();
 
                 $clone = clone $plan;
-                $handle = $clone->handle.'.'.$elementLinkTypeHandle;
+                $handle = $clone->handle . '.' . $elementLinkTypeHandle;
 
                 $clone->handle = $handle;
                 $clone->alias = $handle;
 
                 $newPlans[] = $clone;
             }
-        }
-        else
-        {
+        } else {
             $newPlans = [$plan];
         }
 
-        if(!empty($plan->nested))
-        {
-            foreach($newPlans as &$newPlan)
-            {
+        if (!empty($plan->nested)) {
+            foreach ($newPlans as &$newPlan) {
                 $newNestedPlans = [];
-                foreach($newPlan->nested as $nestedPlan)
-                {
+                foreach ($newPlan->nested as $nestedPlan) {
                     array_push($newNestedPlans, ...$this->_getCustomPlans($nestedPlan, $linkitFieldHandles, $elementLinkTypes));
                 }
                 $newPlan->nested = $newNestedPlans;

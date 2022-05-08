@@ -1,12 +1,10 @@
 <?php
+
 namespace presseddigital\linkit\base;
 
-use presseddigital\linkit\base\Link;
-
-use Craft;
-use craft\base\SavableComponentInterface;
 use craft\base\ElementInterface;
 use craft\base\FieldInterface;
+use craft\base\SavableComponentInterface;
 
 interface LinkInterface extends SavableComponentInterface
 {

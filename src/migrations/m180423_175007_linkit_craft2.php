@@ -1,7 +1,6 @@
 <?php
-namespace presseddigital\linkit\migrations;
 
-use presseddigital\linkit\migrations\Install;
+namespace presseddigital\linkit\migrations;
 
 class m180423_175007_linkit_craft2 extends Install
 {
