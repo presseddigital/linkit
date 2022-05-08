@@ -12,7 +12,6 @@ use craft\validators\ArrayValidator;
 
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
-use presseddigital\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use presseddigital\linkit\base\Link;
 use presseddigital\linkit\gql\types\generators\LinkitGenerator;
 use presseddigital\linkit\models\Asset;
@@ -104,8 +103,9 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
      * @return array|false|null The eager-loading element ID mappings, false if no mappings exist, or null if the result
      * should be ignored.
      */
-    public function getEagerLoadingMap(array $sourceElements): void
+    public function getEagerLoadingMap(array $sourceElements): array|false|null
     {
+
     }
 
 
@@ -134,7 +134,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return true;
     }
 
-    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         if ($value instanceof Link) {
             return $value;
@@ -171,7 +171,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return null;
     }
 
-    public function serializeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         $serialized = [];
         if ($value instanceof Link) {
@@ -188,15 +188,12 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getSettingsHtml(): ?string
     {
-        $view = Craft::$app->getView();
-        $view->registerAssetBundle(FieldSettingsAssetBundle::class);
-
-        return $view->renderTemplate('linkit/fields/_settings', [
+        return Craft::$app->getView()->renderTemplate('linkit/fields/_settings', [
             'field' => $this,
         ]);
     }
 
-    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         $view = Craft::$app->getView();
 
@@ -330,7 +327,8 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     private function _getLinkTypeModelByType(string $type, bool $populate = true)
     {
         try {
-            $linkType = Craft::createObject($type);
+            $linkType = new $type();;
+            // $linkType = Craft::createObject($type);
             if ($populate) {
                 $linkType = $this->_populateLinkTypeModel($linkType);
             }
@@ -343,10 +341,11 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     private function _populateLinkTypeModel(Link $linkType): \presseddigital\linkit\base\Link
     {
+        Craft::dd($linkType->customLabel);
         // Get Type Settings
         $linkType->setAttributes($this->types[$linkType->type] ?? [], false); // TODO: Get Rules added for these and remove false
         // Craft::configure($linkType, $attributes); // Want to use but only if we can confirm that we can't get passed invalid attributes here
-        $linkType->fieldSettings = $this->getSettings(); // TODO: remove and ust use the field now set below
+        $linkType->fieldSettings = $this->getSettings(); // TODO: remove and just use the field now set below
         $linkType->setField($this);
         return $linkType;
     }

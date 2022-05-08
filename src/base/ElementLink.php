@@ -15,7 +15,7 @@ abstract class ElementLink extends Link implements \Stringable
     /**
      * @var mixed|null
      */
-    private ?mixed $_element = null;
+    private mixed $_element = null;
 
     // Static
     // =========================================================================

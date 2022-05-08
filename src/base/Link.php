@@ -138,9 +138,9 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
 
     public function getLabel(): string
     {
-        if (!is_null($this->customLabel) && $this->customLabel != '') {
-            return $this->customLabel;
-        }
+        // if (!is_null($this->customLabel) && $this->customLabel != '') {
+        //     return $this->customLabel;
+        // }
         return static::defaultLabel();
     }
 

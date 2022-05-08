@@ -15,7 +15,7 @@ class User extends ElementLink
     /**
      * @var mixed|null
      */
-    private ?mixed $_user = null;
+    private mixed $_user = null;
 
     // Public
     // =========================================================================

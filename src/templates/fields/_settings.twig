@@ -28,9 +28,9 @@
 		first: true
 	}) }}
 
-	{% set availableLinkFieldsByGroup = field.availableLinkTypes|group('groupTitle')  %}
+	{% set availableLinkTypesByGroup = field.availableLinkTypes|group(t => t.groupTitle)  %}
 
-	{% for groupTitle, linksTypesInGroup in availableLinkFieldsByGroup %}
+	{% for groupTitle, linksTypesInGroup in availableLinkTypesByGroup %}
 
 		{{ forms.field({
 			label: groupTitle,
@@ -39,6 +39,8 @@
 		}) }}
 
 		{% for linkType in linksTypesInGroup %}
+
+			{# {{ dump(linkType) }} #}
 
 			{% set name = 'types['~linkType.type~']' %}
 			{% set isAvailable = field.types[linkType.type].enabled ?? false %}
