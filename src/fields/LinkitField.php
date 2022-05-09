@@ -339,11 +339,11 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         }
     }
 
-    private function _populateLinkTypeModel(Link $linkType): \presseddigital\linkit\base\Link
+    private function _populateLinkTypeModel(Link $linkType): Link
     {
-        Craft::dd($linkType->customLabel);
         // Get Type Settings
-        $linkType->setAttributes($this->types[$linkType->type] ?? [], false); // TODO: Get Rules added for these and remove false
+        $linkTypeSettings = $this->types[$linkType->type] ?? [];
+        $linkType->setAttributes($linkTypeSettings, false); // TODO: Get Rules added for these and remove false
         // Craft::configure($linkType, $attributes); // Want to use but only if we can confirm that we can't get passed invalid attributes here
         $linkType->fieldSettings = $this->getSettings(); // TODO: remove and just use the field now set below
         $linkType->setField($this);

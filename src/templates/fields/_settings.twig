@@ -28,19 +28,15 @@
 		first: true
 	}) }}
 
-	{% set availableLinkTypesByGroup = field.availableLinkTypes|group(t => t.groupTitle)  %}
-
-	{% for groupTitle, linksTypesInGroup in availableLinkTypesByGroup %}
+	{% for group, linksTypes in field.availableLinkTypes|group('groupTitle') %}
 
 		{{ forms.field({
-			label: groupTitle,
-			instructions: "Select and configure the {groupTitle} you would like to make available."|t('linkit', {groupTitle: groupTitle|lower}),
+			label: group,
+			instructions: "Select and configure the {group} you would like to make available."|t('linkit', {group: group|lower}),
 			first: true
 		}) }}
 
-		{% for linkType in linksTypesInGroup %}
-
-			{# {{ dump(linkType) }} #}
+		{% for linkType in linksTypes %}
 
 			{% set name = 'types['~linkType.type~']' %}
 			{% set isAvailable = field.types[linkType.type].enabled ?? false %}
