@@ -72,11 +72,11 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
 
     public ?string $customLabel = null;
     public ?string $customPlaceholder = null;
-
-    public ?array $fieldSettings = null; // TODO: Remove and use field
     public ?string $value = null;
     public ?string $customText = null;
-    public $target;
+    public ?bool $target = null;
+
+    public ?array $fieldSettings = null; // TODO: Remove and use field
 
     // Private
     // =========================================================================
@@ -235,7 +235,8 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules[] = ['customLabel', 'string'];
+        $rules[] = [['customLabel', 'customPlaceholder', 'value', 'customText'], 'string'];
+        $rules[] = [['target'], 'boolean'];
         return $rules;
     }
 

@@ -2,6 +2,9 @@
 
 <div class="linkit">
 
+	{{ d(field) }}
+	{{ d(currentLink) }}
+
 	{% if field.enabledLinkTypes|length %}
 
 		{% set singleLinkType = field.enabledLinkTypes|length == 1 ? field.enabledLinkTypes[0] : false %}

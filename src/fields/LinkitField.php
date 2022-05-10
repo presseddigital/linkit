@@ -115,7 +115,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     {
         $rules = parent::rules();
         $rules[] = [['selectLinkText', 'defaultText'], 'string'];
-        $rules[] = [['allowCustomText', 'allowTarget'], 'bool'];
+        $rules[] = [['allowCustomText', 'allowTarget'], 'boolean'];
         $rules[] = [
             ['types'],
             ArrayValidator::class,
@@ -169,7 +169,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
             $link = $this->_getLinkTypeModelByType($value['type']);
             unset($value['type']);
-            $link->setAttributes($value, true);
+            $link->setAttributes($value);
             $link->setOwner($element);
             return $link;
         }
