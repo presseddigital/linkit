@@ -2,8 +2,8 @@
 
 namespace presseddigital\linkit\models;
 
+use craft\base\ElementInterface;
 use craft\elements\Asset as CraftAsset;
-
 use presseddigital\linkit\base\ElementLink;
 
 class Asset extends ElementLink
@@ -11,7 +11,7 @@ class Asset extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType(): string
+    public static function elementType(): ?string
     {
         return CraftAsset::class;
     }
@@ -24,7 +24,7 @@ class Asset extends ElementLink
         return $this->getCustomOrDefaultText() ?? $this->getAsset()->filename ?? $this->getUrl() ?? '';
     }
 
-    public function getAsset()
+    public function getAsset(): ?ElementInterface
     {
         return $this->getElement();
     }

@@ -6,9 +6,9 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\FieldInterface;
 use craft\base\SavableComponent;
-use craft\helpers\Template as TemplateHelper;
-
-use presseddigital\linkit\helpers\LinkitHelper;
+use craft\helpers\Template;
+use craft\helpers\Html;
+use Twig\Markup;
 
 /**
  * Class Link
@@ -56,7 +56,8 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
         return true;
     }
 
-    public static function elementType()
+    // TODO: Check if this need to be here or if it could actually be in the Element Link only
+    public static function elementType(): ?string
     {
         return null;
     }
@@ -72,8 +73,8 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     public ?string $customLabel = null;
     public ?string $customPlaceholder = null;
 
-    public $fieldSettings;
-    public $value;
+    public ?array $fieldSettings = null; // TODO: Remove and use field
+    public ?string $value = null;
     public ?string $customText = null;
     public $target;
 
@@ -92,7 +93,7 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
         return $this->getLink([], false);
     }
 
-    public function setOwner(ElementInterface $owner = null)
+    public function setOwner(ElementInterface $owner = null): void
     {
         $this->_owner = $owner;
     }
@@ -102,7 +103,7 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
         return $this->_owner;
     }
 
-    public function setField(FieldInterface $field = null)
+    public function setField(FieldInterface $field = null): void
     {
         $this->_field = $field;
     }
@@ -169,28 +170,31 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
 
     public function getInputHtml(string $name, $field, Link $currentLink = null, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate(static::inputTemplatePath(), [
-            'name' => $name,
-            'link' => $this,
-            'currentLink' => $currentLink,
-            'element' => $element,
-            'field' => $field,
-        ]);
+        return Craft::$app->getView()->renderTemplate(
+            static::inputTemplatePath(),
+            [
+                'name' => $name,
+                'link' => $this,
+                'currentLink' => $currentLink,
+                'element' => $element,
+                'field' => $field,
+            ]
+        );
     }
 
-    public function getLink($customAttributes = [], $raw = true, $preview = false)
+    public function getLink(array $attributes = [], bool $raw = true, bool $preview = false): Markup|string
     {
         if (!$preview && !$this->isAvailable()) {
             return '';
         }
 
-        $html = LinkitHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
-        return $raw ? TemplateHelper::raw($html) : $html;
+        $link = Html::a($this->text, $this->getUrl(), $this->prepLinkAttributes($attributes));
+        return $raw ? Template::raw($link) : $link;
     }
 
-    public function getLinkPreview($customAttributes = [])
+    public function getLinkPreview(array $attributes = [])
     {
-        return $this->getLink($customAttributes, false, true);
+        return $this->getLink($attributes, false, true);
     }
 
     public function getUrl(): string
@@ -243,9 +247,9 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     // Protected Methods
     // =========================================================================
 
-    protected function prepLinkAttributes($customAttributes = []): array
+    protected function prepLinkAttributes(array $attributes = []): array
     {
-        return array_merge($this->getLinkAttributes(), $customAttributes);
+        return array_merge($this->getLinkAttributes(), $attributes);
     }
 
     protected function getCustomOrDefaultText()

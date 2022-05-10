@@ -2,8 +2,8 @@
 
 namespace presseddigital\linkit\models;
 
+use craft\base\ElementInterface;
 use craft\elements\Category as CraftCategory;
-
 use presseddigital\linkit\base\ElementLink;
 
 class Category extends ElementLink
@@ -11,7 +11,7 @@ class Category extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType(): string
+    public static function elementType(): ?string
     {
         return CraftCategory::class;
     }
@@ -19,7 +19,7 @@ class Category extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getCategory()
+    public function getCategory(): ?ElementInterface
     {
         return $this->getElement();
     }

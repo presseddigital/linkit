@@ -56,7 +56,7 @@ class Twitter extends Link
             ['value'],
             'match',
             'pattern' => $this->_match,
-            'message' => Craft::t('linkit', 'Please enter a valid twitter link.'),
+            'message' => Craft::t('linkit', 'Please enter a valid {type} link.', [ 'type' => static::defaultLabel() ]),
         ];
         return $rules;
     }

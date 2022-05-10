@@ -5,6 +5,7 @@ namespace presseddigital\linkit\base;
 use craft\base\ElementInterface;
 use craft\base\FieldInterface;
 use craft\base\SavableComponentInterface;
+use Twig\Markup;
 
 interface LinkInterface extends SavableComponentInterface
 {
@@ -18,7 +19,7 @@ interface LinkInterface extends SavableComponentInterface
     public static function settingsTemplatePath(): string;
     public static function inputTemplatePath(): string;
     public static function hasSettings(): bool;
-    public static function elementType();
+    public static function elementType(): ?string;
     public static function hasElement(): bool;
 
     // Public Methods
@@ -26,10 +27,10 @@ interface LinkInterface extends SavableComponentInterface
 
     public function __toString(): string;
 
-    public function setOwner(ElementInterface $element = null);
+    public function setOwner(ElementInterface $element = null): void;
     public function getOwner(): ElementInterface;
 
-    public function setField(FieldInterface $field = null);
+    public function setField(FieldInterface $field = null): void;
     public function getField(): FieldInterface;
 
     public function defaultSelectionLabel(): string;
@@ -43,7 +44,7 @@ interface LinkInterface extends SavableComponentInterface
     public function getType(): string;
     public function getTypeHandle(): string;
 
-    public function getLink($raw = true);
+    public function getLink(array $attributes = [], bool $raw = true, bool $preview = false): Markup|string;
     public function getUrl(): string;
     public function getText(): string;
 

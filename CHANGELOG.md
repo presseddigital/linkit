@@ -110,7 +110,7 @@
 
 ### Changed
 
-*   Changed - Improved Linked In link validation
+*   Changed - Improved LinkedIn link validation
 *   Changed - Improved url link validation
 *   Changed - Element link types now allowed to select disabled elements to match the first party Craft element fieldtypes
 *   Changed - Updated element select to match first party fields

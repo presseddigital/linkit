@@ -2,8 +2,8 @@
 
 namespace presseddigital\linkit\models;
 
+use craft\base\ElementInterface;
 use craft\commerce\elements\Product as CraftCommerceProduct;
-
 use presseddigital\linkit\base\ElementLink;
 
 class Product extends ElementLink
@@ -11,7 +11,7 @@ class Product extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType(): string
+    public static function elementType(): ?string
     {
         return CraftCommerceProduct::class;
     }
@@ -19,7 +19,7 @@ class Product extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getProduct()
+    public function getProduct(): ?ElementInterface
     {
         return $this->getElement();
     }

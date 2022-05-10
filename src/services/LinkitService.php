@@ -75,8 +75,6 @@ class LinkitService extends Component
         return ArrayHelper::firstWhere($this->getAvailableLinkTypes(), 'typeHandle', $handle);
     }
 
-
-
     // Thrid Party Field Types
     //
     // public function getAllFieldTypes(): array
@@ -107,12 +105,13 @@ class LinkitService extends Component
     //     $this->trigger(self::EVENT_REGISTER_FIELD_TYPES, $event);
     //     return $event->types;
     // }
+
     /**
      * @return array<int, array{label: mixed, value: mixed}>
      */
     public function getSourceOptions($elementType): array
     {
-        $sources = Craft::$app->getElementIndexes()->getSources($elementType, 'modal');
+        $sources = Craft::$app->getElementSources()->getSources($elementType, 'modal');
         $options = [];
         $optionNames = [];
 

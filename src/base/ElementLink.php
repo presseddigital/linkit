@@ -3,6 +3,7 @@
 namespace presseddigital\linkit\base;
 
 use Craft;
+use craft\base\ElementInterface;
 use craft\base\Element;
 use craft\helpers\ArrayHelper;
 
@@ -25,7 +26,7 @@ abstract class ElementLink extends Link implements \Stringable
         return Craft::t('linkit', 'Element');
     }
 
-    public static function elementType(): string
+    public static function elementType(): ?string
     {
         return Element::class;
     }
@@ -44,7 +45,7 @@ abstract class ElementLink extends Link implements \Stringable
     // =========================================================================
 
     public string $sources = '*';
-    public $customSelectionLabel;
+    public ?string $customSelectionLabel = null;
 
     // Public Methods
     // =========================================================================
@@ -61,7 +62,7 @@ abstract class ElementLink extends Link implements \Stringable
 
     public function getSelectionLabel(): string
     {
-        if (!is_null($this->customSelectionLabel) && $this->customSelectionLabel != '') {
+        if (null !== $this->customSelectionLabel && $this->customSelectionLabel != '') {
             return $this->customSelectionLabel;
         }
         return $this->defaultSelectionLabel();
@@ -69,9 +70,6 @@ abstract class ElementLink extends Link implements \Stringable
 
     public function getUrl(): string
     {
-        if (!$this->getElement()) {
-            return '';
-        }
         return $this->getElement()->getUrl() ?? '';
     }
 
@@ -80,7 +78,7 @@ abstract class ElementLink extends Link implements \Stringable
         return $this->getCustomOrDefaultText() ?? $this->getElement()->title ?? $this->getUrl() ?? '';
     }
 
-    public function getElement()
+    public function getElement(): ?ElementInterface
     {
         if ($this->_element !== null) {
             return $this->_element;

@@ -52,10 +52,10 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     // =========================================================================
 
     public string $selectLinkText = '';
-    public $types;
-    public $allowCustomText;
-    public $defaultText;
-    public $allowTarget;
+    public ?string $defaultText = null;
+    public array $types = [];
+    public bool $allowCustomText = false;
+    public bool $allowTarget = false;
 
     // Static Methods
     // =========================================================================
@@ -108,14 +108,21 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     }
 
-
     /**
      * @return mixed[]
      */
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules[] = [['types'], ArrayValidator::class, 'min' => 1, 'tooFew' => Craft::t('linkit', 'You must select at least one link type.'), 'skipOnEmpty' => false];
+        $rules[] = [['selectLinkText', 'defaultText'], 'string'];
+        $rules[] = [['allowCustomText', 'allowTarget'], 'bool'];
+        $rules[] = [
+            ['types'],
+            ArrayValidator::class,
+            'min' => 1,
+            'tooFew' => Craft::t('linkit', 'You must select at least one link type.'),
+            'skipOnEmpty' => false
+        ];
         return $rules;
     }
 
@@ -124,7 +131,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return $this->_columnType;
     }
 
-    public function getContentGqlType(): \craft\gql\base\ObjectType
+    public function getContentGqlType(): \GraphQL\Type\Definition\Type|array
     {
         return LinkitGenerator::generateType($this);
     }
@@ -162,8 +169,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
             $link = $this->_getLinkTypeModelByType($value['type']);
             unset($value['type']);
-            $link->setAttributes($value, false); // TODO: Get Rules added for these and remove false
-            // Craft::configure($link, $value); // Want to use but only if we can confirm that we can't get passed invalid attributes here
+            $link->setAttributes($value, true);
             $link->setOwner($element);
             return $link;
         }
@@ -327,8 +333,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     private function _getLinkTypeModelByType(string $type, bool $populate = true)
     {
         try {
-            $linkType = new $type();;
-            // $linkType = Craft::createObject($type);
+            $linkType = new $type();
             if ($populate) {
                 $linkType = $this->_populateLinkTypeModel($linkType);
             }

@@ -3,9 +3,8 @@
 namespace presseddigital\linkit\models;
 
 use Craft;
-
+use craft\base\ElementInterface;
 use craft\elements\User as CraftUser;
-
 use presseddigital\linkit\base\ElementLink;
 
 class User extends ElementLink
@@ -20,12 +19,12 @@ class User extends ElementLink
     // Public
     // =========================================================================
 
-    public $userPath;
+    public ?string $userPath = null;
 
     // Static
     // =========================================================================
 
-    public static function elementType(): string
+    public static function elementType(): ?string
     {
         return CraftUser::class;
     }
@@ -61,12 +60,14 @@ class User extends ElementLink
         return $this->getCustomOrDefaultText() ?? $this->getUser()->fullName ?? $this->getUser()->name ?? $this->getUrl() ?? '';
     }
 
-    public function getUser()
+    public function getUser(): ?ElementInterface
     {
-        if (is_null($this->_user)) {
-            $this->_user = Craft::$app->getUsers()->getUserById((int) $this->value, $this->owner->siteId ?? null);
-        }
-        return $this->_user;
+        return $this->getElement();
+
+        // if (is_null($this->_user)) {
+        //     $this->_user = Craft::$app->getUsers()->getUserById((int) $this->value, $this->owner->siteId ?? null);
+        // }
+        // return $this->_user;
     }
 
     /**

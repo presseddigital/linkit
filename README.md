@@ -58,7 +58,7 @@ Social
 4.  Twitter
 5.  Facebook
 6.  Instagram
-7.  Linked In
+7.  LinkedIn
 
 Elements
 

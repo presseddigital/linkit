@@ -2,8 +2,8 @@
 
 namespace presseddigital\linkit\models;
 
+use craft\base\ElementInterface;
 use craft\elements\Entry as CraftEntry;
-
 use presseddigital\linkit\base\ElementLink;
 
 class Entry extends ElementLink
@@ -11,7 +11,7 @@ class Entry extends ElementLink
     // Static
     // =========================================================================
 
-    public static function elementType(): string
+    public static function elementType(): ?string
     {
         return CraftEntry::class;
     }
@@ -19,7 +19,7 @@ class Entry extends ElementLink
     // Public Methods
     // =========================================================================
 
-    public function getEntry()
+    public function getEntry(): ?ElementInterface
     {
         return $this->getElement();
     }
