@@ -44,7 +44,7 @@ abstract class ElementLink extends Link implements \Stringable
     // Public
     // =========================================================================
 
-    public string|array|null $sources = '*';
+    public string $sources = '*';
     public ?string $customSelectionLabel = null;
 
     // Public Methods
