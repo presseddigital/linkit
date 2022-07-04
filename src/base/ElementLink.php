@@ -89,7 +89,7 @@ abstract class ElementLink extends Link implements \Stringable
             $eagerLoadingHandle = $this->getField()->handle . '.' . $this->getTypeHandle();
             if ($this->owner->hasEagerLoadedElements($eagerLoadingHandle)) {
                 $elements = $this->owner->getEagerLoadedElements($eagerLoadingHandle);
-                return $this->_element = ArrayHelper::firstValue($elements);
+                return $this->_element = $elements->first();
             }
         }
 
