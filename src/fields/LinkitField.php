@@ -9,11 +9,10 @@ use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
 use craft\helpers\Json as JsonHelper;
 use craft\validators\ArrayValidator;
-
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
 use presseddigital\linkit\base\Link;
-use presseddigital\linkit\gql\types\generators\LinkitGenerator;
+use presseddigital\linkit\gql\types\LinkGqlType;
 use presseddigital\linkit\models\Asset;
 use presseddigital\linkit\models\Category;
 use presseddigital\linkit\models\Email;
@@ -21,7 +20,6 @@ use presseddigital\linkit\models\Entry;
 use presseddigital\linkit\models\Phone;
 use presseddigital\linkit\models\Product;
 use presseddigital\linkit\models\Url;
-
 use yii\base\ErrorException;
 use yii\db\Schema;
 
@@ -133,7 +131,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getContentGqlType(): \GraphQL\Type\Definition\Type|array
     {
-        return LinkitGenerator::generateType($this);
+        return LinkGqlType::getType();
     }
 
     public static function hasContentColumn(): bool

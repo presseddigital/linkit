@@ -2,8 +2,8 @@
 
 namespace presseddigital\linkit\gql\types;
 
+use Craft;
 use craft\gql\base\ObjectType;
-use craft\gql\TypeManager;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
@@ -51,7 +51,7 @@ class LinkitType extends ObjectType
             $contentFields[$key] = $type;
         }
 
-        $contentFields = TypeManager::prepareFieldDefinitions($contentFields, $typeName);
+        $contentFields = Craft::$app->getGql()->prepareFieldDefinitions($contentFields, $typeName);
 
         return $contentFields;
     }
