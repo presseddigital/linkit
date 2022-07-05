@@ -2,6 +2,9 @@
 .linkit--type {
   margin-bottom: 12px;
 }
+.linkit--type .status-badge.modified {
+  display: none;
+}
 
 /* Type Specific Fields
 .linkit--phone { margin-bottom: 12px; }
@@ -15,7 +18,9 @@
 */
 
 /* Default Fields */
-.linkit--settings {}
+.linkit--settings {
+  padding-top: 12px;
+}
 .linkit--customText {
   margin-bottom: 12px;
 }
