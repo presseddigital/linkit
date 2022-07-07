@@ -12,7 +12,7 @@ use craft\validators\ArrayValidator;
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
 use presseddigital\linkit\base\Link;
-use presseddigital\linkit\gql\types\LinkGqlType;
+use presseddigital\linkit\gql\types\LinkType;
 use presseddigital\linkit\models\Asset;
 use presseddigital\linkit\models\Category;
 use presseddigital\linkit\models\Email;
@@ -131,7 +131,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getContentGqlType(): \GraphQL\Type\Definition\Type|array
     {
-        return LinkGqlType::getType();
+        return LinkType::getType();
     }
 
     public static function hasContentColumn(): bool

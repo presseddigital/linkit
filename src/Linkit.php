@@ -18,7 +18,7 @@ use craft\services\Fields;
 use craft\services\Gql;
 use presseddigital\linkit\fields\LinkitField;
 use presseddigital\linkit\services\LinkitService;
-use presseddigital\linkit\gql\types\LinkGqlType;
+use presseddigital\linkit\gql\types\LinkType;
 use yii\base\Event;
 
 class Linkit extends Plugin
@@ -50,7 +50,7 @@ class Linkit extends Plugin
         });
 
         Event::on(Gql::class, Gql::EVENT_REGISTER_GQL_TYPES, function(RegisterGqlTypesEvent $e): void {
-            $e->types[] = LinkGqlType::class;
+            $e->types[] = LinkType::class;
         });
 
         // Before any eager loading happens we need to update the handles to allow us to grab the data from our links

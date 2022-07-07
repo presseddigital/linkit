@@ -187,7 +187,6 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
         if (!$preview && !$this->isAvailable()) {
             return '';
         }
-
         $link = Html::a($this->text, $this->getUrl(), $this->prepLinkAttributes($attributes));
         return $raw ? Template::raw($link) : $link;
     }

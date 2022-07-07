@@ -8,7 +8,7 @@ use craft\gql\interfaces\Element;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
-class LinkGqlType
+class LinkType
 {
     static public function getName(): string
     {
@@ -55,17 +55,16 @@ class LinkGqlType
                 'name' => 'text',
                 'type' => Type::string(),
             ],
-            'element' => [
-                'name' => 'element',
-                'type' => Element::getType(),
-            ],
             'target' => [
                 'name' => 'target',
                 'type' => Type::string(),
+                'resolve' => function($source, $arguments) {
+                    return $source->getTargetString();
+                },
             ],
-            'linkAttributes' => [
-                'name' => 'linkAttributes',
-                'type' => Type::listOf(Type::string()),
+            'element' => [
+                'name' => 'element',
+                'type' => Element::getType(),
             ],
         ];
     }
