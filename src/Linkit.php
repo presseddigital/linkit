@@ -11,11 +11,14 @@ use craft\commerce\Plugin as CommercePlugin;
 use craft\events\DefineEagerLoadingMapEvent;
 use craft\events\EagerLoadElementsEvent;
 use craft\events\RegisterComponentTypesEvent;
+use craft\events\RegisterGqlTypesEvent;
 use craft\helpers\ArrayHelper;
 use craft\services\Elements;
 use craft\services\Fields;
+use craft\services\Gql;
 use presseddigital\linkit\fields\LinkitField;
 use presseddigital\linkit\services\LinkitService;
+use presseddigital\linkit\gql\types\LinkType;
 use yii\base\Event;
 
 class Linkit extends Plugin
@@ -44,6 +47,10 @@ class Linkit extends Plugin
 
         Event::on(Fields::className(), Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $e) {
             $e->types[] = LinkitField::class;
+        });
+
+        Event::on(Gql::class, Gql::EVENT_REGISTER_GQL_TYPES, function(RegisterGqlTypesEvent $e) {
+            $e->types[] = LinkType::class;
         });
 
         // Before any eager loading happens we need to update the handles to allow us to grab the data from our links
