@@ -1,7 +1,7 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
-## 1.2.0 - 2021-10-15
+## 3.0.0 - 2022-07-07
 
 ### Changed
 
@@ -9,7 +9,8 @@
 
 ### Added
 
-*   Support for querying subfields with GraphQL. Credit to @peaffenzeller.
+*   Support for querying subfields with GraphQL. Thanks to @peaffenzeller.
+*   Eager loading support
 
 ## 1.1.12.1 - 2020-10-29
 

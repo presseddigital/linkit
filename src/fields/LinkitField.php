@@ -118,7 +118,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
 
     public function getContentGqlType()
     {
-        return LinkitGenerator::generateType($this);
+        return LinkType::getType();
     }
 
     public static function hasContentColumn(): bool
