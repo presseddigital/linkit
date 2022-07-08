@@ -12,7 +12,7 @@ class LinkType
 {
     static public function getName(): string
     {
-        return 'LinkitLink';
+        return 'Linkit_Link';
     }
 
     static public function getType(): Type
