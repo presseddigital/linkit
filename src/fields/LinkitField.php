@@ -14,7 +14,6 @@ use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
 use presseddigital\linkit\assetbundles\fieldsettings\FieldSettingsAssetBundle;
 use presseddigital\linkit\base\Link;
-use presseddigital\linkit\gql\types\generators\LinkitGenerator;
 use presseddigital\linkit\models\Asset;
 use presseddigital\linkit\models\Category;
 use presseddigital\linkit\models\Email;
@@ -22,7 +21,7 @@ use presseddigital\linkit\models\Entry;
 use presseddigital\linkit\models\Phone;
 use presseddigital\linkit\models\Product;
 use presseddigital\linkit\models\Url;
-
+use presseddigital\linkit\gql\types\LinkType;
 use yii\base\ErrorException;
 use yii\db\Schema;
 
