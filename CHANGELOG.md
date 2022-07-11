@@ -3,9 +3,12 @@
 
 ## 3.0.0 - 2022-07-07
 
+> {warning} GQL users, support for querying subfields may mean you need to update and queries that work with linkit fields.
+
 ### Changed
 
 *   Transfer ownership to Pressed Digital
+*   Bump version numbers to mirror crafts major versions
 
 ### Added
 
