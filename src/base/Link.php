@@ -6,9 +6,8 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\FieldInterface;
 use craft\base\SavableComponent;
-use craft\helpers\Template as TemplateHelper;
-
-use presseddigital\linkit\helpers\LinkitHelper;
+use craft\helpers\Template;
+use craft\helpers\Html;
 
 /**
  * Class Link
@@ -178,19 +177,25 @@ abstract class Link extends SavableComponent implements LinkInterface
         ]);
     }
 
-    public function getLink($customAttributes = [], $raw = true, $preview = false)
+    public function getLink($attributes = [], $raw = true, $preview = false)
     {
         if (!$preview && !$this->isAvailable()) {
             return '';
         }
 
-        $html = LinkitHelper::getLinkHtml($this->getUrl(), $this->text, $this->prepLinkAttributes($customAttributes));
-        return $raw ? TemplateHelper::raw($html) : $html;
+        $link = Html::tag('a', $this->getText(), array_merge(
+            $this->getBaseLinkAttributes(),
+            $attributes,
+            [
+                'href' => $this->getUrl(),
+            ]
+        ));
+        return $raw ? Template::raw($link) : $link;
     }
 
-    public function getLinkPreview($customAttributes = [])
+    public function getLinkPreview($attributes = [])
     {
-        return $this->getLink($customAttributes, false, true);
+        return $this->getLink($attributes, false, true);
     }
 
     public function getUrl(): string
@@ -206,7 +211,7 @@ abstract class Link extends SavableComponent implements LinkInterface
         return $this->fieldSettings['defaultText'] != '' ? $this->fieldSettings['defaultText'] : $this->value ?? '';
     }
 
-    public function getLinkAttributes(): array
+    public function getBaseLinkAttributes(): array
     {
         $attributes = [];
         if ($this->fieldSettings['allowTarget'] && $this->target) {
@@ -242,12 +247,6 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     // Protected Methods
     // =========================================================================
-
-    protected function prepLinkAttributes($customAttributes = []): array
-    {
-        return array_merge($this->getLinkAttributes(), $customAttributes);
-        ;
-    }
 
     protected function getCustomOrDefaultText()
     {
