@@ -3,9 +3,16 @@
 
 ## 4.0.0 - 2022-07-07
 
+> {warning} GQL users, support for querying subfields may mean you need to update and queries that work with linkit fields.
+
 ### Changed
 
 *   Transfer ownership to Pressed Digital
+*   Bump version numbers to mirror crafts major versions
+*   Remove LinkitHelper
+*   getLink() now uses the craft Html::tag to build links and correctly handles any custom attributes
+*   Improve attribute methods for the base link
+*   Removed whitespace from the phone url. #74
 
 ### Added
 

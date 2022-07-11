@@ -3,6 +3,7 @@
 namespace presseddigital\linkit\models;
 
 use Craft;
+use craft\helpers\StringHelper;
 
 use presseddigital\linkit\base\Link;
 
@@ -31,7 +32,7 @@ class Phone extends Link
 
     public function getUrl(): string
     {
-        return (string) 'tel:' . $this->value;
+        return (string) 'tel:' . StringHelper::stripWhitespace($this->value);
     }
 
     /**

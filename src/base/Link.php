@@ -187,7 +187,14 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
         if (!$preview && !$this->isAvailable()) {
             return '';
         }
-        $link = Html::a($this->text, $this->getUrl(), $this->prepLinkAttributes($attributes));
+
+        $link = Html::tag('a', $this->getText(), array_merge(
+            $this->getBaseLinkAttributes(),
+            $attributes,
+            [
+                'href' => $this->getUrl(),
+            ]
+        ));
         return $raw ? Template::raw($link) : $link;
     }
 
@@ -209,7 +216,7 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
         return $this->fieldSettings['defaultText'] != '' ? $this->fieldSettings['defaultText'] : $this->value ?? '';
     }
 
-    public function getLinkAttributes(): array
+    public function getBaseLinkAttributes(): array
     {
         $attributes = [];
         if ($this->fieldSettings['allowTarget'] && $this->target) {
@@ -246,11 +253,6 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
 
     // Protected Methods
     // =========================================================================
-
-    protected function prepLinkAttributes(array $attributes = []): array
-    {
-        return array_merge($this->getLinkAttributes(), $attributes);
-    }
 
     protected function getCustomOrDefaultText()
     {
