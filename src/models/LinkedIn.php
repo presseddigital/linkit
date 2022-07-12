@@ -24,7 +24,7 @@ class LinkedIn extends Link
 
     public static function defaultLabel(): string
     {
-        return Craft::t('linkit', 'Linked In');
+        return Craft::t('linkit', 'LinkedIn');
     }
 
     public static function defaultPlaceholder(): string
@@ -53,7 +53,7 @@ class LinkedIn extends Link
             ['value'],
             'match',
             'pattern' => $this->_match,
-            'message' => Craft::t('linkit', 'Please enter a valid Linked In link.'),
+            'message' => Craft::t('linkit', 'Please enter a valid {type} link.', [ 'type' => static::defaultLabel() ]),
         ];
         return $rules;
     }
