@@ -10,15 +10,22 @@
 *   Transfer ownership to Pressed Digital
 *   Bump version numbers to mirror crafts major versions
 *   Remove LinkitHelper
-*   getLink() now uses the craft Html::tag to build links and correctly handles any custom attributes
+*   getLink() now uses the craft `Html::tag()` to build links and correctly handles any custom attributes
 *   Improve attribute methods for the base link
-*   Removed whitespace from the phone url. #74
+*   Removed whitespace from the phone url [#74]
+*   Corrected LinkedIn spelling [#62]
 
 ### Added
 
 *   Craft 4 compatibility
-*   Support for querying subfields with GraphQL. Thanks to @peaffenzeller.
-*   Eager loading support
+*   Support for querying subfields with GraphQL. [#69] [#96] Thanks to @peaffenzeller.
+*   Eager loading support [#89]
+
+[#74]: https://github.com/presseddigital/linkit/issues/74
+[#69]: https://github.com/presseddigital/linkit/issues/69
+[#96]: https://github.com/presseddigital/linkit/issues/96
+[#89]: https://github.com/presseddigital/linkit/issues/89
+[#62]: https://github.com/presseddigital/linkit/issues/62
 
 ## 1.1.12.1 - 2020-10-29
 
