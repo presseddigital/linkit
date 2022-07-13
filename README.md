@@ -130,6 +130,23 @@ would output `<a href="/profile/USERNAME">Visit Profile</a>` which is the defaul
 
     {{ entry.linkItField.user }}
 
+**GraphQL**
+
+Linkit supports querying subfields with GraphQl, the following fields are available:
+
+    myLinkitField {
+      label
+      type
+      typeHandle
+      available
+      link
+      url
+      text
+      target
+      element
+    }
+
+Take a look at the Craft GraphQL explorer to have a play with the return values.
 
 **A Note On Element Status**
 

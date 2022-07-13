@@ -43,6 +43,13 @@ class LinkType
                 'name' => 'typeHandle',
                 'type' => Type::string(),
             ],
+            'available' => [
+                'name' => 'available',
+                'type' => Type::boolean(),
+                'resolve' => function($source, $arguments) {
+                    return $source->isAvailable();
+                },
+            ],
             'link' => [
                 'name' => 'link',
                 'type' => Type::string(),
