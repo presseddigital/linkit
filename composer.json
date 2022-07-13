@@ -10,7 +10,7 @@
 		"link"
 	],
 	"support": {
-		"docs": "https://github.com/presseddigital/linkit/blob/master/README.md",
+		"docs": "https://github.com/presseddigital/linkit/blob/v3/README.md",
 		"issues": "https://github.com/presseddigital/linkit/issues?state=open"
 	},
 	"license": "proprietary",
@@ -35,7 +35,7 @@
 		"handle": "linkit",
 		"hasCpSettings": false,
         "hasCpSection": false,
-		"changelogUrl": "https://raw.githubusercontent.com/presseddigital/linkit/master/CHANGELOG.md",
+		"changelogUrl": "https://raw.githubusercontent.com/presseddigital/linkit/v3/CHANGELOG.md",
 		"class": "presseddigital\\linkit\\Linkit",
         "components": {
             "services": "presseddigital\\linkit\\services\\LinkitService"

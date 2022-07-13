@@ -143,7 +143,7 @@ would output `<a href="/profile/USERNAME">Visit Profile</a>` which is the defaul
 
 **GraphQL**
 
-Linkit supports querying subfields with GraphQl, the following fields are available:
+Linkit supports querying subfields with GraphQl, the following fields are available, take a look at the Craft GraphQL explorer to have a play with the return values:
 
     myLinkitField {
       label
@@ -154,10 +154,11 @@ Linkit supports querying subfields with GraphQl, the following fields are availa
       url
       text
       target
-      element
+      element {
+        id
+        title
+      }
     }
-
-Take a look at the Craft GraphQL explorer to have a play with the return values.
 
 **A Note On Element Status**
 
