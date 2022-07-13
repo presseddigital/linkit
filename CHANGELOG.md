@@ -1,9 +1,9 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 3](http://craftcms.com)
 
-## 3.0.0 - 2022-07-07
+## 3.0.0 - 2022-07-13
 
-> {warning} GQL users, support for querying subfields may mean you need to update and queries that work with linkit fields.
+> {warning} Breaking Change - GQL users, support for querying subfields may mean you need to update and queries that work with linkit fields.
 
 ### Changed
 
