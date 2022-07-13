@@ -1,22 +1,19 @@
 <p align="left"><a href="https://github.com/presseddigital/linkit" target="_blank"><img width="100" height="100" src="resources/img/linkit.svg" alt="Linkit"></a></p>
 
-# Linkit plugin for Craft 3
+# Linkit plugin for Craft 4
 
 One link field to rule them all...
-This plugin adds a custom fieldtype which enables support for linking to email addresses, telephone numbers, URL's and Craft element types.
 
-> :mega: **A note from the new (well sort of new) owners Pressed Digital:** At the end of 2019 Pressed Digital Ltd was sold to allow it's founders to shift 100% of their focus to the, now not so side project, findarace.com. As a part of the deal we retained ownership of all Craft plugins and are committed to make them even more awesome. With findarace.com being all Craft, this aligns really nicely, and as a little silver lining we should now finally have some time to launch some of our unreleased plugins!
+This plugin adds a custom fieldtype which enables support for linking to email addresses, telephone numbers, URL's, Craft element types and more.
 
-## New for Craft 3
+## New for Craft 4
 
-*   Link to Users and specify a profile url rule
-*   New social links
-*   Completely rewritten for Craft 3
-*   Easily extendable, create your own custom link types
+*   GraphQL Support
+*   Eager Loading Support
 
 ## Requirements
 
-This plugin requires Craft CMS 3.1.2 or later.
+This plugin requires Craft CMS 4.0.0 or later.
 
 ## Installation
 
@@ -32,14 +29,6 @@ Open terminal, go to your Craft project folder and use composer to load this plu
 cd /path/to/project
 composer require presseddigital/linkit
 ```
-
-## Updating from Craft 2
-
-Version 1.0.7 includes migration scripts for Craft 2, just install or update via the plugin store and Linkit will handle everything else.
-
-> Backup before installing / updating and note that only native link types (email, url, phone, entry, asset, category and product) can be updated. Settings for custom link types will be overwritten and although content will remain in place, it may cause issues unexpected issues with your templates.
-
-For help on migrating custom link types see the docs and if you run into issues during the update just open a GitHub issue.
 
 ## Configuring Linkit
 
