@@ -16,6 +16,7 @@ use craft\helpers\ArrayHelper;
 use craft\services\Elements;
 use craft\services\Fields;
 use craft\services\Gql;
+use presseddigital\linkit\base\LinkInterface;
 use presseddigital\linkit\fields\LinkitField;
 use presseddigital\linkit\services\LinkitService;
 use presseddigital\linkit\gql\types\LinkType;
@@ -122,8 +123,12 @@ class Linkit extends Plugin
                 if ($field && $field instanceof LinkitField) {
                     $map = [];
                     foreach ($e->sourceElements as $element) {
-                        $link = $element->$handle;
-                        if ($link && $link->getTypeHandle() === $elementLinkTypeHandle) {
+                        if(
+                            $element->__isset('field:'.$handle) &&
+                            ($link = $element->$handle) &&
+                            $link instanceof LinkInterface &&
+                            $link->getTypeHandle() === $elementLinkTypeHandle
+                        ) {
                             $map[] = [ 'source' => (int)$element->id, 'target' => (int)$link->value ];
                         }
                     }
