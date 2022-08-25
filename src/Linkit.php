@@ -132,12 +132,13 @@ class Linkit extends Plugin
                             $map[] = [ 'source' => (int)$element->id, 'target' => (int)$link->value ];
                         }
                     }
-
-                    if ($map) {
-                        $linkType = self::$plugin->service->getLinkTypeByHandle($elementLinkTypeHandle);
-
+                    if (
+                        $map &&
+                        $linkType = self::$plugin->service->getLinkTypeByHandle($elementLinkTypeHandle)
+                    ) {
                         $e->elementType = $linkType::elementType();
                         $e->map = $map;
+                        $e->criteria = [ 'status' => null ];
                         $e->handled = true;
                     }
                 }

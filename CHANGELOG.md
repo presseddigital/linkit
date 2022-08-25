@@ -1,6 +1,11 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 4](http://craftcms.com)
 
+## 4.0.2 - 2022-08-26
+
+### Fixed
+- Fixed another bug related to eager loading disabled elements ([#102](https://github.com/presseddigital/linkit/issues/102))
+
 ## 4.0.1 - 2022-08-24
 
 ### Fixed

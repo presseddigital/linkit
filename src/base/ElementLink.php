@@ -70,12 +70,13 @@ abstract class ElementLink extends Link implements \Stringable
 
     public function getUrl(): string
     {
-        return $this->getElement()->getUrl() ?? '';
+        $element = $this->getElement();
+        return $element ? $element->getUrl() : '';
     }
 
     public function getText(): string
     {
-        return $this->getCustomOrDefaultText() ?? $this->getElement()->title ?? $this->getUrl() ?? '';
+        return $this->getCustomOrDefaultText() ?? ($this->getElement() ? $this->getElement()->title : null) ?? $this->getUrl() ?? '';
     }
 
     public function getElement(): ?ElementInterface
@@ -89,7 +90,9 @@ abstract class ElementLink extends Link implements \Stringable
             $eagerLoadingHandle = $this->getField()->handle . '.' . $this->getTypeHandle();
             if ($this->owner->hasEagerLoadedElements($eagerLoadingHandle)) {
                 $elements = $this->owner->getEagerLoadedElements($eagerLoadingHandle);
-                return $this->_element = $elements->first();
+                if($element = $elements->first()) {
+                    return $this->_element = $element;
+                }
             }
         }
 
