@@ -68,7 +68,7 @@ abstract class ElementLink extends Link
     public function getUrl(): string
     {
         $element = $this->getElement();
-        return $element ? $element->getUrl() : '';
+        return $element ? (string) $element->getUrl() : '';
     }
 
     public function getText(): string
