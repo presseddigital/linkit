@@ -1,6 +1,11 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 4](http://craftcms.com)
 
+## 4.0.3 - 2022-10-21
+
+### Fixed
+- Fixed a bug where null returned instead of a string during getUrl() ([#107](https://github.com/presseddigital/linkit/issues/107))
+
 ## 4.0.2 - 2022-08-26
 
 ### Fixed
