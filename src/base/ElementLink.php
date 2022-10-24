@@ -71,6 +71,7 @@ abstract class ElementLink extends Link implements \Stringable
     public function getUrl(): string
     {
         $element = $this->getElement();
+        if(!$element) return '';
         return $element->getUrl() ?? '';
     }
 
