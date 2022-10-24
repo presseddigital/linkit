@@ -1,6 +1,11 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 4](http://craftcms.com)
 
+## 4.0.4.1 - 2022-10-24
+
+### Fixed
+- Correct fix for null elements
+
 ## 4.0.3 - 2022-10-21
 
 ### Fixed
