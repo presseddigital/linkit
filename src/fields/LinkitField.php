@@ -185,6 +185,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
                 'customText' => $value->customText,
                 'target' => $value->target,
                 'siteId' => $value->siteId,
+                'elementSiteId' => $value->elementSiteId,
             ];
         }
 

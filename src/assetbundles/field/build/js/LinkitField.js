@@ -48,7 +48,7 @@ Craft.BaseElementSelectInput.prototype.init = function(settings) {
         return;
     }
 
-    var siteIdField = $("#"+settings.id).parent().find("input[type=hidden][id$='SiteId']");
+    var siteIdField = $("#"+settings.id).parent().find("input[type=hidden][id$='ElementSiteId']");
 
     if (siteIdField.length < 1) {
         return

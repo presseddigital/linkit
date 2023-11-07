@@ -10,13 +10,5 @@
     showSiteMenu: true,
     limit: 1,
     elements: (currentLink.element ?? false) ? [currentLink.element] : [],
-    storageKey: 'field.'~field.id,
+    storageKey: 'field.'~field.id
 }) }}
-
-{{ forms.hidden({
-    id: name~'SiteId',
-    name: name~'[siteId]',
-    value: 2,
-}) }}
-
-test

@@ -76,6 +76,7 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     public ?string $customText = null;
     public ?bool $target = null;
     public ?string $siteId = null;
+    public ?string $elementSiteId = null;
 
     public ?array $fieldSettings = null; // TODO: Remove and use field
 
@@ -242,7 +243,7 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules[] = [['customLabel', 'customPlaceholder', 'value', 'customText'], 'string'];
+        $rules[] = [['customLabel', 'customPlaceholder', 'value', 'customText', 'elementSiteId'], 'string'];
         $rules[] = [['target'], 'boolean'];
         return $rules;
     }

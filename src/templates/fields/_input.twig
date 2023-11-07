@@ -36,6 +36,15 @@
 
 	        	    <div id="{{ name }}-{{ linkType.type|id }}" class="linkit--{{ linkType.defaultLabel|lower }} {{ not singleLinkType and not isCurrentType ? 'hidden' }}">
 	        	    	{{ linkType.getInputHtml(name, field, (isCurrentType ? currentLink : null), (element ?? null))|raw }}
+
+	        	    	{% if isCurrentType %}
+		        	    	{{ forms.hidden({
+							    id: name~'ElementSiteId',
+							    name: name~'[elementSiteId]',
+							    value: currentLink.elementSiteId ?? '',
+							}) }}
+	        	    	{% endif %}
+
 	        	    </div>
 
 	        	{% endfor %}

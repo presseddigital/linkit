@@ -86,7 +86,7 @@ abstract class ElementLink extends Link implements \Stringable
             return $this->_element;
         }
 
-        $siteId = $this->siteId ?? $this->ownerElement->siteId ?? null;
+        $siteId = $this->elementSiteId ?? null;
 
         // Check eager loading
         if ($this->owner) {
