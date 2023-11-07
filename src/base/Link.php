@@ -75,6 +75,7 @@ abstract class Link extends SavableComponent implements LinkInterface, \Stringab
     public ?string $value = null;
     public ?string $customText = null;
     public ?bool $target = null;
+    public ?string $siteId = null;
 
     public ?array $fieldSettings = null; // TODO: Remove and use field
 

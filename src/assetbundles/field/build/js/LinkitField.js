@@ -38,3 +38,30 @@ Garnish.LinkitField = Garnish.Base.extend({
 		}
 	}
 });
+
+var elementSelectInit = Craft.BaseElementSelectInput.prototype.init;
+
+Craft.BaseElementSelectInput.prototype.init = function(settings) {
+    elementSelectInit.apply(this, arguments);
+
+    if (!settings.id.includes("presseddigital-linkit")) {
+        return;
+    }
+
+    var siteIdField = $("#"+settings.id).parent().find("input[type=hidden][id$='SiteId']");
+
+    if (siteIdField.length < 1) {
+        return
+    }
+
+    siteIdField = siteIdField[0]
+
+    this.on("selectElements", function(e) {
+        siteIdField.value = e.elements[0].siteId
+    });
+
+    this.on("removeElements", function(e) {
+        siteIdField.value = ''
+    });
+}
+
