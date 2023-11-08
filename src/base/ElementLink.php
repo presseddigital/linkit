@@ -83,6 +83,8 @@ abstract class ElementLink extends Link
             return $this->_element;
         }
 
+        $siteId = $this->elementSiteId ?? null;
+
         // Check eager loading
         if ($this->owner) {
             $eagerLoadingHandle = $this->getField()->handle . '.' . $this->getTypeHandle();
@@ -94,7 +96,7 @@ abstract class ElementLink extends Link
             }
         }
 
-        return $this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), $this->owner->siteId ?? null);
+        return $this->_element = Craft::$app->getElements()->getElementById((int) $this->value, static::elementType(), $siteId);
     }
 
     public function isAvailable(): bool

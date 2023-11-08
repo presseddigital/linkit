@@ -70,11 +70,11 @@ abstract class Link extends SavableComponent implements LinkInterface
 
     public $customLabel;
     public $customPlaceholder;
-
     public $fieldSettings;
     public $value;
     public $customText;
     public $target;
+    public $elementSiteId;
 
     // Private
     // =========================================================================
