@@ -7,12 +7,12 @@ use Craft;
 use presseddigital\linkit\base\Link;
 use presseddigital\linkit\validators\UrlValidator;
 
-class Twitter extends Link
+class YouTube extends Link
 {
     // Private
     // =========================================================================
 
-    private string $_match = '/^http(?:s)?:\/\/(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)/';
+    private string $_match = '/^http(?:s)?:\/\/(?:www\.)?(youtube\.com|youtu\.?be)\/([a-zA-Z0-9_]+)/';
 
     // Static
     // =========================================================================
@@ -24,12 +24,12 @@ class Twitter extends Link
 
     public static function defaultLabel(): string
     {
-        return Craft::t('linkit', 'X (Twitter)');
+        return Craft::t('linkit', 'YouTube');
     }
 
     public static function defaultPlaceholder(): string
     {
-        return Craft::t('linkit', 'https://twitter.com/CraftCMS');
+        return Craft::t('linkit', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ');
     }
 
     // Public Methods
@@ -62,4 +62,4 @@ class Twitter extends Link
     }
 }
 
-class_alias(Twitter::class, \fruitstudios\linkit\models\Twitter::class);
+class_alias(YouTube::class, \fruitstudios\linkit\models\YouTube::class);

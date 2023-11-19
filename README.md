@@ -44,18 +44,21 @@ Basic
 
 Social
 
-4.  Twitter
+4.  X (Twitter)
 5.  Facebook
 6.  Instagram
 7.  LinkedIn
+8.  YouTube
+9.  WhatsApp
+10. TikTok
 
 Elements
 
-8.  Entry
-9.  Category
-10. User
-11. Asset
-12. Product
+11.  Entry
+12. Category
+13. User
+14. Asset
+15. Product
 
 Each link type has additional option to allow further customisation. For example, the User link type allows you to set a default path...
 

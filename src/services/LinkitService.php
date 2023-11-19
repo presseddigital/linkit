@@ -17,9 +17,12 @@ use presseddigital\linkit\models\Instagram;
 use presseddigital\linkit\models\LinkedIn;
 use presseddigital\linkit\models\Phone;
 use presseddigital\linkit\models\Product;
+use presseddigital\linkit\models\TikTok;
 use presseddigital\linkit\models\Twitter;
 use presseddigital\linkit\models\Url;
 use presseddigital\linkit\models\User;
+use presseddigital\linkit\models\WhatsApp;
+use presseddigital\linkit\models\YouTube;
 
 class LinkitService extends Component
 {
@@ -45,6 +48,9 @@ class LinkitService extends Component
         $linkTypes[] = new Facebook();
         $linkTypes[] = new Instagram();
         $linkTypes[] = new LinkedIn();
+        $linkTypes[] = new YouTube();
+        $linkTypes[] = new WhatsApp();
+        $linkTypes[] = new TikTok();
 
         // Element link types
         $linkTypes[] = new Entry();
