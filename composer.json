@@ -2,7 +2,7 @@
 	"name": "presseddigital/linkit",
 	"description": "One link field to rule them all.",
 	"type": "craft-plugin",
-	"version": "4.0.4.1",
+	"version": "5.0.0",
 	"keywords": [
 		"craftcms",
 		"link it",
@@ -10,7 +10,7 @@
 		"link"
 	],
 	"support": {
-		"docs": "https://github.com/presseddigital/linkit/blob/v4/README.md",
+		"docs": "https://github.com/presseddigital/linkit/blob/v5/README.md",
 		"issues": "https://github.com/presseddigital/linkit/issues?state=open"
 	},
 	"license": "proprietary",
@@ -21,8 +21,8 @@
 		}
 	],
 	"require": {
-		"craftcms/cms": "^4.0.0",
-		"php": "^8.0"
+		"craftcms/cms": "^5.0.0",
+		"php": "^8.2"
 	},
 	"autoload": {
 		"psr-4": {
@@ -35,7 +35,7 @@
 		"handle": "linkit",
 		"hasCpSettings": false,
         "hasCpSection": false,
-		"changelogUrl": "https://raw.githubusercontent.com/presseddigital/linkit/v4/CHANGELOG.md",
+		"changelogUrl": "https://raw.githubusercontent.com/presseddigital/linkit/v5/CHANGELOG.md",
 		"class": "presseddigital\\linkit\\Linkit",
         "components": {
             "services": "presseddigital\\linkit\\services\\LinkitService"

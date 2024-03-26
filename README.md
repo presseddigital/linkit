@@ -1,19 +1,14 @@
 <p align="left"><a href="https://github.com/presseddigital/linkit" target="_blank"><img width="100" height="100" src="resources/img/linkit.svg" alt="Linkit"></a></p>
 
-# Linkit plugin for Craft 4
+# Linkit plugin for Craft 5
 
 One link field to rule them all...
 
 This plugin adds a custom fieldtype which enables support for linking to email addresses, telephone numbers, URL's, Craft element types and more.
 
-## New for Craft 4
-
-*   GraphQL Support
-*   Eager Loading Support
-
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0 or later.
+This plugin requires Craft CMS 5.0.0 or later.
 
 ## Installation
 
