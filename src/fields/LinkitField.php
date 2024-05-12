@@ -43,7 +43,6 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
      * @var mixed[]|null
      */
     private ?array $_enabledLinkTypes = null;
-    private string $_columnType = Schema::TYPE_TEXT;
 
 
     //  Properties
@@ -89,24 +88,6 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
     }
 
     /**
-     * Returns an array that maps source-to-target element IDs based on this custom field.
-     *
-     * This method aids in the eager-loading of elements when performing an element query. The returned array should
-     * contain the following keys:
-     * - `elementType` – the fully qualified class name of the element type that should be eager-loaded
-     * - `map` – an array of element ID mappings, where each element is a sub-array with `source` and `target` keys.
-     * - `criteria` *(optional)* – Any criteria parameters that should be applied to the element query when fetching the eager-loaded elements.
-     *
-     * @param ElementInterface[] $sourceElements An array of the source elements
-     * @return array|false|null The eager-loading element ID mappings, false if no mappings exist, or null if the result
-     * should be ignored.
-     */
-    public function getEagerLoadingMap(array $sourceElements): array|false|null
-    {
-
-    }
-
-    /**
      * @return mixed[]
      */
     public function rules(): array
@@ -124,19 +105,9 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return $rules;
     }
 
-    public function getContentColumnType(): array|string
-    {
-        return $this->_columnType;
-    }
-
     public function getContentGqlType(): \GraphQL\Type\Definition\Type|array
     {
         return LinkType::getType();
-    }
-
-    public static function hasContentColumn(): bool
-    {
-        return true;
     }
 
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
