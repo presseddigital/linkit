@@ -257,7 +257,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return '';
     }
 
-    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
+    public function getPreviewHtml(mixed $value, ElementInterface $element): string
     {
         if ($value instanceof Link) {
             return '<span title="Link ' . ($value->isAvailable() ? 'Enabled' : 'Disabled') . '" class="status ' . ($value->isAvailable() ? 'enabled' : 'disabled') . '"></span>' . $value->getLinkPreview();
