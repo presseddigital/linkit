@@ -3,7 +3,6 @@
 namespace presseddigital\linkit\fields;
 
 use Craft;
-use craft\base\EagerLoadingFieldInterface;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
@@ -23,7 +22,7 @@ use presseddigital\linkit\models\Url;
 use yii\base\ErrorException;
 use yii\db\Schema;
 
-class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadingFieldInterface
+class LinkitField extends Field implements PreviewableFieldInterface
 {
     // Constants
     // =========================================================================
