@@ -1,6 +1,11 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 4](http://craftcms.com)
 
+## 4.0.4.2 - 2024-05-17
+
+### Changed
+- Allow self realtions on element link fields
+
 ## 4.0.4.1 - 2022-10-24
 
 ### Fixed
