@@ -86,6 +86,11 @@ class LinkitField extends Field implements PreviewableFieldInterface
         parent::__construct($config);
     }
 
+    public static function icon(): string
+    {
+        return 'link';
+    }
+
     /**
      * @return mixed[]
      */
