@@ -5,6 +5,7 @@
 
 ### Added
 - Craft 5 compatibility
+- Allow self realtions on element link fields
 
 ## 4.0.4.1 - 2022-10-24
 
