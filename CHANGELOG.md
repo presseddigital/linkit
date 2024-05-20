@@ -1,7 +1,7 @@
 # Linkit Changelog
 > One link field to rule them all, built for [Craft 5](http://craftcms.com)
 
-## 5.0.0 - 2024-03-26
+## 5.0.0 - 2024-05-20
 
 ### Added
 - Craft 5 compatibility
