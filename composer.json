@@ -2,7 +2,7 @@
 	"name": "presseddigital/linkit",
 	"description": "One link field to rule them all.",
 	"type": "craft-plugin",
-	"version": "4.0.4.2",
+	"version": "5.0.0",
 	"keywords": [
 		"craftcms",
 		"link it",
@@ -21,7 +21,7 @@
 		}
 	],
 	"require": {
-		"craftcms/cms": "^4.0.0",
+		"craftcms/cms": "^5.0.0",
 		"php": "^8.0"
 	},
 	"autoload": {
