@@ -3,7 +3,6 @@
 namespace presseddigital\linkit\fields;
 
 use Craft;
-use craft\base\EagerLoadingFieldInterface;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
@@ -23,7 +22,7 @@ use presseddigital\linkit\models\Url;
 use yii\base\ErrorException;
 use yii\db\Schema;
 
-class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadingFieldInterface
+class LinkitField extends Field implements PreviewableFieldInterface
 {
     // Constants
     // =========================================================================
@@ -43,7 +42,6 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
      * @var mixed[]|null
      */
     private ?array $_enabledLinkTypes = null;
-    private string $_columnType = Schema::TYPE_TEXT;
 
 
     //  Properties
@@ -88,22 +86,9 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         parent::__construct($config);
     }
 
-    /**
-     * Returns an array that maps source-to-target element IDs based on this custom field.
-     *
-     * This method aids in the eager-loading of elements when performing an element query. The returned array should
-     * contain the following keys:
-     * - `elementType` – the fully qualified class name of the element type that should be eager-loaded
-     * - `map` – an array of element ID mappings, where each element is a sub-array with `source` and `target` keys.
-     * - `criteria` *(optional)* – Any criteria parameters that should be applied to the element query when fetching the eager-loaded elements.
-     *
-     * @param ElementInterface[] $sourceElements An array of the source elements
-     * @return array|false|null The eager-loading element ID mappings, false if no mappings exist, or null if the result
-     * should be ignored.
-     */
-    public function getEagerLoadingMap(array $sourceElements): array|false|null
+    public static function icon(): string
     {
-
+        return 'link';
     }
 
     /**
@@ -124,19 +109,9 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return $rules;
     }
 
-    public function getContentColumnType(): array|string
-    {
-        return $this->_columnType;
-    }
-
     public function getContentGqlType(): \GraphQL\Type\Definition\Type|array
     {
         return LinkType::getType();
-    }
-
-    public static function hasContentColumn(): bool
-    {
-        return true;
     }
 
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
@@ -257,7 +232,7 @@ class LinkitField extends Field implements PreviewableFieldInterface, EagerLoadi
         return '';
     }
 
-    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
+    public function getPreviewHtml(mixed $value, ElementInterface $element): string
     {
         if ($value instanceof Link) {
             return '<span title="Link ' . ($value->isAvailable() ? 'Enabled' : 'Disabled') . '" class="status ' . ($value->isAvailable() ? 'enabled' : 'disabled') . '"></span>' . $value->getLinkPreview();

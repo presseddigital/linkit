@@ -1,5 +1,16 @@
 # Linkit Changelog
-> One link field to rule them all, built for [Craft 4](http://craftcms.com)
+> One link field to rule them all, built for [Craft 5](http://craftcms.com)
+
+## 5.0.1 - 2025-11-06
+
+### Added
+- Conversion controller for native link field
+
+## 5.0.0 - 2024-05-20
+
+### Added
+- Craft 5 compatibility
+- Allow self realtions on element link fields
 
 ## 4.0.4.2 - 2024-05-17
 
