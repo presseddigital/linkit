@@ -32,7 +32,7 @@ class Phone extends Link
 
     public function getUrl(): string
     {
-        return (string) 'tel:' . StringHelper::stripWhitespace($this->value);
+        return (string) 'tel:' . StringHelper::stripWhitespace($this->value ?? '');
     }
 
     /**
