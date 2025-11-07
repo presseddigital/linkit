@@ -51,11 +51,8 @@ class MigrateController extends Controller
                     }
 
                     foreach($contentEntries as $contentEntry) {
-                        $this->stdout("existing content\n");
-                        $this->stdout($contentEntry['content'] . PHP_EOL);
                         $newContent = $this->convertContent($contentEntry['content'], $contentEntry['siteId'], $element['uid'] );
                         if ($newContent !== false){
-//                            $this->stdout($newContent . PHP_EOL);
                             Db::update('{{%elements_sites}}',
                                 ['content' => $newContent],
                                 [
@@ -71,6 +68,8 @@ class MigrateController extends Controller
             }
             $this->stdout("    > Field '{$field['handle']}' content migrated.\n", Console::FG_GREEN);
         }
+
+        $this->stdout("\nLinkIt content conversion is complete.\n", Console::FG_GREEN);
 
         return ExitCode::OK;
     }
