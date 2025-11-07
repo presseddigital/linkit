@@ -7,6 +7,7 @@ use craft\console\Controller;
 use craft\db\Query;
 use craft\fields\Link;
 use craft\helpers\App;
+use craft\helpers\Console;
 use craft\helpers\Db;
 use yii\console\ExitCode;
 use presseddigital\linkit\fields\LinkitField;
@@ -24,7 +25,7 @@ class ConvertController extends Controller
     {
         App::maxPowerCaptain();
 
-        echo LinkitField::class;
+        $this->stdout("Convert Linkit to native Link field.\n");
 
         // Get all LinkIt fields
         $fields = (new Query())
@@ -34,9 +35,7 @@ class ConvertController extends Controller
 
         // Loop through each field and migrate settings in this pass
         foreach ($fields as $field) {
-            echo "Preparing to migrate field “{$field['handle']}” ({$field['uid']}) settings.\n";
-
-            echo "   > Field “{$field['handle']}” settings migrated.\n\n";
+            $this->stdout("\nPreparing to migrate field '{$field['handle']}' ({$field['uid']}) settings.\n");
             $linkItSettings = json_decode($field['settings'], true);
             $settings = $this->convertSettings($linkItSettings);
 
@@ -50,7 +49,7 @@ class ConvertController extends Controller
                 ['uid' => $field['uid']]
             );
 
-            echo "   > Field {$field['handle']} successfully updated.\n";
+            $this->stdout("    > Field {$field['handle']} successfully updated.\n");
 
             // Rebuild project config for this field
             $projectConfig = Craft::$app->getProjectConfig();
@@ -69,11 +68,12 @@ class ConvertController extends Controller
                     $fieldsService->createFieldConfig($updatedField)
                 );
 
-                echo "    > Project config rebuilt for field {$field['handle']}.\n";
+                $this->stdout("    > Project config rebuilt for field {$field['handle']}.\n");
             }
-
-            echo PHP_EOL;
         }
+        $this->stdout("\nConversion of LinkIt fields to Link complete.\n", Console::FG_GREEN, Console::BOLD );
+        $this->stdout("Commit your project config changes, and run `craft up` on other environments for the changes to take effect.\n");
+        $this->stdout("Run 'craft linkit/migrate' in this and other environments to migrate the content.\n\n");
         return ExitCode::OK;
 
     }

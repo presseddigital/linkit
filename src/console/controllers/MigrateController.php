@@ -10,6 +10,7 @@ use craft\helpers\App;
 use craft\helpers\Db;
 use presseddigital\linkit\fields\LinkitField;
 use yii\console\ExitCode;
+use craft\helpers\Console;
 
 class MigrateController extends Controller
 {
@@ -22,13 +23,13 @@ class MigrateController extends Controller
     {
         $fields = (new Query())
             ->from('{{%fields}}')
-            ->where(['type' => LinkitField::class])
-            ->orWwhere(['type' => Link::class])
+//            ->where(['type' => LinkitField::class])
+            ->where(['type' => Link::class])
 //            ->orWhere(['type' => LinkitField::class])
             ->all();
 
         foreach ($fields as $field) {
-            echo "Preparing to migrate field '{$field['handle']}' ({$field['uid']}) content.\n";
+            $this->stdout("\nPreparing to migrate field '{$field['handle']}' ({$field['uid']}) content.\n");
 
             $fieldLayouts = (new Query())
                 ->from('{{%fieldlayouts}}')
@@ -45,21 +46,30 @@ class MigrateController extends Controller
                         ->all();
 
                     if (count($contentEntries) < 1) {
-                        echo "> No content to migrate for field '{$field['handle']}'\n";
+                        $this->stdout("    > No content to migrate for field '{$field['handle']}'\n", Console::FG_YELLOW);
                         continue;
                     }
 
                     foreach($contentEntries as $contentEntry) {
+                        $this->stdout("existing content\n");
+                        $this->stdout($contentEntry['content'] . PHP_EOL);
                         $newContent = $this->convertContent($contentEntry['content'], $contentEntry['siteId'], $element['uid'] );
                         if ($newContent !== false){
-                            echo "    > Migrated content for element #{$contentEntry['elementId']}\n";
+//                            $this->stdout($newContent . PHP_EOL);
+                            Db::update('{{%elements_sites}}',
+                                ['content' => $newContent],
+                                [
+                                    'elementId' => $contentEntry['elementId'],
+                                    'siteId' => $contentEntry['siteId']
+                                ]);
+                            $this->stdout("    > Migrated content for element #{$contentEntry['elementId']}\n");
                         } else {
-                            echo "    > Unable to convert content for element #{$contentEntry['elementId']}\n";
+                            $this->stdout("    > Unable to convert content for element #{$contentEntry['elementId']}\n", Console::FG_RED);
                         }
                     }
                 }
             }
-            echo "> Field '{$field['handle']}' content migrated.\n\n";
+            $this->stdout("    > Field '{$field['handle']}' content migrated.\n", Console::FG_GREEN);
         }
 
         return ExitCode::OK;
@@ -87,7 +97,7 @@ class MigrateController extends Controller
      * @param string $fieldUid The field UID to update
      * @return string The converted JSON string
      */
-    private function convertContent(string $contentJson, int $siteId, string $fieldUid): string|false
+    private function convertContent(string $contentJson, int $siteId, string $fieldUid): array|false
     {
         $content = json_decode($contentJson, true);
 
@@ -99,7 +109,6 @@ class MigrateController extends Controller
 
         // If it's already been converted, return
         if (isset($linkitData['type']) && str_starts_with($linkitData['type'], 'presseddigital') === false){
-            echo '   > already converted this content' . PHP_EOL;
             return false;
         }
 
@@ -141,7 +150,8 @@ class MigrateController extends Controller
         // Update the content with the new format
         $content[$fieldUid] = $newLinkData;
 
-        return json_encode($content);
+//        return json_encode($content, JSON_UNESCAPED_SLASHES );
+        return $content;
     }
 
     /**
