@@ -23,9 +23,7 @@ class MigrateController extends Controller
     {
         $fields = (new Query())
             ->from('{{%fields}}')
-//            ->where(['type' => LinkitField::class])
             ->where(['type' => Link::class])
-//            ->orWhere(['type' => LinkitField::class])
             ->all();
 
         foreach ($fields as $field) {
