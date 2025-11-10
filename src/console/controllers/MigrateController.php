@@ -15,7 +15,7 @@ use craft\helpers\Console;
 class MigrateController extends Controller
 {
     /**
-     * Convert all LinkIt field to native Craft Link fields
+     * Migrate all LinkIt field content to native Craft Link fields
      * @return int
      */
 
@@ -71,6 +71,14 @@ class MigrateController extends Controller
 
         return ExitCode::OK;
     }
+
+    /**
+     * Find and return the matching field within the included $data
+     *
+     * @param $data The JSON data to find the field in
+     * @param $fieldUid the field UID to find
+     * @return false|mixed The found field or false if not found
+     */
 
     private function findField($data, $fieldUid){
         $foundElement = false;

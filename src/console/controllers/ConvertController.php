@@ -14,11 +14,9 @@ use presseddigital\linkit\fields\LinkitField;
 
 class ConvertController extends Controller
 {
-//    public $defaultAction = 'convert';
-
 
     /**
-     * Convert all LinkIt field to native Craft Link fields
+     * Convert all LinkIt fields to native Craft Link fields
      * @return int
      */
     public function actionIndex(): int
