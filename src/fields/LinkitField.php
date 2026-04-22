@@ -10,6 +10,7 @@ use craft\helpers\Json as JsonHelper;
 use craft\validators\ArrayValidator;
 use presseddigital\linkit\Linkit;
 use presseddigital\linkit\assetbundles\field\FieldAssetBundle;
+use presseddigital\linkit\base\ElementLink;
 use presseddigital\linkit\base\Link;
 use presseddigital\linkit\gql\types\LinkType;
 use presseddigital\linkit\models\Asset;
@@ -163,6 +164,19 @@ class LinkitField extends Field implements PreviewableFieldInterface
         }
 
         return parent::serializeValue($serialized, $element);
+    }
+
+    public function afterElementSave(ElementInterface $element, bool $isNew): void
+    {
+        $value = $element->getFieldValue($this->handle);
+
+        $targetIds = ($value instanceof ElementLink && $value->value)
+            ? [(int) $value->value]
+            : [];
+
+        Craft::$app->getRelations()->saveRelations($this, $element, $targetIds);
+
+        parent::afterElementSave($element, $isNew);
     }
 
     public function getSettingsHtml(): ?string
