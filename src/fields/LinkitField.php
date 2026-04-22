@@ -130,14 +130,14 @@ class LinkitField extends Field implements PreviewableFieldInterface
         }
 
         if (isset($value['type']) && $value['type'] != '') {
-            if (isset($value['value']) && $value['value'] == '') {
-                return null;
-            }
-
             if (isset($value['values'])) {
                 $postedValue = $value['values'][$value['type']] ?? '';
                 $value['value'] = is_array($postedValue) ? $postedValue[0] : $postedValue;
                 unset($value['values']);
+            }
+
+            if (($value['value'] ?? '') == '') {
+                return null;
             }
 
             $link = $this->_getLinkTypeModelByType($value['type']);

@@ -26,7 +26,11 @@ class Email extends Link
 
     public function getUrl(): string
     {
-        return (string) 'mailto:' . $this->value;
+        if (!$this->value) {
+            return '';
+        }
+
+        return 'mailto:' . $this->value;
     }
 
     /**
