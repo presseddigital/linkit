@@ -158,7 +158,13 @@ class Linkit extends Plugin
         $handleParts = explode(':', $plan->handle);
         $isLinkitField = ArrayHelper::isIn(end($handleParts), $linkitFieldHandles);
         if ($isLinkitField) {
-            // Set a plan for all possible element link types
+            // Preserve the original plan so normal field value resolution continues to work.
+            // Without this, GQL resolvers (e.g. inside Matrix blocks) receive an empty
+            // ElementCollection instead of the Link model, because Craft's eager loading
+            // system finds no data for the original handle.
+            $newPlans[] = $plan;
+
+            // Add a sub-plan for each element link type so linked elements are eager-loaded
             foreach ($elementLinkTypes as $elementLinkType) {
                 $elementLinkTypeHandle = $elementLinkType->getTypeHandle();
 
